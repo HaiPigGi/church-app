@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\admin\beritaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,4 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('admin')->group(function () {
+    Route::post('/berita/store', [BeritaController::class, 'store'])->name('admin.berita.store');
 });
