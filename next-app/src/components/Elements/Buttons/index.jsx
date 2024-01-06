@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-const clsButton = cva(["rounded-sm  text-center py-2"],{
+const clsButton = cva(["rounded-sm block  text-center py-2 cursor-pointer font-semibold"],{
     variants: {
         intent: {
             primary: [
@@ -13,7 +13,7 @@ const clsButton = cva(["rounded-sm  text-center py-2"],{
                 "bg-secondary",
                 "hover:bg-secondary-200",
                 "duration-500",
-                "text-white"
+                "text-black"
             ]
         },
         size: {
@@ -24,19 +24,21 @@ const clsButton = cva(["rounded-sm  text-center py-2"],{
             ],
             large: [
                 "px-5",
+                "w-24",
                 "text-xl"
             ],
             small: [
                 "px-5",
+                "w-20",
                 "text-sm"
             ]
         }
     }
 })
 
-function Button({children, size, intent, href} ) {
+function Button({children, size, intent, href, className} ) {
     return(
-        <a href={href} className={clsButton({intent, size})}>{children}</a>
+        <a href={href} className={clsButton({intent, size})+" "+className}>{children}</a>
     )
 };
 
