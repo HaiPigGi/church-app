@@ -14,7 +14,7 @@ export default function Home() {
           <div id="content-Hero" className="">
             <h1 className="text-4xl text-shadow font-bold text-white text-center">Gereja <span className="block text-secondary">ST. Markus Melak</span></h1>
             <p className="text-center text-white font-light text-sm text-shadow my-2">Temukan lebih banyak tentang komunitas gereja kami <br/>dengan login sekarang untuk eksplorasi lengkap</p>
-            {/* <Button intent="secondary" size="small" className="shadow-xl  mx-auto">Login</Button> */}
+            <Button intent="secondary" size="small" className="shadow-xl  mx-auto">Login</Button>
           </div>
         </div>
 
