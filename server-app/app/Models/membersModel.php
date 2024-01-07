@@ -21,6 +21,7 @@ class membersModel extends Model
         "members_name",
         "born_date",
         "address",
+        "image",
     ];
 
     public function organitation()

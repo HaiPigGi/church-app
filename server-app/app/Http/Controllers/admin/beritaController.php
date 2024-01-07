@@ -12,6 +12,33 @@ use Illuminate\Support\Facades\Validator;
 
 class beritaController extends Controller
 {
+
+    /**
+     * show all berita 
+     *
+     * @return void
+     */
+    public function getAllBerita()
+    {
+        $berita = beritaModel::all();
+        return response()->json(['organitation' => $berita], 200);
+    }
+
+    /**
+     * show berita by id
+     * 
+     * @return void
+     */
+
+    public function getAllberitaById($id)
+    {
+        $berita = beritaModel::findOrFail($id);
+
+        if (!$berita) {
+            return response()->json(['error' => 'Organitation Not Found'], 404);
+        }
+        return response()->json(['organitation' => $berita], 200);
+    }
     /**
      * store some new berita to resource in storage
      * 

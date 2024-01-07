@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('members_name');
             $table->date('born_date');
             $table->string('address');
+            $table->string('image')->nullable();
             $table->timestamps();
 
             $table->foreign('organitation_id')

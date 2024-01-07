@@ -18,6 +18,7 @@ class organitationModel extends Model
         'name_organitation',
         'description',
         'date_of_establishment',
+        'image',
     ];
 
     public function members ()

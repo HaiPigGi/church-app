@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name_organitation');
             $table->string('description');
             $table->date('date_of_establishment');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
