@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-spring/parallax": "^9.7.3",
     "class-variance-authority": "^0.7.0",
     "next": "14.0.4",
     "react": "^18",

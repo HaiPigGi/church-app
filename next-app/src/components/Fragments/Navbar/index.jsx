@@ -6,7 +6,7 @@ import Dropdowns from '@/components/Elements/Dropdown'
 
 function Navbar({props}){
     return(
-        <nav className='px-5 py-2 w-full sticky top-0 bg-white shadow-md flex justify-between items-center'>
+        <nav className='z-30 px-5 py-2 w-full fixed top-0 bg-white shadow-md flex justify-between items-center'>
             <a href="/">
                 <Image 
                 src="/img/Logo.svg"
