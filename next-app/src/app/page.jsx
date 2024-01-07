@@ -4,7 +4,9 @@ import Footer from "@/components/Fragments/Footer";
 import BeritaCard from "@/components/Fragments/BeritaCard";
 
 
+
 export default function Home() {
+
   return (
     <MainLayout>
       {/* Hero Section */}
@@ -14,7 +16,7 @@ export default function Home() {
           <div id="content-Hero" className="">
             <h1 className="text-4xl text-shadow font-bold text-white text-center">Gereja <span className="block text-secondary">ST. Markus Melak</span></h1>
             <p className="text-center text-white font-light text-sm text-shadow my-2">Temukan lebih banyak tentang komunitas gereja kami <br/>dengan login sekarang untuk eksplorasi lengkap</p>
-            <Button intent="secondary" size="small" className="shadow-xl  mx-auto">Login</Button>
+            <Button href={"/pages/login"} intent="secondary" size="small" className="shadow-xl  mx-auto">LOGIN</Button>
           </div>
         </div>
 
