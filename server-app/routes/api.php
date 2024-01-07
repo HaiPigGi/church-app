@@ -20,4 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('admin')->group(function () {
     Route::post('/berita/store', [BeritaController::class, 'store'])->name('admin.berita.store');
+    Route::put('/berita/{id}', [BeritaController::class, 'update'])->name('admin.berita.update');
+    Route::delete('/berita/{id}', [BeritaController::class,'destroy'])->name('admin.berita.delete');
 });

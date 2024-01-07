@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\berita;
 
 use App\Models\beritaModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,7 +18,6 @@ class BeritaStoreTest extends TestCase
      *
      * @return void 
      */
-
     public function testBerita()
     {
         // Fake the storage disk
@@ -63,10 +62,6 @@ class BeritaStoreTest extends TestCase
             'event' => $data['event'],
         ]);
     }
-
-
-
-
 
     /**
      * Test Validation in beritaController store metode
