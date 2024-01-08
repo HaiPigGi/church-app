@@ -12,9 +12,9 @@ export default function Login() {
                 </div>
             </div>
 
-            <div className="bg-white p-4 shadow-md overflow-hidden w-[35rem] h-[100vh] fixed top-[65px] right-0">
+            <div className="bg-white p-4 shadow-md overflow-hidden w-[35rem] h-[100vh] fixed top-0 pt-2 right-0">
                 <section className="bg-white">
-                    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto  lg:py-20">
+                    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-20">
                         <a href="#" className="flex items-center mb-6 mr-5 text-2xl font-semibold text-primary">
                             <label className=""/>LOGIN
                         </a>

@@ -3,10 +3,11 @@ import Image from "next/image";
 import { useState } from "react";
 import { cva } from "class-variance-authority";
 
+
 const ShowModal = (clsModal) => {
     return(
         <div className="absolute transition duration-500 top-full mt-2 border-t-2 shadow-md border-secondary w-52 bg-white rounded-sm p-2">
-            <a href="" className="block text-sm font-light py-2">Pastor Paroki</a>
+            <a href="/pages/pastor" className="block text-sm font-light py-2">Pastor Paroki</a>
             <a href="" className="block text-sm font-light py-2">Kepengurusan OMK</a>
             <a href="" className="block text-sm font-light py-2">Kepengurusan Mesdinar</a>
         </div>

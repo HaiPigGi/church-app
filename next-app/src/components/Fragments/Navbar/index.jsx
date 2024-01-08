@@ -19,7 +19,7 @@ function Navbar({props}){
                 <NavLinks href="/">Forum & Saran</NavLinks>
                 <NavLinks href="/">Tentang</NavLinks>
             </div>
-            <Button href={"/src/app/pages/login"} intent="secondary" size="small">Login</Button>
+            <Button href={""} intent="secondary" size="small">Login</Button>
         </nav>
     )
 };
