@@ -10,6 +10,7 @@ export default function Pastor() {
             <div className="flex flex-col items-center">
               <h2 className="text-black font-poppins text-5xl font-bold leading-[112px] pt-20">Pastor Paroki</h2>
               <div className="flex flex-col md:flex-row justify-center items-center relative">
+
                 {/* gambar 1 */}
                 <div className="relative mb-5 md:mr-10 md:mb-0">
                   <img
@@ -22,7 +23,6 @@ export default function Pastor() {
                     src="/img/Rectangle 20.png"
                     alt=""
                   />
-                  {/* Menambahkan teks di tengah gambar gabungan */}
                   <div className="absolute top-[21rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
                     <p className="text-white text-lg font-bold">Nama</p>
                   </div>
@@ -40,15 +40,14 @@ export default function Pastor() {
                     src="/img/Rectangle 20.png"
                     alt=""
                   />
-                  {/* Menambahkan teks di tengah gambar gabungan */}
                   <div className="absolute top-[21rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
                     <p className="text-white text-lg font-bold">Nama</p>
                   </div>
                 </div>
               </div>
 
-              {/* Membuat blok yang sama untuk gambar 3 dan 4 dengan teks */}
-              <div className="flex flex-col md:flex-row justify-center items-center relative">
+
+              <div className="flex flex-col md:flex-row justify-center items-center relative mt-5">
                 {/* gambar 3 */}
                 <div className="relative mb-5 md:mr-10 md:mb-0">
                   <img
@@ -61,7 +60,6 @@ export default function Pastor() {
                     src="/img/Rectangle 20.png"
                     alt=""
                   />
-                  {/* Menambahkan teks di tengah gambar gabungan */}
                   <div className="absolute top-[21rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
                     <p className="text-white text-lg font-bold">Nama</p>
                   </div>
@@ -79,7 +77,6 @@ export default function Pastor() {
                     src="/img/Rectangle 20.png"
                     alt=""
                   />
-                  {/* Menambahkan teks di tengah gambar gabungan */}
                   <div className="absolute top-[21rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
                     <p className="text-white text-lg font-bold">Nama</p>
                   </div>
