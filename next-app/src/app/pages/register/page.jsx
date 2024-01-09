@@ -1,5 +1,6 @@
 import MainLayout from "@/components/Layouts/MainLayout/index";
 
+
 export default function Register() {
   return(
 
@@ -41,10 +42,10 @@ export default function Register() {
                         </div>
                         </div>
                     </div>
+                        </section>
+                    </div>
                 </section>
-            </div>
-        </section>
-</MainLayout>
+        </MainLayout>
   
     ) 
   
