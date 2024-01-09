@@ -2,9 +2,9 @@ import Image from "next/image";
 
 function BeritaCard({src, title, desc}){
     return(
-        <div className=" border shadow-xl mx-auto w-4/5 mb-5 bg-white ">
+        <div className=" border shadow-xl mx-auto w-full max-w-[500px] md:w-4/5 mb-5 bg-white rounded-xl overflow-hidden">
             <div className="flex justify-center items-center ">
-                <div className="relative w-36 h-36 rounded-tr-full overflow-hidden me-2">
+                <div className="relative w-full min-w-36 max-w-56 h-36 md:w-36 md:h-36 rounded-xl overflow-hidden me-2">
                     <Image
                     src={src}
                     fill={true}
