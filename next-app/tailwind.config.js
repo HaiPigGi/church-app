@@ -12,13 +12,21 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         "hero": "url('/img/bgHero.jpeg')",
+        "depan":"url('/img/depan_mimbar.jpg')",
+        "dalam": "url('/img/gereja_dalam.jpg')",
+        "partor": "url('/img\pastor.jpg')"
       },
       colors: {
         "primary": "#7D390F",
         "secondary" : "#DBA150",
         "primary-200" : "#9F5C32",
         "secondary-200": "#E4C599",
-      }
+      },
+      textColor: {
+        'custom': '#FF9843', 
+        'custom2': '#ffffff66', 
+      },
+    
     },
   },
   plugins: [],

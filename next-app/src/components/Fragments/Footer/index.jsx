@@ -11,7 +11,11 @@ function Footer(){
                 objectFit="cover"
                 />
             </div>
-            <h1 className="text-pretty text-center md:text-right md:w-80">Jl. Pangeran Antasari No.18, Melak Ulu, Kec. Melak, Kabupaten Kutai Barat, Kalimantan Timur 75775</h1>
+            <div className="mb-[3rem] text-center whitespace-no-wrap ">
+            <a href="/pages/tim">Tim Pembuat Website</a>
+            </div>
+
+            <h1 className="text-pretty text-center md:text-right md:w-80"><a href="https://maps.app.goo.gl/dJTNAHz2XiPnkeWr9">Jl. Pangeran Antasari No.18, Melak Ulu, Kec. Melak, Kabupaten Kutai Barat, Kalimantan Timur 75775</a></h1>
         </footer>
     )
 };

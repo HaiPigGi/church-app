@@ -47,11 +47,7 @@ function Navbar({props}){
                     <NavLinks href="/">Tentang</NavLinks>
                 </div>
             </motion.div>
-<<<<<<< HEAD
             <Button href={"#"} intent="secondary" size="small">Login</Button>
-=======
-            <Button href={"/pages/login"} intent="secondary" size="small" className="">Login</Button>
->>>>>>> 7d6b9748fb6279bfef33b69998f32e0db24fe819
         </nav>
         <footer className='md:hidden fixed bottom-0 block w-full py-3 px-2  bg-white z-40 rounded-t-xl'>
             <div className='grid grid-cols-3 h-full'>
@@ -70,7 +66,7 @@ function Navbar({props}){
                     </NavLinks>
                 </div>
                 <div className='flex justify-center items-center h-full w-full text-center'>
-                    <NavLinks href="/" intent="netral" size="extraSmall">
+                    <NavLinks href="/pages/tentang" intent="netral" size="extraSmall">
                         <i class="ri-team-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
                         Tentang
                     </NavLinks>
