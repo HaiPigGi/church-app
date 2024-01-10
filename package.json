@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "aos": "^3.0.0-beta.6",
-    "framer-motion": "^10.17.9"
+    "framer-motion": "^10.17.9",
+    "remixicon": "^4.0.1"
   }
 }

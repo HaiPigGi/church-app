@@ -4,18 +4,26 @@ import NavLinks from '@/components/Elements/navlinks'
 import Button from '@/components/Elements/Buttons'
 import Dropdowns from '@/components/Elements/Dropdown'
 import {motion, useInView, useAnimation} from "framer-motion"
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import 'remixicon/fonts/remixicon.css'
+
 
 function Navbar({props}){
     const ref = useRef(null);
     const isInView = useInView(ref, { once:true });
     const mainControl = useAnimation();
+    const [open,setOpen] = useState(false);
+
     useEffect(()=> {
         if(isInView){
             mainControl.start("visible")
         }   
     },[isInView])
+
+    
+
     return(
+        <>
         <nav ref={ref} className='z-30 px-5 py-2 w-full fixed top-0 bg-white shadow-md flex justify-between items-center'>
             <a href="/">
                 <Image 
@@ -33,14 +41,43 @@ function Navbar({props}){
             animate={mainControl}
             transition={{ duration:0.5, delay:0.50 }}
             >
-                <div className='flex'>
-                    <Dropdowns>Profil Gereja</Dropdowns>
+                <div className='md:flex hidden'>
+                    <Dropdowns size="medium" intent="black" modalAbove="false">Profil Gereja</Dropdowns>
                     <NavLinks href="/">Forum & Saran</NavLinks>
                     <NavLinks href="/">Tentang</NavLinks>
                 </div>
             </motion.div>
+<<<<<<< HEAD
             <Button href={"#"} intent="secondary" size="small">Login</Button>
+=======
+            <Button href={"/pages/login"} intent="secondary" size="small" className="">Login</Button>
+>>>>>>> 7d6b9748fb6279bfef33b69998f32e0db24fe819
         </nav>
+        <footer className='md:hidden fixed bottom-0 block w-full py-3 px-2  bg-white z-40 rounded-t-xl'>
+            <div className='grid grid-cols-3 h-full'>
+                <div className=' flex justify-center items-center h-full w-full text-center'>
+                    <div className='w-full text-center'>
+                        <Dropdowns size="extraSmall" intent="netral" modalAbove="true">
+                            <i class="ri-home-5-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
+                            Profil Gereja
+                        </Dropdowns>
+                    </div>
+                </div>
+                <div className='flex justify-center items-center h-full w-full text-center'>
+                    <NavLinks href="/" intent="netral" size="extraSmall">
+                        <i className="ri-question-answer-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
+                        Forum & Saran
+                    </NavLinks>
+                </div>
+                <div className='flex justify-center items-center h-full w-full text-center'>
+                    <NavLinks href="/" intent="netral" size="extraSmall">
+                        <i class="ri-team-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
+                        Tentang
+                    </NavLinks>
+                </div>
+            </div>
+        </footer>
+        </>
     )
 };
 
