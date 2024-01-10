@@ -39,7 +39,7 @@ function Navbar({props}){
                     <NavLinks href="/">Tentang</NavLinks>
                 </div>
             </motion.div>
-            <Button href={"/pages/login"} intent="secondary" size="small">Login</Button>
+            <Button href={"#"} intent="secondary" size="small">Login</Button>
         </nav>
     )
 };
