@@ -72,7 +72,7 @@ export default function tim(){
                         </div>
                         <div className="mt-4 text-center">
                             <h2 className="text-lg text-gray-800">Heronimus</h2>
-                            <h3 className="text-sm text-slate-500">FrontEnd</h3>
+                            <h3 className="text-sm text-slate-500">FrontEnd And UI Desainer </h3>
                         </div>
                     </div>
 
