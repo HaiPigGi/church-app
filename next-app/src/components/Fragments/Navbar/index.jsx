@@ -24,6 +24,7 @@ function Navbar({props}){
 
     return(
         <>
+        {/* for  */}
         <nav ref={ref} className='z-30 px-5 py-2 w-full fixed top-0 bg-white shadow-md flex justify-between items-center'>
             <a href="/">
                 <Image 
@@ -49,6 +50,8 @@ function Navbar({props}){
             </motion.div>
             <Button href={"#"} intent="secondary" size="small">Login</Button>
         </nav>
+
+        {/* for mobile */}
         <footer className='md:hidden fixed bottom-0 block w-full py-3 px-2  bg-white z-40 rounded-t-xl'>
             <div className='grid grid-cols-3 h-full'>
                 <div className=' flex justify-center items-center h-full w-full text-center'>
