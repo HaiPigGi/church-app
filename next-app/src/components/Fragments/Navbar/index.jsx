@@ -43,8 +43,8 @@ function Navbar({props}){
             >
                 <div className='md:flex hidden'>
                     <Dropdowns size="medium" intent="black" modalAbove="false">Profil Gereja</Dropdowns>
-                    <NavLinks href="/">Forum & Saran</NavLinks>
-                    <NavLinks href="/">Tentang</NavLinks>
+                    <NavLinks href="/pages/forum">Forum & Saran</NavLinks>
+                    <NavLinks href="/pages/tentang">Tentang</NavLinks>
                 </div>
             </motion.div>
             <Button href={"#"} intent="secondary" size="small">Login</Button>
