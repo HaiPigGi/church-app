@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\organitationModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class organitationController extends Controller
 {
@@ -54,12 +56,23 @@ class organitationController extends Controller
             DB::beginTransaction();
 
             $image = $request->file('image');
-            $image->storeAs('public/organitation', $image->hashName());
-            $organitation = organitationModel::create($request->all());
+            $imagePath = $image->storeAs('public/organitation', $image->hashName());
+
+            $organitationId = Str::uuid();
+
+            $organitationData = [
+                'organitation_id' => $organitationId,
+                'name_organitation' => $request->input('name_organitation'),
+                'description' => $request->input('description'),
+                'date_of_establishment' => $request->input('date_of_establishment'),
+                'image' => $imagePath,
+            ];
+            $organitation = organitationModel::create($organitationData);
             DB::commit();
             return response()->json(['organitation' => $organitation], 201);
         } catch (\Throwable $th) {
             DB::rollBack();
+            Log::error($th->getMessage());
             return response()->json(['message' => $organitation], 500);
         }
     }
