@@ -31,6 +31,7 @@ function Navbar({props}){
                 src="/img/Logo.svg"
                 width={130}
                 height={10}
+                alt='logo gereja'
                 />
             </a>
             <motion.div
@@ -57,7 +58,7 @@ function Navbar({props}){
                 <div className=' flex justify-center items-center h-full w-full text-center'>
                     <div className='w-full text-center'>
                         <Dropdowns size="extraSmall" intent="netral" modalAbove="true">
-                            <i class="ri-home-5-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
+                            <i className="ri-home-5-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
                             Profil Gereja
                         </Dropdowns>
                     </div>
@@ -70,7 +71,7 @@ function Navbar({props}){
                 </div>
                 <div className='flex justify-center items-center h-full w-full text-center'>
                     <NavLinks href="/pages/tentang" intent="netral" size="extraSmall">
-                        <i class="ri-team-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
+                        <i className="ri-team-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
                         Tentang
                     </NavLinks>
                 </div>

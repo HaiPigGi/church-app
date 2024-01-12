@@ -6,13 +6,10 @@ export default function tim(){
 
     return(
         <MainLayout>
-        <div className="">
-            <section className="mb-20">
-                <Navbar/>
-            </section>
-            <div className="mt-5 mb-[6rem]">
+        <div className="mt-20">
+            <div className="mt-5 mb-[6rem] px-5">
                 <h1 className="font-bold text-[40px] text-center text-black tracking-[6px] mt-[20px] mb-[10px]">About</h1>
-                <h3 className="text-center text-gray-500 text-lg leading-relaxed">Selamat datang di tim pembuat web kami yang penuh semangat dan berdedikasi! Kami adalah tim yang terdiri dari tiga orang ahli di bidangnya, masing-masing membawa keahlian unik untuk menciptakan pengalaman web yang luar biasa.</h3>
+                <h3 className="text-center text-gray-500 text-lg text-pretty leading-relaxed">Selamat datang di tim pembuat web kami yang penuh semangat dan berdedikasi! Kami adalah tim yang terdiri dari tiga orang ahli di bidangnya, masing-masing membawa keahlian unik untuk menciptakan pengalaman web yang luar biasa.</h3>
             </div>
             
             <div className="mt-5 mb-[6rem]">

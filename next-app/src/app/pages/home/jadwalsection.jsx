@@ -31,7 +31,7 @@ function JadwalMisaSection(){
                     initial="hiddenLeft"
                     animate={mainControlls}
                     transition={{ duration: 0.5, delay: 0.25 }}
-                    className="flex justify-center md:mb-0 mb-5 w-full"
+                    className="flex justify-center md:justify-end md:mb-0 mb-5 w-full"
                     >
                         <div className="border  bg-white w-full max-h-[400px] min-w-[300px] md:min-w-[400px] max-w-[500px]  h-full border-secondary rounded-sm p-5  shadow-sm shadow-primary">
                             {/* Card Title */}
@@ -71,7 +71,7 @@ function JadwalMisaSection(){
                         initial="hiddenRight"
                         animate={mainControlls}
                         transition={{ duration: 0.5, delay: 0.25 }}
-                        className="rounded-md flex justify-center items-center w-full h-full "
+                        className="rounded-md flex justify-center md:justify-start items-center w-full h-full "
                     >
                         <div className=" border  bg-white w-full md:max-h-[400px] min-w-[300px]  md:min-h-[400px]  md:min-w-[400px] max-w-[500px]  h-full border-secondary rounded-sm p-5  shadow-sm shadow-primary">
                             <h1 className="text-xl font-light text-center">Misa Mingguan</h1>
