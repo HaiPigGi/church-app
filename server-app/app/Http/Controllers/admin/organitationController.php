@@ -13,7 +13,6 @@ use Illuminate\Support\Str;
 
 class organitationController extends Controller
 {
-
     /**
      * show all organitation 
      *
