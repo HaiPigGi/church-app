@@ -16,6 +16,7 @@ class membersModel extends Model
     protected $table = "members";
 
     protected $fillable = [
+        'member_id',
         "organitation_id",
         "position_id",
         "members_name",
@@ -36,9 +37,9 @@ class membersModel extends Model
     {
         parent::boot();
 
-        // Generating UUID for 'position_id' before creating the model
+        // Generating UUID for 'members_id' before creating the model
         static::creating(function ($model) {
-            $model->position_id = (string) Str::uuid();
+            $model->member_id = (string) Str::uuid();
         });
     }
 }

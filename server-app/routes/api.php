@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\beritaController;
 use App\Http\Controllers\admin\organitationController;
 use App\Http\Controllers\admin\PositionController;
-
+use App\Http\Controllers\admin\MembersController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -51,4 +51,16 @@ Route::prefix('admin')->group(function () {
     Route::put('/positions/{position}', [PositionController::class, 'update'])->name('admin.positions.update');
     // Delete
     Route::delete('/positions/{position}', [PositionController::class, 'destroy'])->name('admin.positions.destroy');
+
+    //its for Members
+    // Display all members
+    Route::get('/members', [MembersController::class, 'getAllDataMembers'])->name('admin.members.index');
+    // Display a specific member by ID
+    Route::get('/members/{member}', [MembersController::class, 'getAllDataMembersById'])->name('admin.members.show');
+    // Store a new member
+    Route::post('/members', [MembersController::class, 'store'])->name('admin.members.store');
+    // Update a member by ID
+    Route::put('/members/{member}', [MembersController::class, 'update'])->name('admin.members.update');
+    // Delete a member by ID
+    Route::delete('/members/{member}', [MembersController::class, 'destroy'])->name('admin.members.destroy');
 });
