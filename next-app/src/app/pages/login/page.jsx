@@ -1,14 +1,8 @@
-"use client"
+
 import MainLayout from "@/components/Layouts/MainLayout/index";
-import React, { useState } from 'react';
-import { FaCheckSquare, FaRegSquare} from "react-icons/fa";
 
 export default function Login() {
-    const [showPassword, setShowPassword] = useState(false);
 
-    const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
-    };
   
   return(
 
@@ -24,8 +18,8 @@ export default function Login() {
             <div className="bg-white p-4 shadow-md overflow-hidden w-[35rem] h-[100vh] fixed top-0 pt-2 right-0">
                 <section className="bg-white">
                     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-20">
-                        <a href="#" className="flex items-center mb-6 mr-5 text-2xl font-semibold text-primary">
-                            <label className=""/>LOGIN
+                        <a href="#" className="flex items-center mb-6 mr-5 text-2xl font-semibold text-primary min-[360px]:max-[555px]:mt-[3rem] ">
+                            <label className="min-[360px]:max-[555px]:ml-[13rem] font-bold"/>LOGIN
                         </a>
                         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0  sm:max-w-md xl:p-0 min-[360px]:max-[555px]:w-[22rem] min-[360px]:max-[555px]:ml-[12.5rem]">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -36,18 +30,12 @@ export default function Login() {
                                     </div>
                                     <div>
                                         <input
-                                            type={showPassword ? 'text' : 'password'}
+                                            type='password'
                                             className="bg-gray-50 border mb-2 border-yellow-800 text-primary rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400 min-[360px]:max-[555px]:w-72"
                                             placeholder="password"
                                             required
                                         />
-                                        <button
-                                            type="button"
-                                            onClick={togglePasswordVisibility}
-                                            className="absolute pl-[15px]  text-gray-500 focus:outline-none"
-                                        >
-                                            {showPassword ? <FaCheckSquare  /> : <FaRegSquare  />}
-                                        </button>
+                    
                                     </div>
                                     <div className="flex items-center justify-between">
                                         <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 mt-3 ">Forgot password?</a>
