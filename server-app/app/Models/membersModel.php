@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Str;
 class membersModel extends Model
 {
     use HasFactory;
@@ -16,6 +16,7 @@ class membersModel extends Model
     protected $table = "members";
 
     protected $fillable = [
+        'member_id',
         "organitation_id",
         "position_id",
         "members_name",
@@ -31,5 +32,14 @@ class membersModel extends Model
     public function position()
     {
         return $this->belongsTo(positionModel::class,'position_id');
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Generating UUID for 'members_id' before creating the model
+        static::creating(function ($model) {
+            $model->member_id = (string) Str::uuid();
+        });
     }
 }
