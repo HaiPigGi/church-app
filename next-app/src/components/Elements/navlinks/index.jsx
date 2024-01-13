@@ -1,4 +1,5 @@
 import { cva } from "class-variance-authority";
+import Link from "next/link";
 
 const clsNavLinks = cva(["text-center mx-2 relative after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-[110%] after:left-0 after:border-b-2 after:border-secondary py-1"],{
     variants:{
@@ -21,7 +22,7 @@ const clsNavLinks = cva(["text-center mx-2 relative after:absolute after:transit
 
 function NavLinks({href, children, size, intent, className}){
     return(
-        <a href={href} className={clsNavLinks({ size,intent })+" "+className}>{children}</a>
+        <Link href={href} className={clsNavLinks({ size,intent })+" "+className}>{children}</Link>
     )
 };
 
