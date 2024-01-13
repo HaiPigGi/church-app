@@ -1,6 +1,15 @@
+"use client"
 import MainLayout from "@/components/Layouts/MainLayout/index";
+import React, { useState } from 'react';
+import { FaCheckSquare, FaRegSquare} from "react-icons/fa";
 
 export default function Login() {
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+    };
+  
   return(
 
 <MainLayout>
@@ -18,20 +27,32 @@ export default function Login() {
                         <a href="#" className="flex items-center mb-6 mr-5 text-2xl font-semibold text-primary">
                             <label className=""/>LOGIN
                         </a>
-                        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
+                        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0  sm:max-w-md xl:p-0 min-[360px]:max-[555px]:w-[22rem] min-[360px]:max-[555px]:ml-[12.5rem]">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-yellow-800 md:text-2xl ">Sign in to your account</h1>
                                 <form className="space-y-4 md:space-y-6" action="#">
                                     <div>
-                                        <input type="text"className="bg-gray-50 border border-yellow-800 text-primary  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400" placeholder="username" required />
+                                        <input type="text"className="bg-gray-50 border border-yellow-800 text-primary rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400 min-[360px]:max-[555px]:w-72" placeholder="username" required />
                                     </div>
                                     <div>
-                                    <input type="password"className="bg-gray-50 border border-yellow-800 text-primary  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400" placeholder="password" required />
+                                        <input
+                                            type={showPassword ? 'text' : 'password'}
+                                            className="bg-gray-50 border mb-2 border-yellow-800 text-primary rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400 min-[360px]:max-[555px]:w-72"
+                                            placeholder="password"
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={togglePasswordVisibility}
+                                            className="absolute pl-[15px]  text-gray-500 focus:outline-none"
+                                        >
+                                            {showPassword ? <FaCheckSquare  /> : <FaRegSquare  />}
+                                        </button>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+                                        <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 mt-3 ">Forgot password?</a>
                                     </div>
-                                    <button type="submit" className="w-full text-white bg-primary focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center  ">Login</button>
+                                    <button type="submit" className="w-full text-white bg-primary focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center  min-[360px]:max-[555px]:w-72">Login</button>
                                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">Don’t have an account yet? <a href="/pages/register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a></p>    
                                 </form>
                         </div>

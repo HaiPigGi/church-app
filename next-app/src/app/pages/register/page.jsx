@@ -19,24 +19,24 @@ export default function Register() {
                         <a href="#" className="flex items-center mb-6 mr-5 text-2xl font-semibold text-primary">
                             <label className=""/>Register
                         </a>
-                        <div className="w-full h-[24.8rem] bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
+                        <div className="w-full h-[24.8rem] bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 min-[360px]:max-[555px]:w-[22rem] min-[360px]:max-[555px]:ml-[12.5rem] ">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                             {/* <h1 className="text-xl font-bold leading-tight tracking-tight text-yellow-800 md:text-2xl ">Sign in to your account</h1> */}
                                 <form className="space-y-4 md:space-y-6" action="#">
 
                                     <div className="mt-[-1rem]">
                                         <label  class="block mb-1 text-sm font-medium text-primary ">Username</label>
-                                        <input type="text"className="bg-gray-50 border border-yellow-800 text-primary  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400" placeholder="Masukan Nama Anda" required />
+                                        <input type="text"className="bg-gray-50 border border-yellow-800 text-primary  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400 min-[360px]:max-[555px]:w-72" placeholder="Masukan Nama Anda" required />
                                     </div>
                                     <div className="">
                                         <label class="block mb-1 text-sm font-medium text-primary ">Password</label>
-                                        <input type="password"className="bg-gray-50 border border-yellow-800 text-primary  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400" placeholder="Masukan Password Anda" required />
+                                        <input type="password"className="bg-gray-50 border border-yellow-800 text-primary  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400 min-[360px]:max-[555px]:w-72" placeholder="Masukan Password Anda" required />
                                     </div>
                                     <div className="">
                                         <label class="block mb-1 text-sm font-medium text-primary ">Kondirmasi Password</label>
-                                        <input type="password"className="bg-gray-50 border border-yellow-800 text-primary  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400" placeholder="Masukan Ulang Password Anda" required />
+                                        <input type="password"className="bg-gray-50 border border-yellow-800 text-primary  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400 min-[360px]:max-[555px]:w-72" placeholder="Masukan Ulang Password Anda" required />
                                     </div>
-                                    <button type="submit" className="w-full text-white bg-primary focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center  ">Register</button>
+                                    <button type="submit" className="w-full text-white bg-primary focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center min-[360px]:max-[555px]:w-72">Register</button>
                                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">already have an account? <a href="/pages/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign in</a></p>    
                                 </form>
                         </div>

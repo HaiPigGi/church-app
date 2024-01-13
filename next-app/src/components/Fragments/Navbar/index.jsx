@@ -49,7 +49,7 @@ function Navbar({props}){
                     <NavLinks href="/pages/tentang">Tentang</NavLinks>
                 </div>
             </motion.div>
-            <Button href={"#"} intent="secondary" size="small">Login</Button>
+            <Button href={"/pages/login"} intent="secondary" size="small">Login</Button>
         </nav>
 
         {/* for mobile */}
