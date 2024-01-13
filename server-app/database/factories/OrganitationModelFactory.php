@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\organitationModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class OrganitationModelFactory extends Factory
 {
@@ -22,6 +23,7 @@ class OrganitationModelFactory extends Factory
     public function definition()
     {
         return [
+            'organitation_id' => Str::uuid(),
             'name_organitation' => $this->faker->name,
             'description' => $this->faker->paragraph,
             'date_of_establishment' => $this->faker->date,

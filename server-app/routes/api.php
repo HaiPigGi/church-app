@@ -31,7 +31,7 @@ Route::prefix('admin')->group(function () {
     // Store organitation to the database
     Route::post('/organitations', [organitationController::class, 'store'])->name('admin.organitations.store');
     // Update organitation in the database
-    Route::put('/organitations/{id}', [organitationController::class, 'update'])->name('admin.organitations.update');
+    Route::put('/organitations/{organitationId}', [organitationController::class, 'update'])->name('admin.organitations.update');
     // Delete organitation using ID
-    Route::delete('/organitations/{id}', [organitationController::class, 'delete'])->name('admin.organitations.delete');
+    Route::delete('/organitations/{organitationId}', [organitationController::class, 'destroy'])->name('admin.organitations.delete');
 });
