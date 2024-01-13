@@ -18,8 +18,8 @@ export default function Login() {
             <div className="bg-white p-4 shadow-md overflow-hidden w-[35rem] h-[100vh] fixed top-0 pt-2 right-0">
                 <section className="bg-white">
                     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-20">
-                        <a href="#" className="flex items-center mb-6 mr-5 text-2xl font-semibold text-primary">
-                            <label className=""/>LOGIN
+                        <a href="#" className="flex items-center mb-6 mr-5 text-2xl font-semibold text-primary min-[360px]:max-[555px]:mt-[3rem] ">
+                            <label className="min-[360px]:max-[555px]:ml-[13rem] font-bold"/>LOGIN
                         </a>
                         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0  sm:max-w-md xl:p-0 min-[360px]:max-[555px]:w-[22rem] min-[360px]:max-[555px]:ml-[12.5rem]">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
