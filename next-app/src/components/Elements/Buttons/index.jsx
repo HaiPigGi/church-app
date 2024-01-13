@@ -1,4 +1,6 @@
 import { cva } from "class-variance-authority";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const clsButton = cva(["rounded-sm block  text-center py-2 cursor-pointer font-semibold"],{
     variants: {
@@ -31,14 +33,17 @@ const clsButton = cva(["rounded-sm block  text-center py-2 cursor-pointer font-s
                 "px-5",
                 "w-20",
                 "text-sm"
+            ],
+            extraSmall: [
+                "px-3 text-xs w-16"
             ]
         }
     }
 })
 
-function Button({children, size, intent, href, className} ) {
+function Button({children, size, intent, href = "/", className, onClick, type="Submit"} ) {
     return(
-        <a href={href} className={clsButton({intent, size})+" "+className}>{children}</a>
+        <Link type={type} href={href} className={clsButton({intent, size})+" "+className} onClick={onClick}>{children}</Link>
     )
 };
 

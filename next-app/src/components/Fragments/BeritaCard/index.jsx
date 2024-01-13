@@ -1,10 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 
-function BeritaCard({src, title, desc}){
+function BeritaCard({src, title, desc, href}){
     return(
-        <div className=" border shadow-xl mx-auto w-4/5 mb-5 bg-white ">
+        <Link href={href} className=" border shadow-xl mx-auto w-full max-w-[500px] md:w-4/5 mb-5 bg-white rounded-xl overflow-hidden">
             <div className="flex justify-center items-center ">
-                <div className="relative w-36 h-36 rounded-tr-full overflow-hidden me-2">
+                <div className="relative w-full min-w-36 max-w-56 h-36 md:w-36 md:h-36 rounded-xl overflow-hidden me-2">
                     <Image
                     src={src}
                     fill={true}
@@ -16,7 +17,7 @@ function BeritaCard({src, title, desc}){
                     <p className="line-clamp-3 text-base font-light">{desc}</p>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 };
 
