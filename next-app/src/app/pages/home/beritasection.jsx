@@ -33,31 +33,37 @@ function BeritaSection(){
                 >
                     <div className="grid md:grid-cols-2 grid-cols-1 mt-2 py-5">
                         <BeritaCard
+                        href="/pages/berita/1"
                         src="/img/bgHero.jpeg"
                         title="Penyelenggaraan Seminar Pemuda: Generasi Muda Berdaya"
                         desc="Seminar yang diadakan oleh komunitas pemuda bertujuan menggali potensi generasi muda dalam mewujudkan perubahan positif dalam berbagai aspek kehidupan."
                         />
                         <BeritaCard
+                        href="/pages/berita/2"
                         src="/img/bgHero.jpeg"
                         title="Penyelenggaraan Seminar Pemuda: Generasi Muda Berdaya"
                         desc="Seminar yang diadakan oleh komunitas pemuda bertujuan menggali potensi generasi muda dalam mewujudkan perubahan positif dalam berbagai aspek kehidupan."
                         />
                         <BeritaCard
+                        href="/pages/berita/3"
                         src="/img/bgHero.jpeg"
                         title="Penyelenggaraan Seminar Pemuda: Generasi Muda Berdaya"
                         desc="Seminar yang diadakan oleh komunitas pemuda bertujuan menggali potensi generasi muda dalam mewujudkan perubahan positif dalam berbagai aspek kehidupan."
                         />
                         <BeritaCard
+                        href="/pages/berita/4"
                         src="/img/bgHero.jpeg"
                         title="Penyelenggaraan Seminar Pemuda: Generasi Muda Berdaya"
                         desc="Seminar yang diadakan oleh komunitas pemuda bertujuan menggali potensi generasi muda dalam mewujudkan perubahan positif dalam berbagai aspek kehidupan."
                         />
                         <BeritaCard
+                        href="/pages/berita/5"
                         src="/img/bgHero.jpeg"
                         title="Penyelenggaraan Seminar Pemuda: Generasi Muda Berdaya"
                         desc="Seminar yang diadakan oleh komunitas pemuda bertujuan menggali potensi generasi muda dalam mewujudkan perubahan positif dalam berbagai aspek kehidupan."
                         />
                         <BeritaCard
+                        href="/pages/berita/6"
                         src="/img/bgHero.jpeg"
                         title="Penyelenggaraan Seminar Pemuda: Generasi Muda Berdaya"
                         desc="Seminar yang diadakan oleh komunitas pemuda bertujuan menggali potensi generasi muda dalam mewujudkan perubahan positif dalam berbagai aspek kehidupan."
