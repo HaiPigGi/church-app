@@ -12,7 +12,6 @@ function Navbar({props}){
     const ref = useRef(null);
     const isInView = useInView(ref, { once:true });
     const mainControl = useAnimation();
-    const [open,setOpen] = useState(false);
 
     useEffect(()=> {
         if(isInView){
@@ -26,12 +25,13 @@ function Navbar({props}){
         <>
         {/* for  */}
         <nav ref={ref} className='z-30 px-5 py-2 w-full fixed top-0 bg-white shadow-md flex justify-between items-center'>
-            <a href="/">
+            <a href="/" >
                 <Image 
                 src="/img/Logo.svg"
                 width={130}
                 height={10}
                 alt='logo gereja'
+                data-testid="logo gereja"
                 />
             </a>
             <motion.div
@@ -44,9 +44,9 @@ function Navbar({props}){
             transition={{ duration:0.5, delay:0.50 }}
             >
                 <div className='md:flex hidden'>
-                    <Dropdowns size="medium" intent="black" modalAbove="false">Profil Gereja</Dropdowns>
-                    <NavLinks href="/pages/forum">Forum & Saran</NavLinks>
-                    <NavLinks href="/pages/tentang">Tentang</NavLinks>
+                    <Dropdowns size="medium" intent="black" modalAbove="false" datatestid="profilgereja">Profil Gereja</Dropdowns>
+                    <NavLinks href="/pages/forum" datatestid="forum & saran">Forum & Saran</NavLinks>
+                    <NavLinks href="/pages/tentang" datatestid="Tentang">Tentang</NavLinks>
                 </div>
             </motion.div>
             <Button href={"/pages/login"} intent="secondary" size="small">Login</Button>
