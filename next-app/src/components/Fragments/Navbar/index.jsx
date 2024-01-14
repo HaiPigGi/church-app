@@ -64,7 +64,7 @@ function Navbar({props}){
                     </div>
                 </div>
                 <div className='flex justify-center items-center h-full w-full text-center'>
-                    <NavLinks href="/pages/tentang" intent="netral" size="extraSmall">
+                    <NavLinks href="/pages/saran" intent="netral" size="extraSmall">
                         <i className="ri-question-answer-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
                         Forum & Saran
                     </NavLinks>
