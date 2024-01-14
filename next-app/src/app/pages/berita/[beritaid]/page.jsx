@@ -22,7 +22,6 @@ function BeritaPage({params}){
                         <br/>
                         <br/>
                         Melalui rangkaian diskusi, pemuda diharapkan dapat mengenali potensi mereka secara lebih mendalam serta menemukan solusi inovatif untuk permasalahan yang ada. Seminar ini diharapkan akan memberikan wawasan yang luas dan inspirasi kepada peserta, memungkinkan mereka untuk berkontribusi secara lebih aktif dalam menciptakan perubahan yang positif dalam lingkungan mereka, baik dalam skala lokal maupun lebih luas.
-                        
                     </p>
                 </article>
             </section>
