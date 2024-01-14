@@ -76,7 +76,7 @@ export default function saran() {
               <div className="empty-feedback invalid-feedback text-red-400 text-sm mt-1">Please enter your message.</div>
               <button
                 type="submit"
-                className="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 w-full px-6 py-3 bg-black text-white hover:bg-slate-900  border-2 border-transparent">Send Message
+                className=" transition duration-150 ease-in-out  rounded text-center  focus-visible:ring-2 ring-offset-2 ring-gray-200 w-full px-6 py-3 bg-black text-white hover:bg-slate-900  border-2 border-transparent">Send Message
               </button>
               <div id="result" className="mt-3 text-center"></div>
             </div>
