@@ -14,15 +14,32 @@ export default function Register() {
 
     const [session, setSession] = useState({})
 
+    const getCSRF = async() => {
+        try{
+            const csrf = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/api/get-session-data`, {
+                method:"GET",
+                headers:{
+                    "content-type": "application/json"
+                }
+            })
+
+            await csrf.json().then((res)=>{setSession(res)})
+            
+        }catch(e){
+            console.log("Error when getCSRF data with message : ",e.message);
+        }
+    }
+
     const postData = async () => {
         try{
+            console.log(session.csrf_token)
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/api/auth/register`,{
                 method:"POST",
                 headers:{
-                    "content-type":"application/json",
                     "csrf_token" : session.csrf_token
                 },
-                body:JSON.stringify(dataRegis),                
+                body:JSON.stringify(dataRegis),
+                cache:"no-store"                
             })
             if(res.status == 200){
                 return Router.push("/pages/login");
@@ -30,7 +47,7 @@ export default function Register() {
             setErrorMessage(res.status);
             console.log(res)
         }catch(e){
-            setErrorMessage(`${e.message}`);
+            console.log(`${e.message}`);
         }
         
     };
@@ -44,11 +61,13 @@ export default function Register() {
     };
 
     const handleClickLogin = () => {
-        if(dataRegis.password != dataRegis.konfirmasiPassword){
+        setErrorMessage("");
+        if(dataRegis.password != dataRegis.password_confirmation){
             setErrorMessage("Username dan Password tidak sama")
             return;
         }
-        console.log("handleClick executed")
+        getCSRF();
+        console.log("Session : ", session.csrf_token)
         postData();
     };
 
@@ -77,11 +96,11 @@ export default function Register() {
                                     :
                                     ""
                                 }
-                                <form className="space-y-4 md:space-y-6" action={handleClickLogin}>
+                                <form className="space-y-4 md:space-y-6" action={handleClickLogin} method="POST">
 
                                     <div className="mt-[-1rem]">
                                         <label  className="block mb-1 text-sm font-medium text-primary ">Username</label>
-                                        <input name="username" type="text" onChange={handleChanges} className="bg-gray-50 border border-yellow-800 text-primary  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400 min-[360px]:max-[555px]:w-72" placeholder="Masukan Nama Anda" required />
+                                        <input name="name" type="text" onChange={handleChanges} className="bg-gray-50 border border-yellow-800 text-primary  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400 min-[360px]:max-[555px]:w-72" placeholder="Masukan Nama Anda" required />
                                     </div>
                                     <div className="">
                                         <label className="block mb-1 text-sm font-medium text-primary ">Password</label>
@@ -89,7 +108,7 @@ export default function Register() {
                                     </div>
                                     <div className="">
                                         <label className="block mb-1 text-sm font-medium text-primary ">Konfirmasi Password</label>
-                                        <input name="konfirmasiPassword" type="password" onChange={handleChanges} className="bg-gray-50 border border-yellow-800 text-primary  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400 min-[360px]:max-[555px]:w-72" placeholder="Masukan Ulang Password Anda" required />
+                                        <input name="password_confirmation" type="password" onChange={handleChanges} className="bg-gray-50 border border-yellow-800 text-primary  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :placeholder-gray-400 min-[360px]:max-[555px]:w-72" placeholder="Masukan Ulang Password Anda" required />
                                     </div>
                                     <button type="submit" className="w-full text-white bg-primary focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center min-[360px]:max-[555px]:w-72">Register</button>
                                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">already have an account? <a href="/pages/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign in</a></p>    
