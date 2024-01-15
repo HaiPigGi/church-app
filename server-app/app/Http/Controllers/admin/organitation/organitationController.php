@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
-
+namespace App\Http\Controllers\admin\organitation;
 use App\Http\Controllers\Controller;
 use App\Models\organitationModel;
 use Illuminate\Support\Facades\Validator;
