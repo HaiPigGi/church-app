@@ -16,47 +16,56 @@ class RegistrationController extends Controller
 {
 
 
-    /** its for Registration user 
-     * 
+    /**
+     * its for Registration user
+     *
      * @param \Illuminate\Http\JsonResponse
      */
 
     public function register(Request $request)
     {
-        // Validasi menggunakan Validator
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:3'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-
-        // Jika validasi gagal
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
-
-        // Check if the password meets the minimum length requirement
-        if (strlen($request->name) < 3) {
-            return response()->json(['error' => 'Name must be at least 3 characters long'], 400);
-        }
-
-        // Check if the username already exists
-        $cekName = User::where('name', $request->name)->first();
-
-        if ($cekName) {
-            return response()->json(['error' => 'Username already exists'], 400);
-        }
-
-        // Check if the password meets the minimum length requirement
-        if (strlen($request->password) < 8) {
-            return response()->json(['error' => 'Password must be at least 8 characters long'], 400);
-        }
-
-        // Check if the password and password confirmation match
-        if ($request->password !== $request->password_confirmation) {
-            return response()->json(['error' => 'Password and password confirmation do not match'], 400);
-        }
-
         try {
+            // Validasi menggunakan Validator
+            $validator = Validator::make($request->all(), [
+                'name' => ['required', 'string', 'min:3'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+
+            // Log data registrasi
+            Log::info('Data registrasi:', $request->all());
+
+            // Jika validasi gagal
+            if ($validator->fails()) {
+                Log::warning('Registration validation failed', ['errors' => $validator->errors()]);
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
+            // Check if the password meets the minimum length requirement
+            if (strlen($request->name) < 3) {
+                Log::warning('Registration failed: Name must be at least 3 characters long');
+                return response()->json(['error' => 'Name must be at least 3 characters long'], 400);
+            }
+
+            // Check if the username already exists
+            $cekName = User::where('name', $request->name)->first();
+
+            if ($cekName) {
+                Log::warning('Registration failed: Username already exists', ['username' => $request->name]);
+                return response()->json(['error' => 'Username already exists'], 400);
+            }
+
+            // Check if the password meets the minimum length requirement
+            if (strlen($request->password) < 8) {
+                Log::warning('Registration failed: Password must be at least 8 characters long');
+                return response()->json(['error' => 'Password must be at least 8 characters long'], 400);
+            }
+
+            // Check if the password and password confirmation match
+            if ($request->password !== $request->password_confirmation) {
+                Log::warning('Registration failed: Password and password confirmation do not match');
+                return response()->json(['error' => 'Password and password confirmation do not match'], 400);
+            }
+
             DB::beginTransaction();
 
             // Create a new user instance
@@ -67,7 +76,7 @@ class RegistrationController extends Controller
 
             // Optionally generate a JWT token for the newly registered user
             $token = JWTAuth::fromUser($user);
-            Log::info('cek isi token register', ['token' => $token]);
+            Log::info('Registration successful', ['user_id' => $user->id, 'username' => $user->name, 'token' => $token]);
 
             // Commit the transaction
             DB::commit();
