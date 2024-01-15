@@ -25,13 +25,13 @@ describe("Navbar Component", () => {
             <Navbar/>
         </MemoryRouter>
         );
-        const nalink = screen.getByTestId(/forum & saran/i);
+        const nalink = screen.getByTestId(/kritik & saran/i);
         expect(nalink).toBeInTheDocument();
 
         userEvent.click(nalink);
 
         waitFor(() => {
-            expect(window.location.pathname).toBe("/pages/forum");
+            expect(window.location.pathname).toBe("/pages/saran");
         })
     })
 
@@ -83,3 +83,4 @@ describe("Navbar Component", () => {
         })
     })
 })
+

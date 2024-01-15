@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { cva } from "class-variance-authority";
 
-const clsDropdown = cva(["relative h-full after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-[110%] after:left-0 after:border-b-2 after:border-secondary"],{
+const clsDropdown = cva([" h-full mx-2 text-center after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-[110%] after:left-0 after:border-b-2 after:border-secondary"],{
     variants:{
         intent:{
             primary:"text-primary",
