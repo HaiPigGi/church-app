@@ -26,7 +26,12 @@ use App\Http\Controllers\Auth\RegistrationController;
 //     return $request->user();
 // });
 
-Route::middleware(['cors'])->group(function () {
+Route::middleware(['cors','web'])->group(function () {
+
+    // CSRF Cookie
+    Route::get('/sanctum/csrf-cookie', function (Request $request) {
+        return response()->json(['message' => 'CSRF cookie set']);
+    });
 
     Route::prefix('auth')->group(function () {
         Route::post('/register', [RegistrationController::class, 'register'])->name('user.register');
@@ -42,8 +47,8 @@ Route::middleware(['cors'])->group(function () {
     Route::prefix('admin')->middleware(['jwt'])->group(function () {
         // Berita Routes
         Route::prefix('berita')->group(function () {
-            Route::get('/',[beritaController::class,'getAllBerita']);
-            Route::get('/{id}',[beritaController::class,'getAllBeritaById']);
+            Route::get('/', [beritaController::class, 'getAllBerita']);
+            Route::get('/{id}', [beritaController::class, 'getAllBeritaById']);
             Route::post('/store', [BeritaController::class, 'store'])->name('admin.berita.store');
             Route::put('/{id}', [BeritaController::class, 'update'])->name('admin.berita.update');
             Route::delete('/{id}', [BeritaController::class, 'destroy'])->name('admin.berita.delete');
