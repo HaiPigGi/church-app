@@ -17,7 +17,7 @@ function JadwalMisaSection(){
     }, [inView])
 
     return(
-        <section  className="bg-transparent w-full h-screen flex justify-center items-center px-5 py-5 overflow-hidden">
+        <section  className="snap-always snap-center w-full h-screen flex justify-center items-center px-5 py-5 overflow-hidden bg-fixed bg-jadwalMisa bg-no-repeat bg-cover bg-center">
           <div className="w-full">
             <h1 className="text-secondary text-center text-2xl font-bold text-shadow ">Jadwal Misa</h1>
             <div className="w-full h-full mt-5">

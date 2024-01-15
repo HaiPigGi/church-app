@@ -14,7 +14,9 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        "hero": "url('/img/bgHero.jpeg')",
+        "hero": "url('/img/hero.JPG')",
+        "jadwalMisa": "url('/img/bg-jadwalmisa.JPG')",
+        "berita": "url('/img/bg-Berita.JPG')",
         "depan":"url('/img/depan_mimbar.jpg')",
         "dalam": "url('/img/gereja_dalam.jpg')",
         "partor": "url('/img\pastor.jpg')"

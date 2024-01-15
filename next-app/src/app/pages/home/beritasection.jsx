@@ -18,8 +18,8 @@ function BeritaSection(){
     }, [inView])
 
     return(
-        <section  className=" w-full h-screen p-5 ">
-            <div ref={refBeritaSec} className="h-full overflow-hidden ">
+        <section  className="snap-always snap-start bg-berita bg-center bg-no-repeat bg-fixed bg-cover flex justify-center items-center w-full h-screen px-5 pt-16 ">
+            <div ref={refBeritaSec} className="h-auto overflow-hidden ">
                 <h1 className="text-secondary text-center text-2xl font-bold text-shadow ">Berita Terkini</h1>
                 <motion.div
                 variants={{ 

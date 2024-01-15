@@ -18,7 +18,7 @@ function HeroSection(){
     }, [inView])
 
     return(
-        <section id="sectionHero" ref={refHeroSec} className="snap-always snap-start relative w-full h-screen flex justify-center items-center px-5">
+        <section id="sectionHero" ref={refHeroSec} className="snap-always snap-center bg-hero bg-fixed  bg-left bg-cover bg-no-repeat relative w-full h-screen flex justify-center items-center px-5">
           <motion.div
           variants={{ 
             hidden:{ opacity:0, y:75},
