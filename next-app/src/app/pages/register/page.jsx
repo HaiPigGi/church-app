@@ -1,3 +1,4 @@
+"use client"
 import MainLayout from "@/components/Layouts/MainLayout/index";
 
 

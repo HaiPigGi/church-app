@@ -3,12 +3,12 @@ import BeritaCard from "@/components/Fragments/BeritaCard";
 import { useEffect, useRef } from "react";
 import { useInView, motion,useAnimation } from 'framer-motion';
 
-const data = {
+const data = [{
     id:"1",
     title:"Penyelenggaraan Seminar Pemuda: Generasi Muda Berdaya",
     desc:"Seminar yang diadakan oleh komunitas pemuda bertujuan menggali potensi generasi muda dalam mewujudkan perubahan positif dalam berbagai aspek kehidupan.",
     imgPath:"/img/bgHero.jpeg"
-}
+}]
 
 function BeritaSection(){
     const refBeritaSec = useRef(null);
@@ -18,14 +18,11 @@ function BeritaSection(){
 
     useEffect(() => {
         if(inView){
-            console.log("ref:",refBeritaSec)
-            console.log(inView)
             mainControlls.start("visible");
         }
     }, [inView])
 
     const cardContainerClass = (data) => {
-        console.log(data.length)
         if(data.length < 2){
             return "grid grid-cols-1 mt-2 py-5"
         }
@@ -48,7 +45,7 @@ function BeritaSection(){
                 >
                     <div className={cardContainerClass(data)}>
                         <BeritaCard
-                        data={data}
+                        data={data[0]}
                         />
                     </div>      
                 </motion.div>

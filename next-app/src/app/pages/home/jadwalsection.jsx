@@ -10,8 +10,6 @@ function JadwalMisaSection(){
 
     useEffect(() => {
         if(inView){
-            console.log("ref:",refJadwalSec)
-            console.log(inView)
             mainControlls.start("visible");
         }
     }, [inView])
