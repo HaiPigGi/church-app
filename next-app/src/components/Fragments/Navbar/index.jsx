@@ -23,7 +23,7 @@ function Navbar({props}){
 
     return(
         <>
-        {/* for  */}
+        {/* for PC*/}
         <nav ref={ref} className='z-30 px-5 py-2 w-full fixed top-0 bg-white shadow-md flex justify-between items-center'>
             <a href="/" >
                 <Image 
@@ -45,7 +45,7 @@ function Navbar({props}){
             >
                 <div className='md:flex hidden'>
                     <Dropdowns size="medium" intent="black" modalAbove="false" datatestid="profilgereja">Profil Gereja</Dropdowns>
-                    <NavLinks href="/pages/forum" datatestid="forum & saran">Forum & Saran</NavLinks>
+                    <NavLinks href="/pages/saran" datatestid="Kritik & Saran">Kritik & Saran</NavLinks>
                     <NavLinks href="/pages/tentang" datatestid="Tentang">Tentang</NavLinks>
                 </div>
             </motion.div>
@@ -53,7 +53,7 @@ function Navbar({props}){
         </nav>
 
         {/* for mobile */}
-        <footer className='md:hidden fixed bottom-0 block w-full py-3 px-2  bg-white z-40 rounded-t-xl'>
+        <nav className='md:hidden fixed bottom-0 block w-full py-3 px-2  bg-white z-40 rounded-t-xl'>
             <div className='grid grid-cols-3 h-full'>
                 <div className=' flex justify-center items-center h-full w-full text-center'>
                     <div className='w-full text-center'>
@@ -66,7 +66,7 @@ function Navbar({props}){
                 <div className='flex justify-center items-center h-full w-full text-center'>
                     <NavLinks href="/pages/saran" intent="netral" size="extraSmall">
                         <i className="ri-question-answer-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
-                        Forum & Saran
+                        Kritik & Saran
                     </NavLinks>
                 </div>
                 <div className='flex justify-center items-center h-full w-full text-center'>
@@ -76,7 +76,7 @@ function Navbar({props}){
                     </NavLinks>
                 </div>
             </div>
-        </footer>
+        </nav>
         </>
     )
 };
