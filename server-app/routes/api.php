@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\jadwal_misa\JadwalMisaController;
 use App\Http\Controllers\admin\jadwal_misa\JenisMisaController;
+use App\Http\Controllers\csrf_token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\Berita\beritaController;
@@ -27,7 +28,7 @@ use App\Http\Controllers\Auth\RegistrationController;
 // });
 
 Route::middleware(['cors','web'])->group(function () {
-
+    Route::get('/get-session-data', [csrf_token::class, 'getSessionData']);
     // CSRF Cookie
     Route::get('/sanctum/csrf-cookie', function (Request $request) {
         return response()->json(['message' => 'CSRF cookie set']);
