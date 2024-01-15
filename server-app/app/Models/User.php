@@ -4,13 +4,19 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
-class User extends Authenticatable
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Str;
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+
+    protected $primaryKey="user_id";
+    public $incrementing=false;
+    protected $keyType = "string";
 
     /**
      * The attributes that are mass assignable.
@@ -23,23 +29,34 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
+   /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
      *
-     * @var array<int, string>
+     * @return mixed
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
 
     /**
-     * The attributes that should be cast.
+     * Return a key value array, containing any custom claims to be added to the JWT.
      *
-     * @var array<string, string>
+     * @return array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Generating UUID for 'position_id' before creating the model
+        static::creating(function ($model) {
+            $model->user_id = (string) Str::uuid();
+        });
+    }
+    
 }
