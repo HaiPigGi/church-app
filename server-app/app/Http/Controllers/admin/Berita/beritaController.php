@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\admin\Berita;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Log;
 use App\Models\beritaModel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
 class beritaController extends Controller
 {
 
@@ -21,7 +20,7 @@ class beritaController extends Controller
     public function getAllBerita()
     {
         $berita = beritaModel::all();
-        return response()->json(['organitation' => $berita], 200);
+        return response()->json(['data' => $berita], 200);
     }
 
     /**
@@ -37,7 +36,7 @@ class beritaController extends Controller
         if (!$berita) {
             return response()->json(['error' => 'Organitation Not Found'], 404);
         }
-        return response()->json(['organitation' => $berita], 200);
+        return response()->json(['data' => $berita], 200);
     }
     /**
      * store some new berita to resource in storage
