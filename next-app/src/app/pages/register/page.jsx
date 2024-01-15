@@ -12,14 +12,15 @@ export default function Register() {
     });
     const [errorMessage, setErrorMessage] = useState("");
 
-    
+    const [session, setSession] = useState({})
 
     const postData = async () => {
         try{
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/api/auth/register`,{
                 method:"POST",
                 headers:{
-                    "content-type":"application/json"
+                    "content-type":"application/json",
+                    "csrf_token" : session.csrf_token
                 },
                 body:JSON.stringify(dataRegis),                
             })

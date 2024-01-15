@@ -29,7 +29,7 @@ export default function Login() {
                     "content-type": "application/json"
                 },
                 body:JSON.stringify(dataLogin)
-            }).then(setLoginStatus = res.JSON())
+            }).then(setLoginStatus(res.JSON()))
             if(res.status == 200){
                 Router.push("/");
             }
