@@ -52,6 +52,7 @@ class organitationController extends Controller
             'date_of_establishment' => 'required|date',
             'image'   => 'required|image|mimes:jpeg,png,jpg,svg|max:2080',
         ]);
+        Log::info('cek semua data organitation', $request->all());
 
         try {
             DB::beginTransaction();
@@ -92,6 +93,8 @@ class organitationController extends Controller
             'date_of_establishment' => 'required|date',
             'image'   => 'image|mimes:jpeg,png,jpg,svg|max:2080',
         ]);
+
+        
 
         try {
             DB::beginTransaction();
