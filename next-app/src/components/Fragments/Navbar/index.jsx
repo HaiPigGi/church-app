@@ -24,7 +24,7 @@ function Navbar({props}){
     return(
         <>
         {/* for PC*/}
-        <nav ref={ref} className='z-30 px-5 py-2 w-full fixed top-0 bg-white shadow-md flex justify-between items-center'>
+        <nav ref={ref} className='z-30 px-5 py-2 w-full sticky top-0 bg-white shadow-md flex justify-between items-center'>
             <a href="/" >
                 <Image 
                 src="/img/Logo.svg"

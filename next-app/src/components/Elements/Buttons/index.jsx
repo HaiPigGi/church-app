@@ -16,6 +16,9 @@ const clsButton = cva(["rounded-sm block  text-center py-2 cursor-pointer font-s
                 "hover:bg-secondary-200",
                 "duration-500",
                 "text-black"
+            ],
+            danger : [
+                "bg-secondary hover:bg-red-300 bg-red-500 duration-500 text-white"
             ]
         },
         size: {

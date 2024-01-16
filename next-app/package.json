@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
     "@react-spring/parallax": "^9.7.3",
+    "axios": "^1.6.5",
     "class-variance-authority": "^0.7.0",
     "framer-motion": "^10.18.0",
     "intersection-observer": "^0.12.2",
