@@ -63,10 +63,10 @@ class LoginController extends Controller
             // Check user status
             if ($user->status == 1) {
                 // Admin login
-                return response()->json(['message' => 'Admin Login Successfully', 'token' => $token, 'role' => $user->status], 200);
+                return response()->json(['message' => 'Admin Login Successfully', 'token' => $token, 'role' => $user->status, 'name' => $user->name], 200);
             } else {
                 // Regular user login
-                return response()->json(['message' => 'User Login Successfully', 'token' => $token, 'role' => $user->status], 200);
+                return response()->json(['message' => 'User Login Successfully', 'token' => $token, 'role' => $user->status, 'name' => $user->name], 200);
             }
         } catch (JWTException $e) {
             // If an exception occurs while attempting to create a token
