@@ -1,9 +1,9 @@
 "use client"
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cva } from "class-variance-authority";
 
-const clsDropdown = cva(["relative h-full after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-[110%] after:left-0 after:border-b-2 after:border-secondary"],{
+const clsDropdown = cva([" h-full mx-2 text-center after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-[110%] after:left-0 after:border-b-2 after:border-secondary"],{
     variants:{
         intent:{
             primary:"text-primary",
@@ -31,7 +31,7 @@ const clsModal = cva(["absolute transition duration-500  shadow-md text-left bor
 }) 
 const ShowModal = ({above}) => {
     return(
-        <div className={clsModal({above})}>
+        <div className={clsModal({above})} data-testid="modalDropdown">
             <a href="/pages/pastor" className="relative block text-sm font-light my-2 py-1 after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-full after:left-0 after:border-b-2 after:border-secondary">Pastor Paroki</a>
             <a href="/pages/OMK" className="relative block text-sm font-light my-2 py-1 after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-full after:left-0 after:border-b-2 after:border-secondary">Kepengurusan OMK</a>
             <a href="/pages/mesdinar" className="relative block text-sm font-light my-2 py-1 after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-full after:left-0 after:border-b-2 after:border-secondary">Kepengurusan Mesdinar</a>
@@ -40,16 +40,37 @@ const ShowModal = ({above}) => {
     )
 }
 
-function Dropdowns({children, size, intent, modalAbove}){
+function Dropdowns({children, size, intent, modalAbove,datatestid}){
     const [open, setOpen] = useState(false);
+
+    // to update when the open useState is changes
+    useEffect(() => {
+        document.addEventListener("click", closeModal)
+        return () => {
+            document.removeEventListener("click",closeModal)
+        }
+    },[open])
+
+    // for changing the open useState hook to be true
+    const openModal = () => {
+        setOpen(true);
+    }
+    
+    // for changing the open useState hook to be false
+    const closeModal = () => {
+        if(open){
+            setOpen(false);
+        }
+    }
+
+
 
     return(
         <div className="relative">
             <button 
             className={clsDropdown({size,intent })}
-            onClick={() => {
-                setOpen(!open);
-            }}
+            onClick={openModal}
+            data-testid={datatestid}
             >
                 {children}
                 <Image

@@ -18,7 +18,7 @@ function HeroSection(){
     }, [inView])
 
     return(
-        <section id="sectionHero" ref={refHeroSec} className="snap-always snap-start relative w-full h-screen flex justify-center items-center px-5">
+        <section id="sectionHero" ref={refHeroSec} className="snap-always snap-center bg-hero bg-fixed bg-center bg-cover bg-no-repeat relative w-full h-screen flex justify-center items-center px-5">
           <motion.div
           variants={{ 
             hidden:{ opacity:0, y:75},
@@ -30,7 +30,7 @@ function HeroSection(){
           >
             <div id="content-Hero" className="">
                 <h1 className="md:text-4xl text-2xl text-shadow font-bold text-white text-center">Gereja <span className="block text-secondary">ST. Markus Melak</span></h1>
-                <p className="md:w-96 text-center text-white font-light md:text-sm text-xs text-pretty text-shadow my-2 mx-2">Temukan lebih banyak tentang komunitas gereja kami dengan login sekarang untuk eksplorasi lengkap</p>
+                <p className="md:w-96 w-80 text-center text-white font-light md:text-sm text-xs text-pretty text-shadow my-2 mx-2">Temukan lebih banyak tentang komunitas gereja kami dengan login sekarang untuk eksplorasi lengkap</p>
                 <Button href={"/pages/login"} intent="secondary" size="small" className="shadow-xl  mx-auto hidden md:block">LOGIN</Button>
                 <Button href={"/pages/login"} intent="secondary" size="extraSmall" className="shadow-xl  mx-auto md:hidden">LOGIN</Button>
             </div>

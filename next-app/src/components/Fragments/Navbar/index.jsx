@@ -12,7 +12,6 @@ function Navbar({props}){
     const ref = useRef(null);
     const isInView = useInView(ref, { once:true });
     const mainControl = useAnimation();
-    const [open,setOpen] = useState(false);
 
     useEffect(()=> {
         if(isInView){
@@ -24,14 +23,15 @@ function Navbar({props}){
 
     return(
         <>
-        {/* for  */}
+        {/* for PC*/}
         <nav ref={ref} className='z-30 px-5 py-2 w-full fixed top-0 bg-white shadow-md flex justify-between items-center'>
-            <a href="/">
+            <a href="/" >
                 <Image 
                 src="/img/Logo.svg"
                 width={130}
                 height={10}
                 alt='logo gereja'
+                data-testid="logo gereja"
                 />
             </a>
             <motion.div
@@ -46,7 +46,6 @@ function Navbar({props}){
                 <div className='md:flex hidden'>
                     <Dropdowns size="medium" intent="black" modalAbove="false">Profil Gereja</Dropdowns>
                     <NavLinks href="/pages/forum">Forum & Saran</NavLinks>
-                    <NavLinks href="/pages/dok">Dokumentasi</NavLinks>
                     <NavLinks href="/pages/tentang">Tentang</NavLinks>
                 </div>
             </motion.div>
@@ -55,7 +54,7 @@ function Navbar({props}){
 
         {/* for mobile */}
         <footer className='md:hidden fixed bottom-0 block w-full py-3 px-2  bg-white z-40 rounded-t-xl'>
-            <div className='grid grid-cols-4 h-full'>
+            <div className='grid grid-cols-3 h-full'>
                 <div className=' flex justify-center items-center h-full w-full text-center'>
                     <div className='w-full text-center'>
                         <Dropdowns size="extraSmall" intent="netral" modalAbove="true">
@@ -65,9 +64,9 @@ function Navbar({props}){
                     </div>
                 </div>
                 <div className='flex justify-center items-center h-full w-full text-center'>
-                    <NavLinks href="/pages/forum" intent="netral" size="extraSmall">
+                    <NavLinks href="/" intent="netral" size="extraSmall">
                         <i className="ri-question-answer-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
-                        Forum & Saran
+                        Kritik & Saran
                     </NavLinks>
                 </div>
                 <div className='flex justify-center items-center h-full w-full text-center'>
@@ -83,7 +82,7 @@ function Navbar({props}){
                     </NavLinks>
                 </div>
             </div>
-        </footer>
+        </nav>
         </>
     )
 };

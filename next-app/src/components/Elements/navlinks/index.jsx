@@ -20,9 +20,9 @@ const clsNavLinks = cva(["text-center mx-2 relative after:absolute after:transit
 })
 
 
-function NavLinks({href, children, size, intent, className}){
+function NavLinks({href, children, size, intent, className, datatestid}){
     return(
-        <Link href={href} className={clsNavLinks({ size,intent })+" "+className}>{children}</Link>
+        <Link href={href} data-testid={datatestid} className={clsNavLinks({ size,intent })+" "+className}>{children}</Link>
     )
 };
 

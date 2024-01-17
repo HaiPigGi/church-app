@@ -7,12 +7,14 @@ import Footer from "@/components/Fragments/Footer"
 function Dashboard(){
     return(
         <>
-            <div className=" bg-hero bg-fixed bg-center bg-cover bg-no-repeat ">
+            <div className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
                     <HeroSection/>
                     <JadwalMisaSection/>
                     <BeritaSection/>
+                    <div className="snap-always snap-center">
+                        <Footer/>
+                    </div>
             </div>      
-            <Footer/>
         </>
     )
 };
