@@ -35,6 +35,7 @@ const ShowModal = ({above}) => {
             <a href="/pages/pastor" className="relative block text-sm font-light my-2 py-1 after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-full after:left-0 after:border-b-2 after:border-secondary">Pastor Paroki</a>
             <a href="/pages/OMK" className="relative block text-sm font-light my-2 py-1 after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-full after:left-0 after:border-b-2 after:border-secondary">Kepengurusan OMK</a>
             <a href="/pages/mesdinar" className="relative block text-sm font-light my-2 py-1 after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-full after:left-0 after:border-b-2 after:border-secondary">Kepengurusan Mesdinar</a>
+            <a href="/pages/DPP" className="relative block text-sm font-light my-2 py-1 after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-full after:left-0 after:border-b-2 after:border-secondary">Dewan Pastoran Paroki</a>
         </div>
     )
 }

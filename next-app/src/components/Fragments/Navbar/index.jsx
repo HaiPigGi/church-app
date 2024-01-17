@@ -46,6 +46,7 @@ function Navbar({props}){
                 <div className='md:flex hidden'>
                     <Dropdowns size="medium" intent="black" modalAbove="false">Profil Gereja</Dropdowns>
                     <NavLinks href="/pages/forum">Forum & Saran</NavLinks>
+                    <NavLinks href="/pages/dok">Dokumentasi</NavLinks>
                     <NavLinks href="/pages/tentang">Tentang</NavLinks>
                 </div>
             </motion.div>
@@ -54,7 +55,7 @@ function Navbar({props}){
 
         {/* for mobile */}
         <footer className='md:hidden fixed bottom-0 block w-full py-3 px-2  bg-white z-40 rounded-t-xl'>
-            <div className='grid grid-cols-3 h-full'>
+            <div className='grid grid-cols-4 h-full'>
                 <div className=' flex justify-center items-center h-full w-full text-center'>
                     <div className='w-full text-center'>
                         <Dropdowns size="extraSmall" intent="netral" modalAbove="true">
@@ -64,14 +65,20 @@ function Navbar({props}){
                     </div>
                 </div>
                 <div className='flex justify-center items-center h-full w-full text-center'>
-                    <NavLinks href="/" intent="netral" size="extraSmall">
+                    <NavLinks href="/pages/forum" intent="netral" size="extraSmall">
                         <i className="ri-question-answer-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
                         Forum & Saran
                     </NavLinks>
                 </div>
                 <div className='flex justify-center items-center h-full w-full text-center'>
+                    <NavLinks href="/pages/dok" intent="netral" size="extraSmall">
+                        <i className="ri-camera-line block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
+                        Dokumentasi
+                    </NavLinks>
+                </div>
+                <div className='flex justify-center items-center h-full w-full text-center'>
                     <NavLinks href="/pages/tentang" intent="netral" size="extraSmall">
-                        <i className="ri-team-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
+                        <i className="ri-question-answer-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
                         Tentang
                     </NavLinks>
                 </div>
