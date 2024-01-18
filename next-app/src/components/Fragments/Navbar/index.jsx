@@ -78,6 +78,9 @@ function Navbar({ props }) {
             <NavLinks href="/pages/saran" datatestid="Kritik & Saran">
               Kritik & Saran
             </NavLinks>
+            <NavLinks href="/pages/dok" datatestid="Dokumentasi">
+              Dokumentasi
+            </NavLinks>
             <NavLinks href="/pages/tentang" datatestid="Tentang">
               Tentang
             </NavLinks>
@@ -109,7 +112,7 @@ function Navbar({ props }) {
 
       {/* for mobile */}
       <nav className="md:hidden fixed bottom-0 block w-full py-3 px-2  bg-white z-40 rounded-t-xl">
-        <div className="grid grid-cols-3 h-full">
+        <div className="grid grid-cols-4 h-full">
           <div className=" flex justify-center items-center h-full w-full text-center">
             <div className="w-full text-center">
               <Dropdowns size="extraSmall" intent="netral" modalAbove="true">
