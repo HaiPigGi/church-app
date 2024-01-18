@@ -1,44 +1,18 @@
-"use client";
-import MainLayout from "@/components/Layouts/MainLayout/index";
-import { useState } from "react";
+'use client';
+import MainLayout from '@/components/Layouts/MainLayout/index';
+import { useState, useContext } from 'react';
+import Navbar from '@/components/Fragments/Navbar';
+import AuthService from '@/app/lib/Auth/route.jsx';
+import { Session } from '@/app/context/sessionContext';
+
 export default function Login() {
+  const { session, setSession } = useContext(Session);
   const [dataLogin, setDataLogin] = useState({
-    name: "",
-    password: "",
+    name: '',
+    password: '',
   });
 
-  const [loginStatus, setLoginStatus] = useState({});
-
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const [session, setSession] = useState({});
-
-  const getCSRF = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN}/sanctum/csrf-cookie`,
-        {
-          method: "GET",
-          mode: "cors",
-          credentials: "include",
-        }
-      );
-
-      if (response.ok) {
-        const csrfToken = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("XSRF-TOKEN"))
-          .split("=")[1];
-
-        setSession({ csrf_token: csrfToken });
-        console.log("CSRF Token:", csrfToken);
-      } else {
-        console.error("Failed to fetch CSRF token");
-      }
-    } catch (error) {
-      console.error(`An error occurred: ${error.message}`);
-    }
-  };
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,76 +21,19 @@ export default function Login() {
       [name]: value,
     }));
   };
-  const postData = async () => {
+
+  const handleClickLogin = async () => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/auth/login`,
-        {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": session.csrf_token,
-          },
-          credentials: "include",
-          body: JSON.stringify(dataLogin),
-          cache: "no-store",
-        }
-      );
-
-      console.log("Response Status:", res.status);
-
-      if (res.status === 200) {
-        // Successful login
-        const responseData = await res.json();
-        const role = responseData.role;
-
-        if (role === 0) {
-          window.location.href = "/";
-        } else if (role === 1) {
-          window.location.href = "/pages/admin";
-        } else {
-          // Handle other cases if needed
-          setErrorMessage("Unexpected role received");
-        }
-      } else if (res.status === 401) {
-        // Handle unauthorized (401) error
-        setErrorMessage(
-          "Invalid credentials. Please check your username and password."
-        );
-      } else if (res.status === 404) {
-        // Handle not found (404) error
-        const responseData = await res.json();
-        setErrorMessage(responseData.error || "User not found");
-      } else if (res.status === 400) {
-        // Handle validation or other client-side errors
-        const responseData = await res.json();
-        setErrorMessage(responseData.error || "Login failed");
-        console.error("Login Error:", responseData);
-      } else {
-        // Handle other server-side errors
-        const contentType = res.headers.get("content-type");
-        const isJSON = contentType && contentType.includes("application/json");
-
-        if (!isJSON) {
-          setErrorMessage(`Login failed with status: ${res.status}`);
-          console.error(`Login failed with status: ${res.status}`);
-          return;
-        }
-
-        const responseData = await res.json();
-        setErrorMessage(responseData.message || "Login failed");
-        console.error("Login Error:", responseData);
-      }
-    } catch (error) {
-      // Handle unexpected errors
-      console.error("Error in postData:", error.message);
-      setErrorMessage("An unexpected error occurred during login");
+      await AuthService().Sign_in(dataLogin);
+      console.log(session);
+    } catch (e) {
+      console.log(e.message);
     }
   };
 
   return (
     <MainLayout>
+      <Navbar />
       <section className="snap-y snap-mandatory h-screen w-full bg-hero bg-fixed bg-center bg-cover bg-no-repeat overflow-hidden">
         <div className="snap-always snap-start w-full h-screen absolute flex justify-center items-center right-[15rem]">
           <div id="content-Hero" className="">
@@ -145,14 +62,17 @@ export default function Login() {
                   <h1 className="text-xl font-bold leading-tight tracking-tight text-yellow-800 md:text-2xl ">
                     Sign in to your account
                   </h1>
-                  {errorMessage != "" ? (
+                  {errorMessage != '' ? (
                     <h1 className="text-red-500 font-semibold font-xl">
                       {errorMessage}
                     </h1>
                   ) : (
-                    ""
+                    ''
                   )}
-                  <form className="space-y-4 md:space-y-6" action={postData}>
+                  <form
+                    className="space-y-4 md:space-y-6"
+                    action={handleClickLogin}
+                  >
                     <div>
                       <input
                         type="text"
@@ -188,7 +108,7 @@ export default function Login() {
                       Login
                     </button>
                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Don’t have an account yet?{" "}
+                      Don’t have an account yet?{' '}
                       <a
                         href="/pages/register"
                         className="font-medium text-primary-600 hover:underline dark:text-primary-500"
