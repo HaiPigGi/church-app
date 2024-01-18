@@ -20,6 +20,16 @@ class PositionController extends Controller
         $positions = PositionModel::all();
         return response()->json(['positions' => $positions]);
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\PositionModel  $position
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show(PositionModel $position)
+    {
+        return response()->json(['position' => $position]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -53,16 +63,7 @@ class PositionController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PositionModel  $position
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show(PositionModel $position)
-    {
-        return response()->json(['position' => $position]);
-    }
+    
 
     /**
      * Update the specified resource in storage.
