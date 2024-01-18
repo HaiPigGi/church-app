@@ -9,34 +9,97 @@ use Illuminate\Support\Facades\Log;
 use App\Models\beritaModel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
+
 class beritaController extends Controller
 {
 
     /**
-     * show all berita 
+     * Get all posts with image details.
      *
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getAllBerita()
     {
-        $berita = beritaModel::all();
-        return response()->json(['data' => $berita], 200);
+        try {
+            // Get all posts
+            $posts = beritaModel::all();
+            Log::info("cek All data post : " . json_encode($posts));
+
+            // Retrieve image details for each post
+            $postsWithImages = $posts->map(function ($post) {
+                $imagePath = 'storage/berita/' . $post->image;
+
+                // Check if the file exists before getting the size
+                if (File::exists($imagePath)) {
+                    return [
+                        'id' => $post->id,
+                        'title' => $post->title,
+                        'content' => $post->content,
+                        'event' => $post->event,
+                        'image' => [
+                            'url' => asset($imagePath),
+                            'path' => $imagePath,
+                            'size' => File::size($imagePath),
+                        ],
+                    ];
+                } else {
+                    // Log a warning if the file does not exist
+                    Log::warning('Image not found: ' . $imagePath);
+                    return null; // or handle it as needed
+                }
+            })->filter(); // Filter out null values (non-existent images)
+
+            Log::info("cek All data post : " . json_encode($postsWithImages));
+
+            return response()->json(['data' => $postsWithImages], 200);
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('Error getting all posts:', ['error' => $e->getMessage()]);
+
+            // Return a JSON response with an error message
+            return response()->json(['error' => 'Terjadi kesalahan saat mengambil data.'], 500);
+        }
     }
 
     /**
-     * show berita by id
-     * 
-     * @return void
+     * Get all posts with image details.
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-
-    public function getAllberitaById($id)
+    public function getAllBeritaById($id)
     {
-        $berita = beritaModel::findOrFail($id);
+        try {
+            // Get a specific post by ID
+            $post = beritaModel::find($id);
 
-        if (!$berita) {
-            return response()->json(['error' => 'Organitation Not Found'], 404);
+            if (!$post) {
+                // Return a JSON response indicating that the post with the provided ID was not found
+                return response()->json(['error' => 'Post not found.'], 404);
+            }
+
+            // Retrieve image details for the post
+            $imagePath = 'storage/berita/' . $post->image;
+            $postWithImage = [
+                'id'      => $post->id,
+                'title'   => $post->title,
+                'content' => $post->content,
+                'event'   => $post->event,
+                'image'   => [
+                    'url'  => asset($imagePath),
+                    'path' => $imagePath,
+                    'size' => File::size($imagePath),
+                ],
+            ];
+            // Return the post data as a JSON response
+            return response()->json(['datas' => $postWithImage], 200);
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('Error getting post by ID:', ['error' => $e->getMessage()]);
+
+            // Return a JSON response with an error message
+            return response()->json(['error' => 'Terjadi kesalahan saat mengambil data.'], 500);
         }
-        return response()->json(['data' => $berita], 200);
     }
     /**
      * store some new berita to resource in storage
@@ -93,88 +156,88 @@ class beritaController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-     protected function update(Request $request, beritaModel $beritaModel)
-     {
-         try {
-             DB::beginTransaction();
-     
-             // Log request data for debugging
-             Log::info('Request data in controller: ', $request->all());
-             // Validate form data
-             $validator = Validator::make($request->all(), [
-                 'image'   => 'image|mimes:jpeg,png,jpg,svg|max:2080',
-                 'title'   => 'required|min:5',
-                 'content' => 'required|min:10',
-                 'event'   => 'required',
-             ]);
-     
-             if ($validator->fails()) {
-                 // Log validation errors for debugging
-                 Log::error('Validation Error', ['error' => $validator->errors()->all()]);
-                 return response()->json(['status' => 'error', 'message' => 'Data is not valid', 'errors' => $validator->errors()], 422);
-             }
-     
-             // Check if an image is uploaded
-             if ($request->hasFile('image')) {
-                 // Upload new image
-                 $image = $request->file('image');
-                 $image->storeAs('public/berita/', $image->hashName());
-     
-                 // Delete old image
-                 Storage::delete('public/berita/' . $beritaModel->image);
-     
-                 // Update berita with new image
-                 $beritaModel->update([
-                     'image'   => $image->hashName(),
-                     'title'   => $request->title,
-                     'content' => $request->content,
-                     'event'   => $request->event,
-                 ]);
-             } else {
-                 // Update berita without image
-                 $beritaModel->update([
-                     'title'   => $request->title,
-                     'content' => $request->content,
-                     'event'   => $request->event,
-                 ]);
-             }
-     
-             // Commit the database transaction
-             DB::commit();
-     
-             // Return success response
-             return response()->json(['status' => 'success', 'message' => 'Data has been updated'], 200);
-         } catch (\Throwable $th) {
-             // Roll back the database transaction on error
-             DB::rollBack();
-     
-             // Log the error for debugging
-             Log::error('Error during update', ['error' => $th->getMessage()]);
-     
-             // Return error response
-             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
-         }
-     }
-     /**
-      * Remove the specified resource from storage
-      *
-      *@return \Illuminate\Http\JsonResponse
-      */
-      public function destroy(beritaModel $beritaModel)
-      {
+    protected function update(Request $request, beritaModel $beritaModel)
+    {
         try {
             DB::beginTransaction();
 
-            Storage::delete('public/berita/'. $beritaModel->image);
+            // Log request data for debugging
+            Log::info('Request data in controller: ', $request->all());
+            // Validate form data
+            $validator = Validator::make($request->all(), [
+                'image'   => 'image|mimes:jpeg,png,jpg,svg|max:2080',
+                'title'   => 'required|min:5',
+                'content' => 'required|min:10',
+                'event'   => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                // Log validation errors for debugging
+                Log::error('Validation Error', ['error' => $validator->errors()->all()]);
+                return response()->json(['status' => 'error', 'message' => 'Data is not valid', 'errors' => $validator->errors()], 422);
+            }
+
+            // Check if an image is uploaded
+            if ($request->hasFile('image')) {
+                // Upload new image
+                $image = $request->file('image');
+                $image->storeAs('public/berita/', $image->hashName());
+
+                // Delete old image
+                Storage::delete('public/berita/' . $beritaModel->image);
+
+                // Update berita with new image
+                $beritaModel->update([
+                    'image'   => $image->hashName(),
+                    'title'   => $request->title,
+                    'content' => $request->content,
+                    'event'   => $request->event,
+                ]);
+            } else {
+                // Update berita without image
+                $beritaModel->update([
+                    'title'   => $request->title,
+                    'content' => $request->content,
+                    'event'   => $request->event,
+                ]);
+            }
+
+            // Commit the database transaction
+            DB::commit();
+
+            // Return success response
+            return response()->json(['status' => 'success', 'message' => 'Data has been updated'], 200);
+        } catch (\Throwable $th) {
+            // Roll back the database transaction on error
+            DB::rollBack();
+
+            // Log the error for debugging
+            Log::error('Error during update', ['error' => $th->getMessage()]);
+
+            // Return error response
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+        }
+    }
+    /**
+     * Remove the specified resource from storage
+     *
+     *@return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(beritaModel $beritaModel)
+    {
+        try {
+            DB::beginTransaction();
+
+            Storage::delete('public/berita/' . $beritaModel->image);
 
             $beritaModel->delete();
 
             DB::commit();
 
-            return response()->json(['status'=> 'success', 'message'=> 'Successfull Delete'],200);
+            return response()->json(['status' => 'success', 'message' => 'Successfull Delete'], 200);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return response()->json(['status'=> 'error', 'message'=> $th->getMessage()],500);
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
         }
-      }
+    }
 }
