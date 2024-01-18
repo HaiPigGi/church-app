@@ -1,8 +1,7 @@
 'use client';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { cva } from 'class-variance-authority';
-import { DDcontext } from './dropdownContext';
 
 const clsDropdown = cva(
   [
@@ -44,19 +43,36 @@ const clsModal = cva(
     },
   },
 );
-export const ShowModal = ({ above, children }) => {
-  const { open } = DDcontext();
-  return open == true ? (
-    <div className={clsModal({ above })} data-testid="modalDropdown">
-      {children}
+
+export const ShowModal = ({ above, datas, position = 'toLeft' }) => {
+  console.log(datas);
+  return (
+    <div className={clsModal({ above, position })} data-testid="modalDropdown">
+      {datas.map((data) => {
+        return (
+          <a
+            href={data.href}
+            onClick={data.action}
+            className="relative block text-sm font-light my-2 py-1 after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-full after:left-0 after:border-b-2 after:border-secondary"
+          >
+            {data.text}
+          </a>
+        );
+      })}
     </div>
-  ) : (
-    <></>
   );
 };
 
-function Dropdowns({ children, size, intent, datatestid }) {
-  const { open, setOpen } = DDcontext();
+function Dropdowns({
+  children,
+  size,
+  intent,
+  datatestid,
+  modalAbove,
+  modalPosition,
+  dataModal,
+}) {
+  const [open, setOpen] = useState(false);
 
   // to update when the open useState is changes
   useEffect(() => {
@@ -94,6 +110,15 @@ function Dropdowns({ children, size, intent, datatestid }) {
           className="inline-block ms-1 rotate-180 md:rotate-0 md:opacity-100 opacity-[0.40]"
         />
       </button>
+      {open ? (
+        <ShowModal
+          datas={dataModal}
+          above={modalAbove}
+          position={modalPosition}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

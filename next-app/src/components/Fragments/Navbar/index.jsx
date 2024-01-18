@@ -7,6 +7,7 @@ import { motion, useInView, useAnimation } from 'framer-motion';
 import { useContext, useEffect, useRef, useState } from 'react';
 import 'remixicon/fonts/remixicon.css';
 import DropDownContextProvider from '@/components/Elements/Dropdown/dropdownContext';
+import AuthService from '@/app/lib/Auth/route';
 
 function Navbar({ props }) {
   const ref = useRef(null);
@@ -51,31 +52,28 @@ function Navbar({ props }) {
           transition={{ duration: 0.5, delay: 0.5 }}
         >
           <div className="md:flex hidden">
-            <DropDownContextProvider>
-              <Dropdowns size="medium" intent="black" datatestid="profilgereja">
-                Profil Gereja
-              </Dropdowns>
-              <ShowModal modalAbove="false">
-                <a
-                  href="/pages/pastor"
-                  className="relative block text-sm font-light my-2 py-1 after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-full after:left-0 after:border-b-2 after:border-secondary"
-                >
-                  Pastor Paroki
-                </a>
-                <a
-                  href="/pages/OMK"
-                  className="relative block text-sm font-light my-2 py-1 after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-full after:left-0 after:border-b-2 after:border-secondary"
-                >
-                  Kepengurusan OMK
-                </a>
-                <a
-                  href="/pages/mesdinar"
-                  className="relative block text-sm font-light my-2 py-1 after:absolute after:transition-all after:duration-500 after:w-0  after:hover:w-full after:h-full after:left-0 after:border-b-2 after:border-secondary"
-                >
-                  Kepengurusan Mesdinar
-                </a>
-              </ShowModal>
-            </DropDownContextProvider>
+            <Dropdowns
+              size="medium"
+              intent="black"
+              datatestid="profilgereja"
+              modalAbove={false}
+              dataModal={[
+                {
+                  text: 'Pasor Paroki',
+                  href: '/pages/pastor',
+                },
+                {
+                  text: 'Kepungurasan OMK',
+                  href: '/pages/OMK',
+                },
+                {
+                  text: 'Kepengurusan Mesdinar',
+                  href: '/pages/mesdinar',
+                },
+              ]}
+            >
+              Profil Gereja
+            </Dropdowns>
 
             <NavLinks href="/pages/saran" datatestid="Kritik & Saran">
               Kritik & Saran
@@ -86,11 +84,22 @@ function Navbar({ props }) {
           </div>
         </motion.div>
         {user ? (
-          <button type="button">
+          <Dropdowns
+            size="medium"
+            intent="black"
+            modalAbove={false}
+            modalPosition="toRight"
+            dataModal={[
+              {
+                text: 'Log out',
+                href: '#',
+                action: AuthService().Logout,
+              },
+            ]}
+          >
             welcome,{' '}
             <span className="font-bold text-secondary capitalize">{user}</span>
-            <i class="ri-arrow-down-s-fill text-black"></i>
-          </button>
+          </Dropdowns>
         ) : (
           <Button href={'/pages/login'} intent="secondary" size="small">
             Login
