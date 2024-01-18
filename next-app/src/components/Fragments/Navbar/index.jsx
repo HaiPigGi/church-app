@@ -82,7 +82,7 @@ function Navbar({props}){
                     </NavLinks>
                 </div>
             </div>
-        </nav>
+        </footer>
         </>
     )
 };
