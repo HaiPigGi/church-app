@@ -27,6 +27,9 @@ module.exports = {
         "primary-200" : "#9F5C32",
         "secondary-200": "#E4C599",
       },
+      backgroundColor:{
+        "asek" : "#DBA150",
+      },
       textColor: {
         'custom': '#FF9843', 
         'custom2': '#ffffff66', 

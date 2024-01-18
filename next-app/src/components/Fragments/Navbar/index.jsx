@@ -116,8 +116,14 @@ function Navbar({ props }) {
             </NavLinks>
           </div>
           <div className="flex justify-center items-center h-full w-full text-center">
+            <NavLinks href="/pages/dok" intent="netral" size="extraSmall">
+              <i className="ri-camera-line block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
+              Dokumentasi
+            </NavLinks>
+          </div>
+          <div className="flex justify-center items-center h-full w-full text-center">
             <NavLinks href="/pages/tentang" intent="netral" size="extraSmall">
-              <i className="ri-team-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
+              <i className="ri-question-answer-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
               Tentang
             </NavLinks>
           </div>
