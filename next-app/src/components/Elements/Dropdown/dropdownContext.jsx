@@ -14,6 +14,5 @@ export default function DropDownContextProvider({ children }) {
 }
 
 export const DDcontext = () => {
-  console.log('DD COntext:', DropDownContext);
   return useContext(DropDownContext);
 };

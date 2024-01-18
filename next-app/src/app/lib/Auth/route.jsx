@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const AuthService = () => {
@@ -108,8 +109,28 @@ const AuthService = () => {
     }
   }
 
+  async function delete_Logout() {
+    const jwtToken = sessionStorage.getItem('jwtToken');
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/api/auth/logout`, {
+        method: 'DELETE',
+        mode: 'cors',
+        headers: {
+          Authorization: `bearer ${jwtToken}`,
+        },
+      });
+      sessionStorage.removeItem('jwtToken');
+      sessionStorage.removeItem('name');
+      sessionStorage.removeItem('role');
+      window.location.href = '/';
+    } catch (e) {
+      console.log('Error When logout : ', e.message);
+    }
+  }
+
   return {
     Sign_in: post_Login,
+    Logout: delete_Logout,
     CSRF_token: get_CSRF,
   };
 };
