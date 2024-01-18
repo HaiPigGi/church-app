@@ -1,12 +1,12 @@
-import MainLayout from "@/components/Layouts/MainLayout";
-import Dashboard from "./Dashboard"
+import MainLayout from '@/components/Layouts/MainLayout';
+import Dashboard from './Dashboard';
 
-function PageHome(){
-    return(
-        <MainLayout>
-            <Dashboard/>
-        </MainLayout>
-    )
-};
+function PageHome() {
+  return (
+    <MainLayout>
+      <Dashboard />
+    </MainLayout>
+  );
+}
 
 export default PageHome;
