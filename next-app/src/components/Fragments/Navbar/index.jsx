@@ -70,12 +70,16 @@ function Navbar({ props }) {
                   text: 'Kepengurusan Mesdinar',
                   href: '/pages/mesdinar',
                 },
+                {
+                  text: 'Kepengurusan DPP',
+                  href: '/pages/DPP',
+                },
               ]}
             >
               Profil Gereja
             </Dropdowns>
 
-            <NavLinks href="/pages/saran" datatestid="Kritik & Saran">
+            <NavLinks href="/pages/forum" datatestid="Kritik & Saran">
               Kritik & Saran
             </NavLinks>
             <NavLinks href="/pages/dok" datatestid="Dokumentasi">

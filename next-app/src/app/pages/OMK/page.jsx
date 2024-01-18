@@ -1,11 +1,13 @@
 import MainLayout from "@/components/Layouts/MainLayout/index";
 import Footer from "@/components/Fragments/Footer";
+import Navbar from "@/components/Fragments/Navbar";
 
 export default function Struktur() {
   return (
-      <MainLayout>
-       <section className="">
-        <div className="relative items-center justify-center mb-[5rem]">
+    <MainLayout>
+        <section className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
+      <Navbar/>
+        <div className="relative items-center justify-center mb-[5rem] mt-[-3rem]">
           <section>
             <div className="flex flex-col items-center">
               <h2 className="text-black font-poppins  md:text-5xl md:font-bold leading-[112px] pt-20 min-[357px]:text-primary min-[357px]:text-xl min-[357px]:mt-10 min-[357px]:mb-5  max-[775px]:text-black md:text-black">Struktur Organisasi OMK</h2>

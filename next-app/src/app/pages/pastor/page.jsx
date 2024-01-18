@@ -1,11 +1,13 @@
 import MainLayout from "@/components/Layouts/MainLayout/index";
 import Footer from "@/components/Fragments/Footer";
+import Navbar from "@/components/Fragments/Navbar";
 
 export default function Pastor() {
   return (
-    <section className="">
+    <section className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
       <MainLayout>
-        <div className="relative items-center justify-center mb-10">
+        <Navbar/>
+        <div className="relative items-center justify-center mb-10  mt-[-3rem]">
           <section>
             <div className="flex flex-col items-center">
               <h2 className="text-black font-poppins text-5xl font-bold leading-[112px] pt-20">Pastor Paroki</h2>

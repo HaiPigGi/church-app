@@ -1,15 +1,17 @@
 "use client"
 import MainLayout from "@/components/Layouts/MainLayout"
 import Footer from "@/components/Fragments/Footer"
+import Navbar from "@/components/Fragments/Navbar"
 
 
 export default function Dokumentasi (){
 
-
-
     return(
         <MainLayout>
-            <div className="flex grid-cols-3 mt-32 mb-16 items-center justify-center min-[360px]:max-[765px]:flex-col ">
+            <a className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
+                <Navbar />
+            </a>
+            <div className="flex grid-cols-3 mt-20 mb-16 items-center justify-center min-[360px]:max-[765px]:flex-col ">
                 
                 {/* event pertama */}
             <div class="relative flex flex-col mr-5 text-gray-700 bg-secondary shadow-md bg-clip-border rounded-xl w-96 h-96 min-[360px]:max-[765px]:mb-10 ">
