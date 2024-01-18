@@ -9,19 +9,57 @@ use Illuminate\Support\Facades\Log;
 use App\Models\beritaModel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 class beritaController extends Controller
 {
 
-    /**
-     * show all berita 
-     *
-     * @return void
-     */
-    public function getAllBerita()
-    {
-        $berita = beritaModel::all();
-        return response()->json(['data' => $berita], 200);
+  /**
+ * Get all posts with image details.
+ *
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function getAllDataStore()
+{
+    try {
+        // Get all posts
+        $posts = beritaModel::all();
+        Log::info("cek All data post : " . json_encode($posts));
+
+        // Retrieve image details for each post
+        $postsWithImages = $posts->map(function ($post) {
+            $imagePath = 'storage/berita/' . $post->image;
+
+            // Check if the file exists before getting the size
+            if (File::exists($imagePath)) {
+                return [
+                    'id' => $post->id,
+                    'title' => $post->title,
+                    'content' => $post->content,
+                    'event' => $post->event,
+                    'image' => [
+                        'url' => asset($imagePath),
+                        'path' => $imagePath,
+                        'size' => File::size($imagePath),
+                    ],
+                ];
+            } else {
+                // Log a warning if the file does not exist
+                Log::warning('Image not found: ' . $imagePath);
+                return null; // or handle it as needed
+            }
+        })->filter(); // Filter out null values (non-existent images)
+
+        Log::info("cek All data post : " . json_encode($postsWithImages));
+
+        return response()->json(['posts' => $postsWithImages], 200);
+    } catch (\Exception $e) {
+        // Log the error
+        Log::error('Error getting all posts:', ['error' => $e->getMessage()]);
+
+        // Return a JSON response with an error message
+        return response()->json(['error' => 'Terjadi kesalahan saat mengambil data.'], 500);
     }
+}
 
     /**
      * show berita by id
