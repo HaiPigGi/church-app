@@ -46,6 +46,7 @@ function Navbar({props}){
                 <div className='md:flex hidden'>
                     <Dropdowns size="medium" intent="black" modalAbove="false">Profil Gereja</Dropdowns>
                     <NavLinks href="/pages/forum">Forum & Saran</NavLinks>
+                    <NavLinks href="/pages/dok">Dokumentasi</NavLinks>
                     <NavLinks href="/pages/tentang">Tentang</NavLinks>
                 </div>
             </motion.div>
