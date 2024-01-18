@@ -6,8 +6,9 @@ import Pesan from '@/app/pages/admin/pesan';
 import Organisasi from './organisasi';
 import Posisi from './posisi';
 import Member from './member';
+import WithAuth from '@/app/lib/Auth/withAuth.js';
 
-export default function admin() {
+function Admin() {
   const [open, setopen] = useState(true);
   const [activeMenu, setActiveMenu] = useState('');
 
@@ -163,3 +164,5 @@ export default function admin() {
     </div>
   );
 }
+
+export default WithAuth(Admin, ['1']);

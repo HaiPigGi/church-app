@@ -3,10 +3,8 @@ import MainLayout from '@/components/Layouts/MainLayout/index';
 import { useState, useContext } from 'react';
 import Navbar from '@/components/Fragments/Navbar';
 import AuthService from '@/app/lib/Auth/route.jsx';
-import { Session } from '@/app/context/sessionContext';
 
 export default function Login() {
-  const { session, setSession } = useContext(Session);
   const [dataLogin, setDataLogin] = useState({
     name: '',
     password: '',
@@ -25,7 +23,6 @@ export default function Login() {
   const handleClickLogin = async () => {
     try {
       await AuthService().Sign_in(dataLogin);
-      console.log(session);
     } catch (e) {
       console.log(e.message);
     }

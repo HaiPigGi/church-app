@@ -1,7 +1,6 @@
 // layout.js
 import { Poppins } from 'next/font/google';
 import './globals.css';
-import SessionContextProvider from './context/sessionContext';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -11,9 +10,7 @@ const poppins = Poppins({
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={poppins.className}>
-        <SessionContextProvider>{children}</SessionContextProvider>
-      </body>
+      <body className={poppins.className}>{children}</body>
     </html>
   );
 }

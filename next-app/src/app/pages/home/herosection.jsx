@@ -1,11 +1,12 @@
 'use client';
 import Button from '@/components/Elements/Buttons';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInView, motion, useAnimation } from 'framer-motion';
 
 function HeroSection() {
   const refHeroSec = useRef(null);
   const inView = useInView(refHeroSec, { once: true });
+  const [session, setSession] = useState();
 
   const mainControlls = useAnimation();
   useEffect(() => {
@@ -14,6 +15,12 @@ function HeroSection() {
       mainControlls.start('visible');
     }
   }, [inView]);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('jwtToken');
+    setSession(token);
+    console.log(session);
+  });
 
   return (
     <section
@@ -39,22 +46,28 @@ function HeroSection() {
             Temukan lebih banyak tentang komunitas gereja kami dengan login
             sekarang untuk eksplorasi lengkap
           </p>
-          <Button
-            href={'/pages/login'}
-            intent="secondary"
-            size="small"
-            className="shadow-xl  mx-auto hidden md:block"
-          >
-            LOGIN
-          </Button>
-          <Button
-            href={'/pages/login'}
-            intent="secondary"
-            size="extraSmall"
-            className="shadow-xl  mx-auto md:hidden"
-          >
-            LOGIN
-          </Button>
+          {session ? (
+            <></>
+          ) : (
+            <>
+              <Button
+                href={'/pages/login'}
+                intent="secondary"
+                size="small"
+                className="shadow-xl  mx-auto hidden md:block"
+              >
+                LOGIN
+              </Button>
+              <Button
+                href={'/pages/login'}
+                intent="secondary"
+                size="extraSmall"
+                className="shadow-xl  mx-auto md:hidden"
+              >
+                LOGIN
+              </Button>
+            </>
+          )}
         </div>
       </motion.div>
     </section>
