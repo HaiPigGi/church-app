@@ -75,7 +75,7 @@ function Navbar({ props }) {
               Profil Gereja
             </Dropdowns>
 
-            <NavLinks href="/pages/saran" datatestid="Kritik & Saran">
+            <NavLinks href="/pages/forum" datatestid="Kritik & Saran">
               Kritik & Saran
             </NavLinks>
             <NavLinks href="/pages/tentang" datatestid="Tentang">
@@ -119,7 +119,7 @@ function Navbar({ props }) {
             </div>
           </div>
           <div className="flex justify-center items-center h-full w-full text-center">
-            <NavLinks href="/pages/saran" intent="netral" size="extraSmall">
+            <NavLinks href="/pages/forum" intent="netral" size="extraSmall">
               <i className="ri-question-answer-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
               Kritik & Saran
             </NavLinks>

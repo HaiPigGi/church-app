@@ -57,50 +57,74 @@ const AuthService = () => {
         },
       );
 
+      const responseData = await res.json();
       if (res.status === 200) {
         // Successful login
-        const responseData = await res.json();
+
         const role = responseData.role;
+
         sessionStorage.setItem('jwtToken', responseData.token);
         sessionStorage.setItem('role', responseData.role);
         sessionStorage.setItem('name', responseData.name);
+
         if (role === 0) {
-          window.location.href = '/';
+          return {
+            message: responseData.message,
+            href: '/',
+            status: res.status,
+          };
         } else if (role === 1) {
-          window.location.href = '/pages/admin';
+          return {
+            message: responseData.message,
+            href: '/page/admin',
+            status: res.status,
+          };
         } else {
-          // Handle other cases if needed
-          setErrorMessage('Unexpected role received');
+          return {
+            message: 'Unexpected role Received',
+            href: '/login',
+            status: res.status,
+          };
         }
       } else if (res.status === 401) {
         // Handle unauthorized (401) error
-        setErrorMessage(
-          'Invalid credentials. Please check your username and password.',
-        );
+        return {
+          message:
+            'Invalid credentials. Please check your username and password.',
+          status: res.status,
+        };
       } else if (res.status === 404) {
         // Handle not found (404) error
-        const responseData = await res.json();
-        setErrorMessage(responseData.error || 'User not found');
+        const Message = responseData.error || 'user not found';
+        return {
+          message: Message,
+          status: res.status,
+        };
       } else if (res.status === 400) {
         // Handle validation or other client-side errors
-        const responseData = await res.json();
-        setErrorMessage(responseData.error || 'Login failed');
-        console.error('Login Error:', responseData);
+        const Message = responseData.error || 'Login Failed';
+        return {
+          message: Message,
+          status: res.status,
+        };
       } else {
         // Handle other server-side errors
         const contentType = res.headers.get('content-type');
         const isJSON = contentType && contentType.includes('application/json');
 
         if (!isJSON) {
-          setErrorMessage(`Login failed with status: ${res.status}`);
-          console.error(`Login failed with status: ${res.status}`);
-          return;
+          const Message = `Login failed with status : ${res.status}`;
+          return {
+            message: Message,
+            status: res.status,
+          };
         }
 
-        const responseData = await res.json();
-        setErrorMessage(responseData.message || 'Login failed');
-        console.error('Login Error:', responseData);
-        return errorMessage;
+        const Message = responseData.message || 'login failed';
+        return {
+          message: Message,
+          status: res.status,
+        };
       }
     } catch (error) {
       // Handle unexpected errors
