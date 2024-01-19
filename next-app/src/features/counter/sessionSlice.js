@@ -7,9 +7,9 @@ export const sessionSlice = createSlice({
     value: '',
   },
   reducers: {
-    setSession: (state, session) => {
-      console.log('session : ', session);
-      state.value = session.payload;
+    setSession: (state, action) => {
+      console.log('session : ', action.payload);
+      state.value = action.payload;
     },
   },
 });

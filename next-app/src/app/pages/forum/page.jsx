@@ -3,8 +3,11 @@ import Footer from '@/components/Fragments/Footer';
 
 export default function saran() {
   return (
-    <MainLayout>
-      <div className="max-w-screen-xl mx-auto px-5 ">
+    <MainLayout >
+      <a className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
+      <Navbar />
+      </a>
+      <div className="max-w-screen-xl mx-auto px-5 mt-[-3rem] ">
         <div className="mt-28 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold lg:tracking-tight">
             Saran, Kritik Dan Permintaan

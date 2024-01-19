@@ -4,13 +4,10 @@ import MainLayout from "@/components/Layouts/MainLayout";
 
 export default function about() {
   return (
-    <MainLayout>
-      <section className="mb-[5rem]">
-        <Navbar />
-        </section>
-
+    <MainLayout className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
+        <Navbar/>
         {/* gambar pertama */}
-        <div className="mb-10">
+        <div className="mb-10 mt-10">
           <section className="parallax-1 bg-hero bg-no-repeat bg-cover bg-center bg-fixed min-h-[357px] sm:min-h-[375px]">
             <div className="parallax-inner py-[10%] px-0">
               <h1 className="font-bold text-[120px] text-center text-custom2 text-shadow1 min-[357px]:text-[70px]">
@@ -74,6 +71,7 @@ export default function about() {
             repellat optio, quasi id obcaecati libero numquam dolorum.
           </p>
         </div>
+      
       <Footer/>
     </MainLayout>
   );

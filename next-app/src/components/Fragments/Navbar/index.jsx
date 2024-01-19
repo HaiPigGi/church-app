@@ -73,6 +73,10 @@ function Navbar({ props }) {
                   text: 'Kepengurusan Mesdinar',
                   href: '/pages/mesdinar',
                 },
+                {
+                  text: 'Kepengurusan DPP',
+                  href: '/pages/DPP',
+                },
               ]}
             >
               Profil Gereja
