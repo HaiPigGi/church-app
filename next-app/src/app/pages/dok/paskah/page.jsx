@@ -4,25 +4,26 @@ import { IoIosExit } from "react-icons/io";
 import Modal from 'react-modal';
 
 
-const GalleryNatal = () => {
+const GalleryPaskah = () => {
   
+    const unsplashImage = 'https://source.unsplash.com/500x500';
   const photos = [
-    { id: 1, title: 'Photo 1', year: 2022, url: '/img/bg-Berita.JPG' },
-    { id: 1, title: 'Photo 1', year: 2022, url: '/img/abdi2.jpeg' },
-    { id: 1, title: 'Photo 1', year: 2022, url: '/img/bg-Berita.JPG' },
-    { id: 1, title: 'Photo 1', year: 2022, url: '/img/abdi2.jpeg' },
-    { id: 1, title: 'Photo 1', year: 2022, url: '/img/bg-Berita.JPG' },
-    { id: 1, title: 'Photo 1', year: 2022, url: '/img/bg-Berita.JPG' },
-    { id: 1, title: 'Photo 1', year: 2022, url: '/img/bg-Berita.JPG' },
-    { id: 1, title: 'Photo 1', year: 2022, url: '/img/bg-Berita.JPG' },
-    { id: 1, title: 'Photo 1', year: 2022, url: '/img/bg-Berita.JPG' },
-    { id: 1, title: 'Photo 1', year: 2022, url: '/img/bg-Berita.JPG' },
-    { id: 1, title: 'Photo 1', year: 2022, url: '/img/bg-Berita.JPG' },
+    { id: 1, title: 'Photo 1', year: 2022, url: unsplashImage },
+    { id: 1, title: 'Photo 1', year: 2022, url: unsplashImage },
+    { id: 1, title: 'Photo 1', year: 2022, url: unsplashImage },
+    { id: 1, title: 'Photo 1', year: 2022, url: unsplashImage},
+    { id: 1, title: 'Photo 1', year: 2022, url: unsplashImage },
+    { id: 1, title: 'Photo 1', year: 2022, url: unsplashImage },
+    { id: 1, title: 'Photo 1', year: 2022, url: unsplashImage },
+    { id: 1, title: 'Photo 1', year: 2022, url: unsplashImage },
+    { id: 1, title: 'Photo 1', year: 2022, url: unsplashImage },
+    { id: 1, title: 'Photo 1', year: 2022, url: unsplashImage },
+    { id: 1, title: 'Photo 1', year: 2022, url: unsplashImage },
 
-    { id: 2, title: 'Photo 2', year: 2021, url: 'https://placekitten.com/401/300' },
-    { id: 2, title: 'Photo 2', year: 2021, url: 'https://placekitten.com/401/300' },  
-    { id: 3, title: 'Photo 3', year: 2023, url: 'https://placekitten.com/402/300' },
-    { id: 3, title: 'Photo 3', year: 2023, url: 'https://placekitten.com/402/300' },
+    { id: 2, title: 'Photo 2', year: 2021, url: unsplashImage },
+    { id: 2, title: 'Photo 2', year: 2021, url: unsplashImage },  
+    { id: 3, title: 'Photo 3', year: 2023, url: unsplashImage },
+    { id: 3, title: 'Photo 3', year: 2023, url: unsplashImage },
  
   ];
 
@@ -69,7 +70,7 @@ const GalleryNatal = () => {
       <button className='flex ml-5 text-secondary font-semibold mt-3' onClick={handleGoBack}>
         <img src="/img/assets/left-arrow (1).png" className='mr-2'/> Kembali
       </button>
-      <h1 className="text-3xl font-semibold mb-6 text-center">Dokumentasi Natal</h1>
+      <h1 className="text-3xl font-semibold mb-6 text-center">Dokumentasi Paskah</h1>
 
       <div className="flex justify-center mb-4">
         <input
@@ -145,4 +146,4 @@ const GalleryNatal = () => {
   );
 };
 
-export default GalleryNatal;
+export default GalleryPaskah;
