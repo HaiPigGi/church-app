@@ -3,14 +3,11 @@ import { createContext, useState } from 'react';
 
 const SessionContext = createContext();
 
-export function setSession(value) {
-  session = value;
-  sessionStorage.setItem('UserToken', session);
-}
-
-var session;
 
 const SessionContextProvider = ({ children }) => {
+  const [session , setSession] = useState(
+    
+  );
   return (
     <SessionContext.Provider value={{ session }}>
       {children}

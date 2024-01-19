@@ -19,7 +19,6 @@ function HeroSection() {
   useEffect(() => {
     const token = sessionStorage.getItem('jwtToken');
     setSession(token);
-    console.log(session);
   });
 
   return (

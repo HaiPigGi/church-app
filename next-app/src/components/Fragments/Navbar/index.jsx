@@ -119,14 +119,33 @@ function Navbar({ props }) {
         <div className="grid grid-cols-4 h-full">
           <div className=" flex justify-center items-center h-full w-full text-center">
             <div className="w-full text-center">
-              <Dropdowns size="extraSmall" intent="netral" modalAbove="true">
+              <Dropdowns
+                size="extraSmall"
+                intent="netral"
+                modalAbove="true"
+                datatestid="profilgereja"
+                dataModal={[
+                  {
+                    text: 'Pasor Paroki',
+                    href: '/pages/pastor',
+                  },
+                  {
+                    text: 'Kepungurasan OMK',
+                    href: '/pages/OMK',
+                  },
+                  {
+                    text: 'Kepengurusan Mesdinar',
+                    href: '/pages/mesdinar',
+                  },
+                ]}
+              >
                 <i className="ri-home-5-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
                 Profil Gereja
               </Dropdowns>
             </div>
           </div>
           <div className="flex justify-center items-center h-full w-full text-center">
-            <NavLinks href="/pages/saran" intent="netral" size="extraSmall">
+            <NavLinks href="/pages/forum" intent="netral" size="extraSmall">
               <i className="ri-question-answer-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
               Kritik & Saran
             </NavLinks>
