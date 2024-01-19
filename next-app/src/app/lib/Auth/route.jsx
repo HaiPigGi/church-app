@@ -3,12 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const AuthService = () => {
-  var errorMessage = '';
   var csrf_token = '';
-
-  function setErrorMessage(ErrorMessage) {
-    errorMessage = ErrorMessage;
-  }
 
   function setCsrf(value) {
     csrf_token = value;
@@ -152,9 +147,65 @@ const AuthService = () => {
     }
   }
 
+  async function post_Register(dataRegis) {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/auth/register`,
+        {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrf_token,
+          },
+          credentials: 'include',
+          body: JSON.stringify(dataRegis),
+          cache: 'no-store',
+        },
+      );
+
+      console.log('Response Status:', res.status);
+      const responseData = await res.json();
+
+      if (res.status === 201) {
+        return {
+          message: responseData.message,
+          status: res.status,
+          href: '/pages/login',
+        };
+      } else if (res.status === 400) {
+        const message = responseData.error || 'Registration Failed';
+        return {
+          message: message,
+          status: res.status,
+        };
+      } else {
+        const contentType = res.headers.get('content-type');
+        const isJSON = contentType && contentType.includes('application/json');
+
+        if (!isJSON) {
+          const message = `Registration failed with status: ${res.status}`;
+          return {
+            message: message,
+            status: res.status,
+          };
+        }
+
+        const message = responseData.message || 'Registration failed';
+        return {
+          message: message,
+          status: res.status,
+        };
+      }
+    } catch (error) {
+      console.error('Error when post data in register:', error.message);
+    }
+  }
+
   return {
     Sign_in: post_Login,
     Logout: delete_Logout,
+    Sign_up: post_Register,
     CSRF_token: get_CSRF,
   };
 };
