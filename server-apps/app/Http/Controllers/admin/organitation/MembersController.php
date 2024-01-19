@@ -74,6 +74,13 @@ class MembersController extends Controller
         }
     }
 
+    public function getAllData() {
+        $member=membersModel::all();
+        return response()->json(['data'=> $member],200);
+
+    }
+
+
     /**
      * Get details for a specific member by ID, including image details and organization/position names.
      *
