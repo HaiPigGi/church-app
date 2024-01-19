@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\RegistrationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Auth\VallidationJWTController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -39,6 +40,12 @@ Route::middleware(['cors'])->group(function () {
             Route::delete('/logout', [LoginController::class, 'logout']);
         });
     });
+
+    // No middleware specified for this route
+    Route::prefix('validation')->group(function () {
+        Route::get('/validate-token', [VallidationJWTController::class, 'validateToken']);
+    });
+
 
     Route::prefix('admin')->middleware(['jwt'])->group(function () {
         // Berita Routes
