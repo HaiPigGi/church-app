@@ -1,9 +1,12 @@
 'use client';
 import MainLayout from '@/components/Layouts/MainLayout/index';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import Navbar from '@/components/Fragments/Navbar';
 import AuthService from '@/app/lib/Auth/route.jsx';
 import Modal from '@/components/Fragments/Modal';
+import { useRouter } from 'next/navigation';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSession } from '@/features/counter/sessionSlice';
 
 export default function Login() {
   const [dataLogin, setDataLogin] = useState({
@@ -14,6 +17,12 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState('');
+  const [path, setPath] = useState('');
+  const session = useSelector((state) => {
+    state.session.value;
+  });
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,8 +61,11 @@ export default function Login() {
             </p>
           </>,
         );
+        dispatch(setSession(res));
+        console.log('session : ', res);
+        console.log(session);
         setOpenModal(true);
-        window.location.href = res.href;
+        setPath(res.href);
         return;
       }
       setErrorMessage(res.message);
@@ -65,6 +77,7 @@ export default function Login() {
 
   const handleModal = () => {
     setOpenModal(!openModal);
+    // router.push(path);
   };
 
   const clsSection = () => {

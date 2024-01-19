@@ -8,23 +8,26 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import 'remixicon/fonts/remixicon.css';
 import DropDownContextProvider from '@/components/Elements/Dropdown/dropdownContext';
 import AuthService from '@/app/lib/Auth/route';
+import { useSelector } from 'react-redux';
 
 function Navbar({ props }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const mainControl = useAnimation();
   const [user, setUser] = useState('');
-
-  useEffect(() => {
-    const userName = sessionStorage.getItem('name');
-    setUser(userName);
-  }, []);
+  const session = useSelector((state) => state.session.value);
 
   useEffect(() => {
     if (isInView) {
       mainControl.start('visible');
     }
   }, [isInView]);
+
+  useEffect(() => {
+    if (session) {
+      setUser(session.name);
+    }
+  }, [session]);
 
   return (
     <>
@@ -95,7 +98,7 @@ function Navbar({ props }) {
             dataModal={[
               {
                 text: 'Log out',
-                href: '#',
+                href: '/',
                 action: AuthService().Logout,
               },
             ]}

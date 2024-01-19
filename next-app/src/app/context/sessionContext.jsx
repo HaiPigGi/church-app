@@ -1,19 +1,22 @@
 'use client';
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
+import UserService from '@/app/lib/User/route';
 
 const SessionContext = createContext();
 
-
 const SessionContextProvider = ({ children }) => {
-  const [session , setSession] = useState(
-    
-  );
+  const [session, setSession] = useState('');
+  useEffect(() => {
+    console.log(session);
+  }, [session]);
   return (
-    <SessionContext.Provider value={{ session }}>
+    <SessionContext.Provider value={{ session, setSession }}>
       {children}
     </SessionContext.Provider>
   );
 };
 
-export const Session = SessionContext;
+export const useSession = () => {
+  return useContext(SessionContext);
+};
 export default SessionContextProvider;

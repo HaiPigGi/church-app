@@ -15,9 +15,7 @@ export default function Register() {
   });
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [session, setSession] = useState({});
   const [openModal, setOpenModal] = useState(false);
-  const [modalContent, setModalContent] = useState();
 
   const handleChanges = (e) => {
     const { name, value } = e.target;
@@ -72,6 +70,7 @@ export default function Register() {
     setErrorMessage(res.message);
     return;
   };
+
   return (
     <MainLayout>
       <section className={clsSection(openModal)}>

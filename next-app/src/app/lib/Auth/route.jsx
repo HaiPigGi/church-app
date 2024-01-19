@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { Session } from '@/app/context/sessionContext';
 
 const AuthService = () => {
   var csrf_token = '';
@@ -27,6 +28,7 @@ const AuthService = () => {
           .split('=')[1];
 
         setCsrf({ csrf_token: csrfToken });
+        return csrfToken;
       } else {
         console.error('Failed to fetch CSRF token');
       }
@@ -59,28 +61,23 @@ const AuthService = () => {
         const role = responseData.role;
 
         sessionStorage.setItem('jwtToken', responseData.token);
-        sessionStorage.setItem('role', responseData.role);
-        sessionStorage.setItem('name', responseData.name);
 
+        var href;
         if (role === 0) {
-          return {
-            message: responseData.message,
-            href: '/',
-            status: res.status,
-          };
+          href = '/';
         } else if (role === 1) {
-          return {
-            message: responseData.message,
-            href: '/page/admin',
-            status: res.status,
-          };
+          href = '/pages/admin';
         } else {
-          return {
-            message: 'Unexpected role Received',
-            href: '/login',
-            status: res.status,
-          };
+          href = '/pages/login';
         }
+
+        return {
+          name: responseData.name,
+          role: responseData.role,
+          message: responseData.message,
+          href: href,
+          status: res.status,
+        };
       } else if (res.status === 401) {
         // Handle unauthorized (401) error
         return {
@@ -139,8 +136,6 @@ const AuthService = () => {
         },
       });
       sessionStorage.removeItem('jwtToken');
-      sessionStorage.removeItem('name');
-      sessionStorage.removeItem('role');
       window.location.href = '/';
     } catch (e) {
       console.log('Error When logout : ', e.message);

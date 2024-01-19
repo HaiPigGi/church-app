@@ -2,11 +2,13 @@
 import Button from '@/components/Elements/Buttons';
 import { useEffect, useRef, useState } from 'react';
 import { useInView, motion, useAnimation } from 'framer-motion';
+import { useSelector } from 'react-redux';
 
 function HeroSection() {
   const refHeroSec = useRef(null);
   const inView = useInView(refHeroSec, { once: true });
-  const [session, setSession] = useState();
+  const [user, setUser] = useState();
+  const session = useSelector((state) => state.session.value);
 
   const mainControlls = useAnimation();
   useEffect(() => {
@@ -17,9 +19,10 @@ function HeroSection() {
   }, [inView]);
 
   useEffect(() => {
-    const token = sessionStorage.getItem('jwtToken');
-    setSession(token);
-  });
+    if (session) {
+      setUser(session.name);
+    }
+  }, [session]);
 
   return (
     <section
@@ -45,7 +48,7 @@ function HeroSection() {
             Temukan lebih banyak tentang komunitas gereja kami dengan login
             sekarang untuk eksplorasi lengkap
           </p>
-          {session ? (
+          {user ? (
             <></>
           ) : (
             <>
