@@ -1,7 +1,22 @@
-export default function Loading() {
+import { Audio,Puff ,CirclesWithBar} from 'react-loader-spinner'
+
+ function Loading() {
+
   return (
-    <main className="h-screen w-full bg-white flex justify-center items-center">
-      <h1 className="animate-pulse">Loading</h1>
-    </main>
+    <div className="flex text-center justify-center items-center w-[100%] h-[100vh]">
+        <CirclesWithBar
+         height="100"
+         width="100"
+         color="#4fa94d"
+         outerCircleColor="#4fa94d"
+         innerCircleColor="#DBA150"
+         barColor="#DBA150"
+         ariaLabel="circles-with-bar-loading"
+         wrapperStyle={{}}
+         wrapperClass=""
+         visible={true}
+        />
+    </div>
   );
 }
+export default Loading;
