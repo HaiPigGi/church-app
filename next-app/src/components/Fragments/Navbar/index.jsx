@@ -30,12 +30,38 @@ function Navbar({ props }) {
     }
   }, [isInView]);
 
-  useEffect(() => {
-    console.log(status);
+  const RenderBasedStatus = () => {
     if (status == 'succeeded') {
       setUser(userData.user.name);
+      return (
+        <Dropdowns
+          size="medium"
+          intent="black"
+          modalAbove={false}
+          modalPosition="toRight"
+          dataModal={[
+            {
+              text: 'Log out',
+              href: '#',
+              action: AuthService().Logout,
+            },
+          ]}
+        >
+          welcome,{' '}
+          <span className="font-bold text-secondary capitalize">{user}</span>
+        </Dropdowns>
+      );
     }
-  }, [status]);
+    return (
+      <Button href={'/pages/login'} intent="secondary" size="small">
+        Login
+      </Button>
+    );
+  };
+
+  useEffect(() => {
+    RenderBasedStatus();
+  }, [status, RenderBasedStatus]);
 
   return (
     <>
@@ -101,28 +127,7 @@ function Navbar({ props }) {
             </NavLinks>
           </div>
         </motion.div>
-        {user ? (
-          <Dropdowns
-            size="medium"
-            intent="black"
-            modalAbove={false}
-            modalPosition="toRight"
-            dataModal={[
-              {
-                text: 'Log out',
-                href: '/',
-                action: AuthService().Logout,
-              },
-            ]}
-          >
-            welcome,{' '}
-            <span className="font-bold text-secondary capitalize">{user}</span>
-          </Dropdowns>
-        ) : (
-          <Button href={'/pages/login'} intent="secondary" size="small">
-            Login
-          </Button>
-        )}
+        <RenderBasedStatus />
       </nav>
 
       {/* for mobile */}

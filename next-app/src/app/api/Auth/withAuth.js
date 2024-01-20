@@ -4,29 +4,22 @@ import { useAppSelector } from '@/lib/hook';
 
 const WithAuth = (WrappedComponent, allowRoles) => {
   const Auth = () => {
-    const token = sessionStorage.getItem('jwtToken');
-    const tokenInvalid = useAppSelector((state) => state.session.error);
     const redirectToHome = () => {
       window.location.href = '/';
     };
-    if (tokenInvalid) {
-      const userRole = useAppSelector((state) => state.session.user.status);
-
-      useEffect(() => {
-        if (!token) {
-          redirectToHome();
-          return;
-        }
-
-        if (!allowRoles.includes(userRole)) {
-          redirectToHome();
-          return;
-        }
-      }, []);
-      return <WrappedComponent />;
-    }
-    redirectToHome();
-    return;
+    const userRole = useAppSelector((state) => state.session.user.status);
+    useEffect(() => {
+      const token = sessionStorage.getItem('jwtToken');
+      if (!token) {
+        redirectToHome();
+        return;
+      }
+      if (!allowRoles.includes(userRole)) {
+        redirectToHome();
+        return;
+      }
+    }, []);
+    return <WrappedComponent />;
   };
   return Auth;
 };

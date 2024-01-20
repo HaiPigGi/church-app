@@ -6,14 +6,9 @@ import { useAppSelector } from '@/lib/hook';
 
 export default function Home() {
   //get the AuthStatus
-  const AuthStatus = useAppSelector((state) => state.session.status);
 
   //execute function Load whenever the AuthStatus changed
-  useEffect(() => {
-    Load();
-  }, [AuthStatus]);
-
-  // function for Loading
+  const AuthStatus = useAppSelector((state) => state.session.status);
   const Load = () => {
     if (AuthStatus == 'loading') {
       // change the loading animation in components/fragments/Loading
@@ -22,5 +17,11 @@ export default function Home() {
     return <PageHome />;
   };
 
-  return Load();
+  useEffect(() => {
+    Load();
+  }, [AuthStatus]);
+
+  // function for Loading
+
+  return <Load />;
 }

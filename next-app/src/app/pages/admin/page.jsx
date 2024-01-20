@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaAnglesLeft } from 'react-icons/fa6';
 import Out from '@/app/pages/admin/out';
 import Pesan from '@/app/pages/admin/pesan';
@@ -7,10 +7,15 @@ import Organisasi from './organisasi';
 import Posisi from './posisi';
 import Member from './member';
 import WithAuth from '@/app/api/Auth/withAuth.js';
+import { useAppSelector } from '@/lib/hook';
+import Loading from '@/components/Fragments/Loading/loading';
+import { useRouter } from 'next/navigation';
 
 function Admin() {
   const [open, setopen] = useState(true);
   const [activeMenu, setActiveMenu] = useState('');
+  const [loading, setLoading] = useState();
+  const status = useAppSelector((state) => state.session.status);
 
   const Menus = [
     {
@@ -165,4 +170,24 @@ function Admin() {
   );
 }
 
-export default WithAuth(Admin, ['1']);
+const RenderBasedStatus = () => {
+  const status = useAppSelector((state) => state.session.status);
+  const router = useRouter();
+  useEffect(() => {
+    renderUI();
+    console.log(status);
+  }, [status]);
+
+  const renderUI = () => {
+    if (status == 'succeeded') {
+      return WithAuth(<Admin />, [1]);
+    } else if (status == 'loading') {
+      return <Loading />;
+    } else {
+      console.log(status);
+      return router.push('/');
+    }
+  };
+};
+
+export default RenderBasedStatus;
