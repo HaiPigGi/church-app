@@ -170,24 +170,35 @@ function Admin() {
   );
 }
 
+// function for rendering based on the status of the validation token
 const RenderBasedStatus = () => {
+  // for getting the validation status
   const status = useAppSelector((state) => state.session.status);
+
+  // for getting the userData
   const userData = useAppSelector((state) => state.session);
   const router = useRouter();
   const [UI, setUI] = useState();
+
   useEffect(() => {
     setUI(renderUI());
   }, [status]);
 
+  // for redering the ui
   const renderUI = () => {
     console.log(status);
+    // if verify status succeeded
     if (status == 'succeeded') {
       const userRole = userData.user.user.status;
+      // rendering with autentication
       return WithAuth(Admin, [1], userRole);
+
+      // if verify status loading
     } else if (status == 'loading') {
       return <Loading />;
+
+      // if verify status failed
     } else {
-      console.log(status);
       return router.push('/');
     }
   };

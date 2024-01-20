@@ -135,9 +135,6 @@ const AuthService = () => {
           },
         },
       );
-      // const removedToken = sessionStorage.removeItem('jwtToken');
-      // console.log('removed token :', removedToken);
-      // console.log('response When logout ', res);
       if (res.ok) {
         window.location.href = '/';
       }
