@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 import { Poppins } from 'next/font/google';
 import './globals.css';
 import StoreProvider from './storeProvider';

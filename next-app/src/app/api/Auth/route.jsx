@@ -125,15 +125,22 @@ const AuthService = () => {
   async function delete_Logout() {
     const jwtToken = sessionStorage.getItem('jwtToken');
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/api/auth/logout`, {
-        method: 'DELETE',
-        mode: 'cors',
-        headers: {
-          Authorization: `bearer ${jwtToken}`,
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/auth/logout`,
+        {
+          method: 'DELETE',
+          mode: 'cors',
+          headers: {
+            Authorization: `bearer ${jwtToken}`,
+          },
         },
-      });
-      sessionStorage.removeItem('jwtToken');
-      window.location.href = '/';
+      );
+      // const removedToken = sessionStorage.removeItem('jwtToken');
+      // console.log('removed token :', removedToken);
+      // console.log('response When logout ', res);
+      if (res.ok) {
+        window.location.href = '/';
+      }
     } catch (e) {
       console.log('Error When logout : ', e.message);
     }

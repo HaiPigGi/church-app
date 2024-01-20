@@ -17,7 +17,7 @@ export const getUserData = createAsyncThunk('session/getUserData', async () => {
     console.log(token);
     const response = await UserServices().getUserData(token);
     console.log('response at sessionSlice.js : ', response);
-    setSession(response);
+    // setSession(response);
     return response;
   }
   return {
@@ -50,12 +50,12 @@ export const sessionSlice = createSlice({
       //for handle when status fulfilled
       .addCase(getUserData.fulfilled, (state, action) => {
         // check if there is an Error from server
-        console.log(action.payload);
         if (!action.payload.error) {
           state.status = 'succeeded';
           state.user = action.payload;
           return;
         }
+        console.log(action.payload);
         state.status = 'failed';
         state.error = action.error;
         return;

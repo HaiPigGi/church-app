@@ -7,6 +7,7 @@ import Modal from '@/components/Fragments/Modal';
 import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserData, setSession } from '@/lib/features/session/sessionSlice';
+import { useAppDispatch } from '@/lib/hook';
 
 export default function Login() {
   const [dataLogin, setDataLogin] = useState({
@@ -18,10 +19,7 @@ export default function Login() {
   const [openModal, setOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState('');
   const [path, setPath] = useState('');
-  const session = useSelector((state) => {
-    state.session.value;
-  });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -62,7 +60,16 @@ export default function Login() {
           </>,
         );
         const token = sessionStorage.getItem('jwtToken');
-        dispatch(getUserData(token));
+        dispatch(
+          setSession({
+            message: res.message,
+            user: {
+              name: res.name,
+              status: res.status,
+            },
+            error: null,
+          }),
+        );
         setOpenModal(true);
         setPath(res.href);
         return;
@@ -76,7 +83,7 @@ export default function Login() {
 
   const handleModal = () => {
     setOpenModal(!openModal);
-    router.push(path);
+    window.location.href = path;
   };
 
   const clsSection = () => {
