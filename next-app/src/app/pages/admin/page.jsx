@@ -172,15 +172,18 @@ function Admin() {
 
 const RenderBasedStatus = () => {
   const status = useAppSelector((state) => state.session.status);
+  const userData = useAppSelector((state) => state.session);
   const router = useRouter();
+  const [UI, setUI] = useState();
   useEffect(() => {
-    renderUI();
-    console.log(status);
+    setUI(renderUI());
   }, [status]);
 
   const renderUI = () => {
+    console.log(status);
     if (status == 'succeeded') {
-      return WithAuth(<Admin />, [1]);
+      const userRole = userData.user.user.status;
+      return WithAuth(Admin, [1], userRole);
     } else if (status == 'loading') {
       return <Loading />;
     } else {
@@ -188,6 +191,7 @@ const RenderBasedStatus = () => {
       return router.push('/');
     }
   };
+  return UI;
 };
 
 export default RenderBasedStatus;
