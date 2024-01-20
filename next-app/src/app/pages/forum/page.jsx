@@ -1,5 +1,6 @@
 import MainLayout from '@/components/Layouts/MainLayout';
 import Footer from '@/components/Fragments/Footer';
+import Navbar from '@/components/Fragments/Navbar';
 
 export default function saran() {
   return (
