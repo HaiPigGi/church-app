@@ -6,16 +6,23 @@ import Dropdowns, { ShowModal } from '@/components/Elements/Dropdown';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import { useContext, useEffect, useRef, useState } from 'react';
 import 'remixicon/fonts/remixicon.css';
-import DropDownContextProvider from '@/components/Elements/Dropdown/dropdownContext';
-import AuthService from '@/app/lib/Auth/route';
-import { useSelector } from 'react-redux';
+import AuthService from '@/app/api/Auth/route';
+import { useAppSelector, useAppDispatch } from '@/lib/hook';
 
 function Navbar({ props }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const mainControl = useAnimation();
   const [user, setUser] = useState('');
-  const session = useSelector((state) => state.session.value);
+  // to get the status from redux store
+  const status = useAppSelector((state) => state.session.status);
+  // to get user from status
+  const userData = useAppSelector((state) => state.session.user);
+  // userData value must be {
+  //  user : "{'message','user:{name,status}}''",
+  //  status : "{'status : string'",
+  //  error: "string"
+  // }
 
   useEffect(() => {
     if (isInView) {
@@ -24,10 +31,11 @@ function Navbar({ props }) {
   }, [isInView]);
 
   useEffect(() => {
-    if (session) {
-      setUser(session.name);
+    console.log(status);
+    if (status == 'succeeded') {
+      setUser(userData.user.name);
     }
-  }, [session]);
+  }, [status]);
 
   return (
     <>

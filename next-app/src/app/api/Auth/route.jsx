@@ -1,7 +1,4 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import { useContext } from 'react';
-import { Session } from '@/app/context/sessionContext';
 
 const AuthService = () => {
   var csrf_token = '';

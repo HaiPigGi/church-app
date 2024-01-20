@@ -2,10 +2,9 @@
 import { useEffect, useState } from 'react';
 import Router from 'next/router';
 import MainLayout from '@/components/Layouts/MainLayout/index';
-import axios from 'axios';
 import Modal from '@/components/Fragments/Modal';
 import 'remixicon/fonts/remixicon.css';
-import AuthService from '@/app/lib/Auth/route';
+import AuthService from '@/app/api/Auth/route';
 
 export default function Register() {
   const [dataRegis, setDataRegis] = useState({

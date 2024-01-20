@@ -2,11 +2,11 @@
 import MainLayout from '@/components/Layouts/MainLayout/index';
 import { useState } from 'react';
 import Navbar from '@/components/Fragments/Navbar';
-import AuthService from '@/app/lib/Auth/route.jsx';
+import AuthService from '@/app/api/Auth/route.jsx';
 import Modal from '@/components/Fragments/Modal';
 import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSession } from '@/features/counter/sessionSlice';
+import { getUserData, setSession } from '@/lib/features/session/sessionSlice';
 
 export default function Login() {
   const [dataLogin, setDataLogin] = useState({
@@ -61,9 +61,8 @@ export default function Login() {
             </p>
           </>,
         );
-        dispatch(setSession(res));
-        console.log('session : ', res);
-        console.log(session);
+        const token = sessionStorage.getItem('jwtToken');
+        dispatch(getUserData(token));
         setOpenModal(true);
         setPath(res.href);
         return;
@@ -77,7 +76,7 @@ export default function Login() {
 
   const handleModal = () => {
     setOpenModal(!openModal);
-    // router.push(path);
+    router.push(path);
   };
 
   const clsSection = () => {

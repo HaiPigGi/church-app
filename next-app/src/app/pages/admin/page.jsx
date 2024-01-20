@@ -6,7 +6,7 @@ import Pesan from '@/app/pages/admin/pesan';
 import Organisasi from './organisasi';
 import Posisi from './posisi';
 import Member from './member';
-import WithAuth from '@/app/lib/Auth/withAuth.js';
+import WithAuth from '@/app/api/Auth/withAuth.js';
 
 function Admin() {
   const [open, setopen] = useState(true);

@@ -3,7 +3,7 @@ const beritaServices = () => {
   async function get_AllBerita() {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN}/admin/berita/`,
+        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/`,
         {
           method: 'GET',
           mode: 'cors',
@@ -28,7 +28,7 @@ const beritaServices = () => {
   async function get_beritaID(beritaID) {
     try {
       const res = fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN}/admin/berita/${id}`,
+        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${id}`,
         {
           method: 'GET',
           mode: 'cors',
@@ -52,7 +52,7 @@ const beritaServices = () => {
   async function post_berita(dataPost) {
     try {
       const res = fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN}/admin/berita/store`,
+        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/store`,
         {
           method: 'POST',
           mode: 'cors',
@@ -72,7 +72,7 @@ const beritaServices = () => {
   async function put_berita(dataPost) {
     try {
       const res = fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN}/admin/berita/${dataPost.id}`,
+        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${dataPost.id}`,
         {
           method: 'PUT',
           mode: 'cors',
@@ -92,7 +92,7 @@ const beritaServices = () => {
   async function delete_berita(beritaID) {
     try {
       const res = fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN}/admin/berita/${beritaID}`,
+        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${beritaID}`,
         {
           method: 'DELETE',
           mode: 'cors',

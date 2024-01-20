@@ -1,8 +1,7 @@
 'use client';
 import { Poppins } from 'next/font/google';
 import './globals.css';
-import { Provider } from 'react-redux';
-import store from './store';
+import StoreProvider from './storeProvider';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -13,7 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={poppins.className}>
-        <Provider store={store}>{children}</Provider>
+        <StoreProvider>{children}</StoreProvider>
       </body>
     </html>
   );
