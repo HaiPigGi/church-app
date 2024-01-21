@@ -9,7 +9,7 @@ function HeroSection() {
   const inView = useInView(refHeroSec, { once: true });
   const [user, setUser] = useState();
   const status = useSelector((state) => state.session.status);
-  const userData = useSelector((state) => state.session.user);
+  const userData = useSelector((state) => state.session);
 
   const mainControlls = useAnimation();
   useEffect(() => {
@@ -20,9 +20,9 @@ function HeroSection() {
   }, [inView]);
 
   useEffect(() => {
-    // if (status == 'succeeded') {
-    //   setUser(userData.user);
-    // }
+    if (status == 'succeeded') {
+      setUser(userData.user.user.name);
+    }
   }, [status]);
 
   return (
