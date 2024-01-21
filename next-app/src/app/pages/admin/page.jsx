@@ -6,6 +6,7 @@ import Pesan from '@/app/pages/admin/pesan';
 import Organisasi from './organisasi';
 import Posisi from './posisi';
 import Member from './member';
+import Berita from './berita'
 import WithAuth from '@/app/api/Auth/withAuth.js';
 import { useAppSelector } from '@/lib/hook';
 import Loading from '@/components/Fragments/Loading/loading';
@@ -52,10 +53,10 @@ function Admin() {
       onClick: () => handleMenuClick('Hidden'),
     },
     {
-      title: 'Pengumunan',
+      title: 'Berita',
       src: 'alert (1)',
       gab: true,
-      onClick: () => handleMenuClick('Pengumunan'),
+      onClick: () => handleMenuClick('Berita'),
     },
     {
       title: 'Logout',
@@ -86,11 +87,7 @@ function Admin() {
     </h1>
   );
 
-  const Pengumunan = () => (
-    <h1 className="p-7 text-2xl font-semibold flex-1 h-screen text-center">
-      Pengumunan page
-    </h1>
-  );
+
 
   const renderContent = () => {
     switch (activeMenu) {
@@ -108,8 +105,8 @@ function Admin() {
         return <Jadwal />;
       case 'Hidden':
         return <Search />;
-      case 'Pengumunan':
-        return <Pengumunan />;
+      case 'Berita':
+        return <Berita />;
       case 'Logout':
         return <Out />;
       default:
