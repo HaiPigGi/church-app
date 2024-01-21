@@ -7,6 +7,7 @@ const AuthService = () => {
     csrf_token = value;
   }
 
+  // function for get csrf token
   async function get_CSRF() {
     try {
       const response = await fetch(
@@ -34,8 +35,10 @@ const AuthService = () => {
     }
   }
 
+  // function for Login
   async function post_Login(dataLogin) {
     try {
+      // 
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/auth/login`,
         {
