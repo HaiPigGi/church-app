@@ -56,6 +56,7 @@ export async function get_beritaID(beritaID) {
 
 // to post new berita
 export async function post_berita(dataPost) {
+  console.log('cek data post : ', dataPost);
   try {
     console.log('data post at POST_BERITA : ', dataPost);
     let res = await fetch(
@@ -65,17 +66,18 @@ export async function post_berita(dataPost) {
         mode: 'cors',
         headers: {
           Authorization: `bearer ${getJwtToken()}`,
-          'content-type': 'application/json',
         },
-        body: dataPost,
+        body: dataPost, //Pass FormData directly as the body //other change to stringyfy to pass just body
       },
     );
+
     console.log(res.status);
-    if (res.status == 200) {
+
+    if (res.status === 200) {
       return {
         message: 'Data Successfully Added',
       };
-    } else if (res.status == 422) {
+    } else if (res.status === 422) {
       return {
         message: 'Data is not valid',
       };

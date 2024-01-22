@@ -112,7 +112,7 @@ class beritaController extends Controller
         try {
             DB::beginTransaction();
 
-            // Log::info("Check Request Data: ", $request->all());
+            Log::info("Check Request Data: ", $request->all());
 
             // Validate form
             $validator = Validator::make($request->all(), [
@@ -123,7 +123,7 @@ class beritaController extends Controller
             ]);
 
             if ($validator->fails()) {
-                // Log::error('Validation Error', ['error' => $validator->errors()->all()]);
+                Log::error('Validation Error', ['error' => $validator->errors()->all()]);
                 return response()->json(['status' => 'error', 'message' => 'Data is not Valid'], 422);
             }
 
