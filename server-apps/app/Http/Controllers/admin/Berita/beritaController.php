@@ -165,7 +165,7 @@ class beritaController extends Controller
             Log::info('Request data in controller: ', $request->all());
             // Validate form data
             $validator = Validator::make($request->all(), [
-                'image'   => 'image|mimes:jpeg,png,jpg,svg|max:2080',
+                'image'   => 'image|mimes:jpeg,png,jpg,svg|max:20480',
                 'title'   => 'required|min:5',
                 'content' => 'required|min:10',
                 'event'   => 'required',

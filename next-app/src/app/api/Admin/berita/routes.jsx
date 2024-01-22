@@ -32,7 +32,7 @@ export async function get_AllBerita() {
 // to get berita based on id
 export async function get_beritaID(beritaID) {
   try {
-    const res = fetch(  
+    const res = fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${id}`,
       {
         method: 'GET',
@@ -57,21 +57,34 @@ export async function get_beritaID(beritaID) {
 // to post new berita
 export async function post_berita(dataPost) {
   try {
-    const res = fetch(
+    let res = await fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/store`,
       {
         method: 'POST',
         mode: 'cors',
         headers: {
           Authorization: `bearer ${getJwtToken()}`,
+          'content-type': 'application/json',
         },
         body: JSON.stringify(dataPost),
       },
     );
-    const responseData = await res.json();
-    return responseData;
+    console.log(res.status);
+    if (res.status == 200) {
+      return {
+        message: 'Data Successfully Added',
+      };
+    } else if (res.status == 422) {
+      return {
+        message: 'Data is not valid',
+      };
+    } else {
+      return {
+        message: res.status,
+      };
+    }
   } catch (e) {
-    console.log('error in pot_berita with message : ', e.message);
+    console.log('error in post_berita with message : ', e.message);
   }
 }
 
