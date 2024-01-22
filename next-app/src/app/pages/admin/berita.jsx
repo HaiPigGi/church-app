@@ -1,21 +1,48 @@
 'use client'
 import { useState } from 'react';
-import route from '@/app/api/Admin/berita/routes'
+// import beritaServices  from '@/app/api/Admin/berita/routes'
+import {post_berita} from '@/app/api/Admin/berita/routes'
 
 
 const berita = () => {
 
-    const initialFormData = {
+    const [beritaData, setBeritaData] = useState({
         image: '',
         title: '',
         content: '',
-        event: ''
+        event: '',
+      })
+
+    
+
+      const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setBeritaData({ ...beritaData, [name]: value });
       };
 
-      const handleCancel = () => {
-        // Reset form
-        setFormData(initialFormData);
+    //   const handleUpdate = async () => {
+    //     try {
+    //       const updatedBerita = await beritaServices.put_berita(beritaData);
+    //       console.log('Berita updated:', updatedBerita);
+    //       // Tambah logika atau tindakan selanjutnya jika diperlukan
+    //     } catch (error) {
+    //       console.error('Error updating berita:', error.message);
+    //     }
+    //   };
+
+    const handleSaveChanges = async () => {
+        try {
+          const createdBerita = await post_berita(beritaData);
+          console.log('Berita created:', createdBerita);
+        } catch (error) {
+          console.error('Error creating berita:', error.message);
+        }
       };
+
+    //   const handleCancel = () => {
+    //     // Reset form
+    //     setBeritaData(beritaData);
+    //   };
   return (
    <div className="pt-10 flex flex-col items-center justify-center h-auto w-auto">
         <h1 className="font-bold text-3xl mb-2">Tambah Berita</h1>
@@ -27,6 +54,7 @@ const berita = () => {
                 name='image'
                 type="file"
                 className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
+                onChange={handleInputChange}
                 placeholder="Images" />
             </div>
             
@@ -57,18 +85,20 @@ const berita = () => {
 
             <div>
                 <button
-                    name='created_at'
+                    onClick={handleSaveChanges}
+                    // name='created_at'
                     className="border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200">
                         Save changes
                 </button>
                 <button
+                    // onClick={handleUpdate}
                     name='updated_at'
                     className="border-2 ml-[4rem] border-green-600 rounded-lg px-3 py-2 text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200">
                         Update
                 </button>
                 <button
                     name='deleted_at'
-                    onClick={handleCancel}
+                    // onClick={handleCancel}
                     className=" border-2 ml-[5rem] border-red-600 rounded-lg px-3 py-2 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200">
                         Batal
                 </button>
