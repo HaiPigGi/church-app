@@ -71,7 +71,7 @@ export async function post_berita(dataPost) {
     const responseData = await res.json();
     return responseData;
   } catch (e) {
-    console.log('error in put_berita with message : ', e.message);
+    console.log('error in pot_berita with message : ', e.message);
   }
 }
 
