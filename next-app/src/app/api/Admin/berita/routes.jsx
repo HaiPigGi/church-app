@@ -57,6 +57,7 @@ export async function get_beritaID(beritaID) {
 // to post new berita
 export async function post_berita(dataPost) {
   try {
+    console.log('data post at POST_BERITA : ', dataPost);
     let res = await fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/store`,
       {
@@ -66,7 +67,7 @@ export async function post_berita(dataPost) {
           Authorization: `bearer ${getJwtToken()}`,
           'content-type': 'application/json',
         },
-        body: JSON.stringify(dataPost),
+        body: dataPost,
       },
     );
     console.log(res.status);

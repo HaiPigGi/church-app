@@ -11,8 +11,28 @@ const berita = () => {
     event: '',
   });
 
+  const [errorMessage, setErrorMessage] = useState({
+    contentError: '',
+    titleError: '',
+    imageError: '',
+  });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if (name == 'title' && value.length < 5) {
+      setErrorMessage({
+        ...errorMessage,
+        titleError: 'Harus lebih dari 5 huruf',
+      });
+      return;
+    } else if (name == 'content' && value.length < 10) {
+      setErrorMessage({
+        ...errorMessage,
+        contentError: 'Harus lebih dari 10 huruf',
+      });
+      return;
+    }
+
     setBeritaData({ ...beritaData, [name]: value });
   };
 
@@ -29,16 +49,21 @@ const berita = () => {
   // method for add new news
   const handleSaveChanges = async () => {
     try {
-      console.log(beritaData);
-      let createdBerita = await post_berita(beritaData);
+      const formData = new FormData();
+      formData.append('image', beritaData.image);
+      formData.append('title', beritaData.title);
+      formData.append('content', beritaData.content);
+      formData.append('event', beritaData.event);
+      console.log(formData);
+      let createdBerita = await post_berita(formData);
       console.log('Berita created:', createdBerita);
     } catch (error) {
       console.error('Error creating berita:', error.message);
     }
   };
 
-  function checkFileSize() {
-    var fileInput = document.getElementById('image');
+  function checkFileSize(e) {
+    var fileInput = e.target;
     if (!fileInput.value) {
       return;
     }
@@ -48,10 +73,14 @@ const berita = () => {
     var fileSizeInMB = fileSize / (1024 * 1024);
 
     if (fileSizeInMB < 20) {
-      console.log(fileInput);
+      console.log(typeof fileInput.value);
+      setErrorMessage({
+        ...errorMessage,
+        contentError: 'Harus lebih dari 10 huruf',
+      });
       setBeritaData({
         ...beritaData,
-        image: fileInput.value,
+        image: fileInput,
       });
     } else {
       alert('bobot file harus kurang dari 20 mb');
@@ -62,13 +91,18 @@ const berita = () => {
   return (
     <div className="pt-10 flex flex-col items-center justify-center h-auto w-auto">
       <h1 className="font-bold text-3xl mb-2">Tambah Berita</h1>
-      <div className="shadow-2xl opacity-50 h-[80vh] w-[95vh] p-10 ">
+      <form
+        id="form"
+        action={handleSaveChanges}
+        className="shadow-2xl opacity-50 h-[80vh] w-[95vh] p-10 "
+      >
         <div className="flex flex-col mb-3">
           <label className="text-red-700 font-semibold mb-2 ">image :</label>
           <input
             id="image"
             name="image"
             type="file"
+            accept="image/*"
             className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
             onChange={checkFileSize}
             placeholder="Images"
@@ -76,6 +110,7 @@ const berita = () => {
         </div>
 
         <div className="flex flex-col mb-3">
+          <label htmlFor="title"></label>
           <input
             name="title"
             type="text"
@@ -106,7 +141,7 @@ const berita = () => {
 
         <div>
           <button
-            onClick={handleSaveChanges}
+            type="submit"
             // name='created_at'
             className="border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200"
           >
@@ -114,12 +149,14 @@ const berita = () => {
           </button>
           <button
             // onClick={handleUpdate}
+            type="submit"
             name="updated_at"
             className="border-2 ml-[4rem] border-green-600 rounded-lg px-3 py-2 text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200"
           >
             Update
           </button>
           <button
+            type="submit"
             name="deleted_at"
             // onClick={handleCancel}
             className=" border-2 ml-[5rem] border-red-600 rounded-lg px-3 py-2 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200"
@@ -127,7 +164,7 @@ const berita = () => {
             Batal
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
