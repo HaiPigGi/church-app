@@ -32,7 +32,7 @@ export async function get_AllBerita() {
 // to get berita based on id
 export async function get_beritaID(beritaID) {
   try {
-    const res = fetch(
+    const res = fetch(  
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${id}`,
       {
         method: 'GET',
