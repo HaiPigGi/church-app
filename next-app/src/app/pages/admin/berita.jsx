@@ -5,7 +5,7 @@ import { post_berita } from '@/app/api/Admin/berita/routes';
 
 const berita = () => {
   const [beritaData, setBeritaData] = useState({
-    image: '',
+    image: null,
     title: '',
     content: '',
     event: '',
@@ -29,32 +29,40 @@ const berita = () => {
   // method for add new news
   const handleSaveChanges = async () => {
     try {
-      console.log(beritaData);
-      let createdBerita = await post_berita(beritaData);
+      const formData = new FormData();
+      formData.append('image', beritaData.image);
+      formData.append('title', beritaData.title);
+      formData.append('content', beritaData.content);
+      formData.append('event', beritaData.event);
+
+      let createdBerita = await post_berita(formData);
       console.log('Berita created:', createdBerita);
     } catch (error) {
       console.error('Error creating berita:', error.message);
     }
   };
 
-  function checkFileSize() {
-    var fileInput = document.getElementById('image');
-    if (!fileInput.value) {
+  function checkFileSize(e) {
+    var fileInput = e.target;
+
+    if (!fileInput.files || fileInput.files.length === 0) {
       return;
     }
-    var fileSize = fileInput.files[0].size; // ukuran file dalam byte
 
-    // Konversi ukuran file ke megabyte
+    var fileSize = fileInput.files[0].size; // file size in bytes
+
+    // Convert file size to megabytes
     var fileSizeInMB = fileSize / (1024 * 1024);
 
     if (fileSizeInMB < 20) {
-      console.log(fileInput);
+      // Update beritaData.image with the File object
       setBeritaData({
         ...beritaData,
-        image: fileInput.value,
+        image: fileInput.files[0],
       });
     } else {
-      alert('bobot file harus kurang dari 20 mb');
+      alert('File size must be less than 20 MB');
+      // Clear the file input
       fileInput.value = '';
     }
   }
@@ -66,12 +74,14 @@ const berita = () => {
         <div className="flex flex-col mb-3">
           <label className="text-red-700 font-semibold mb-2 ">image :</label>
           <input
+            type="file"
             id="image"
             name="image"
-            type="file"
+            accept="image/*"
             className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
             onChange={checkFileSize}
             placeholder="Images"
+            required
           />
         </div>
 
