@@ -7,6 +7,7 @@ import Organisasi from './organisasi';
 import Posisi from './posisi';
 import Member from './member';
 import Berita from './berita'
+import Hidden from './hidden2';
 import WithAuth from '@/app/api/Auth/withAuth.js';
 import { useAppSelector } from '@/lib/hook';
 import Loading from '@/components/Fragments/Loading/loading';
@@ -81,11 +82,6 @@ function Admin() {
     </h1>
   );
 
-  const Search = () => (
-    <h1 className="p-7 text-2xl font-semibold flex-1 h-screen text-center">
-      Search page
-    </h1>
-  );
 
 
 
@@ -104,7 +100,7 @@ function Admin() {
       case 'Jadwal':
         return <Jadwal />;
       case 'Hidden':
-        return <Search />;
+        return <Hidden />;
       case 'Berita':
         return <Berita />;
       case 'Logout':

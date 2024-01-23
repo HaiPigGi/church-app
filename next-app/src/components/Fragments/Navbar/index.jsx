@@ -111,6 +111,10 @@ function Navbar({ props }) {
                   text: 'Kepengurusan DPP',
                   href: '/pages/DPP',
                 },
+                {
+                  text: 'Panitia Kegiatan',
+                  href: '/pages/panitia',
+                },
               ]}
             >
               Profil Gereja
