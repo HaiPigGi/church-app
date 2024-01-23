@@ -9,7 +9,7 @@ const berita = () => {
     const [beritaData, setBeritaData] = useState({
         image: '',
         title: '',
-        content: '',
+        content: '', 
         event: '',
       })
 
