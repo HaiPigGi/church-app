@@ -56,8 +56,11 @@ export async function get_beritaID(beritaID) {
 
 // to post new berita
 export async function post_berita(dataPost) {
-  console.log('cek data post : ', dataPost);
   try {
+    console.log(dataPost.get('image'));
+    console.log(dataPost.get('title'));
+    console.log(dataPost.get('content'));
+    console.log(dataPost.get('event'));
     console.log('data post at POST_BERITA : ', dataPost);
     let res = await fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/store`,
@@ -75,10 +78,12 @@ export async function post_berita(dataPost) {
 
     if (res.status === 200) {
       return {
+        status: 'success',
         message: 'Data Successfully Added',
       };
     } else if (res.status === 422) {
       return {
+        status: 'error',
         message: 'Data is not valid',
       };
     } else {

@@ -8,13 +8,13 @@ import { getUserData } from '@/lib/features/session/sessionSlice';
 // only rendered once per request on server
 export default function StoreProvider({ children }) {
   const storeRef = useRef(null);
-  console.log(storeRef.current);
 
   if (!storeRef.current) {
     //put redux store in storeRef
     storeRef.current = makeStore();
     // execute the getUserData function
-    storeRef.current.dispatch(getUserData());
+    const userData = getUserData();
+    storeRef.current.dispatch(userData);
   }
   // useEffect(() => {
   // }, []);

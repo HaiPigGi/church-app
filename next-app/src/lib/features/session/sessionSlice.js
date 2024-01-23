@@ -1,5 +1,5 @@
 'use client';
-import { createSlice, createAsyncThunk, useDispatch } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import UserServices from '@/app/api/User/route';
 
 // initial value
@@ -14,7 +14,6 @@ export const getUserData = createAsyncThunk('session/getUserData', async () => {
   const token = sessionStorage.getItem('jwtToken');
   // check if token exist
   if (token) {
-    console.log(token);
     const response = await UserServices().getUserData(token);
     console.log('response at sessionSlice.js : ', response);
     // setSession(response);

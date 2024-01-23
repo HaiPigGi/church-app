@@ -116,7 +116,7 @@ class beritaController extends Controller
 
             // Validate form
             $validator = Validator::make($request->all(), [
-                'image'   => 'required|image|mimes:jpeg,png,jpg,svg|max:2080',
+                'image'   => 'required|image|mimes:jpeg,png,jpg,svg|max:20480',
                 'title'   => 'required|min:5',
                 'content' => 'required|min:10',
                 'event'   => 'required',

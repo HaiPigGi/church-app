@@ -2,6 +2,7 @@
 import { useState } from 'react';
 // import beritaServices  from '@/app/api/Admin/berita/routes'
 import { post_berita } from '@/app/api/Admin/berita/routes';
+import Modal from '@/components/Fragments/Modal';
 
 const berita = () => {
   const [beritaData, setBeritaData] = useState({
@@ -17,20 +18,36 @@ const berita = () => {
     imageError: '',
   });
 
+  const [createBerita, setCreateBerita] = useState('');
+
+  const [modalMessage, setModalMessage] = useState();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name == 'title' && value.length < 5) {
+    if (name == 'title') {
+      if (value.length < 5) {
+        setErrorMessage({
+          ...errorMessage,
+          titleError: 'Harus lebih dari 5 huruf',
+        });
+        return;
+      }
       setErrorMessage({
         ...errorMessage,
-        titleError: 'Harus lebih dari 5 huruf',
+        titleError: '',
       });
-      return;
-    } else if (name == 'content' && value.length < 10) {
+    } else if (name == 'content') {
+      if (value.length < 10) {
+        setErrorMessage({
+          ...errorMessage,
+          contentError: 'Harus lebih dari 10 huruf',
+        });
+        return;
+      }
       setErrorMessage({
         ...errorMessage,
-        contentError: 'Harus lebih dari 10 huruf',
+        contentError: '',
       });
-      return;
     }
 
     setBeritaData({ ...beritaData, [name]: value });
@@ -46,6 +63,15 @@ const berita = () => {
   //     }
   //   };
 
+  const [openModal, setOpenModal] = useState(true);
+
+  const clearForm = () => {
+    document.querySelector('#title').value = '';
+    document.querySelector('#content').value = '';
+    document.querySelector('#event').value = '';
+    document.querySelector('#image').value = '';
+  };
+
   // method for add new news
   const handleSaveChanges = async () => {
     try {
@@ -54,9 +80,57 @@ const berita = () => {
       formData.append('title', beritaData.title);
       formData.append('content', beritaData.content);
       formData.append('event', beritaData.event);
-      console.log(formData);
       let createdBerita = await post_berita(formData);
-      console.log('Berita created:', createdBerita);
+      setCreateBerita(createdBerita);
+      setOpenModal(true);
+      setModalMessage(
+        <Modal
+          type={createBerita.status == 'success' ? 'danger' : 'success'}
+          action={() => {
+            setOpenModal(!openModal);
+            clearForm();
+          }}
+        >
+          <div className="">
+            {createdBerita.status == 'success' ? (
+              <div className="flex justify-center items-center w-full h-24 text-green-500 animate-pulse">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  height="full"
+                  fill="currentColor"
+                >
+                  <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
+                </svg>
+              </div>
+            ) : (
+              <div className="flex justify-center items-center w-full h-24 text-red-500 animate-pulse">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  height="full"
+                >
+                  <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path>
+                </svg>
+              </div>
+            )}
+            <h1
+              className={
+                createBerita.status == 'success'
+                  ? 'text-red-500'
+                  : 'text-green-500'
+              }
+            >
+              {createBerita.message}
+            </h1>
+            <h1 className="text-slate-500 text-center ">
+              klik ok untuk melanjutkan
+            </h1>
+          </div>
+          ,
+        </Modal>,
+      );
     } catch (error) {
       console.error('Error creating berita:', error.message);
     }
@@ -75,18 +149,20 @@ const berita = () => {
     var fileSizeInMB = fileSize / (1024 * 1024);
 
     if (fileSizeInMB < 20) {
-      console.log(typeof fileInput.value);
-      // Update beritaData.image with the File object
+      console.log(typeof fileInput.files[0]);
 
+      // Update beritaData.image with the File object
       setBeritaData({
         ...beritaData,
         image: fileInput.files[0],
       });
+      console.log(typeof beritaData.image);
     } else {
       setErrorMessage({
         ...errorMessage,
         contentError: 'File size must be less than 20 MB',
       });
+      console.log('ERROR AT IMAGE');
       // Clear the file input
       fileInput.value = '';
     }
@@ -102,6 +178,9 @@ const berita = () => {
       >
         <div className="flex flex-col mb-3">
           <label className="text-red-700 font-semibold mb-2 ">image :</label>
+          <label htmlFor="content" className="block text-red-500">
+            {errorMessage.imageError}
+          </label>
           <input
             type="file"
             id="image"
@@ -114,21 +193,29 @@ const berita = () => {
           />
         </div>
 
+        <label htmlFor="title" className="block text-red-500">
+          {errorMessage.titleError}
+        </label>
         <div className="flex flex-col mb-3">
-          <label htmlFor="title"></label>
           <input
+            id="title"
             name="title"
             type="text"
             className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
             placeholder="Judul Berita"
             onChange={handleInputChange}
+            required
           />
         </div>
 
+        <label htmlFor="content" className="block text-red-500">
+          {errorMessage.contentError}
+        </label>
         <div className="flex flex-col mb-3">
           <textarea
+            id="content"
             name="content"
-            required=""
+            required
             placeholder="Content"
             className="w-full h-20 px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none  focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
             onChange={handleInputChange}
@@ -136,8 +223,9 @@ const berita = () => {
         </div>
         <div className="flex flex-col mb-3">
           <textarea
+            id="event"
             name="event"
-            required=""
+            required
             placeholder="Event"
             className="w-full h-20 px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none  focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
             onChange={handleInputChange}
@@ -170,6 +258,7 @@ const berita = () => {
           </button>
         </div>
       </form>
+      {openModal ? modalMessage : ''}
     </div>
   );
 };
