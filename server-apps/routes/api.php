@@ -46,6 +46,13 @@ Route::middleware(['cors'])->group(function () {
         Route::get('/validate-token', [VallidationJWTController::class, 'validateToken']);
     });
 
+    Route::prefix('user')->group(function () {
+        //get All Berita For User without any middleware
+        Route::prefix('berita')->group(function () {
+            Route::get('/getAllBerita', [beritaController::class, 'getAllBerita'])->name('user.berita');
+            Route::get('/getAllBerita/{id}', [beritaController::class, 'getAllBeritaById'])->name('user.berita');
+        });
+    });
 
     Route::prefix('admin')->middleware(['jwt'])->group(function () {
         // Berita Routes

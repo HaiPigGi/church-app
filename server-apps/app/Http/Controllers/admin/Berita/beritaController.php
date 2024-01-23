@@ -112,7 +112,7 @@ class beritaController extends Controller
         try {
             DB::beginTransaction();
 
-            // Log::info("Check Request Data: ", $request->all());
+            Log::info("Check Request Data: ", $request->all());
 
             // Validate form
             $validator = Validator::make($request->all(), [
@@ -123,7 +123,7 @@ class beritaController extends Controller
             ]);
 
             if ($validator->fails()) {
-                // Log::error('Validation Error', ['error' => $validator->errors()->all()]);
+                Log::error('Validation Error', ['error' => $validator->errors()->all()]);
                 return response()->json(['status' => 'error', 'message' => 'Data is not Valid'], 422);
             }
 
@@ -165,7 +165,7 @@ class beritaController extends Controller
             Log::info('Request data in controller: ', $request->all());
             // Validate form data
             $validator = Validator::make($request->all(), [
-                'image'   => 'image|mimes:jpeg,png,jpg,svg|max:2080',
+                'image'   => 'image|mimes:jpeg,png,jpg,svg|max:20480',
                 'title'   => 'required|min:5',
                 'content' => 'required|min:10',
                 'event'   => 'required',
