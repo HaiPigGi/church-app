@@ -29,7 +29,7 @@ const hidden = () => {
   }, []);
 
   return (
-    <div className='flex items-center justify-center'>
+    <div className='flex items-center justify-center mt-52'>
       <div className="mb-4">
         <button
           onClick={() => triggredToggle(0)} // Tampilan A

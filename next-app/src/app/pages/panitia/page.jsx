@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { fetchPanitiaStatus } from '@/app/api/Admin/panitia/route';
 import ComingSoon from '@/app/pages/comingsoon/page';
+import Natal from '@/app/pages/panitia/natal'
+import Paskah from './paskah';
 
 const Panitia = () => {
   const [showViewA, setShowViewA] = useState(0); // Default status is set to 0 // 0 untuk default status coming soon
@@ -28,10 +30,10 @@ const Panitia = () => {
       statusText = <ComingSoon/>;
       break;
     case 1:
-      statusText = 'Panitia Natal';
+      statusText = <Natal />;
       break;
     case 2:
-      statusText = 'Panitia Paskah';
+      statusText = <Paskah/>;
       break;
     default:
       statusText = 'Unknown Status';
