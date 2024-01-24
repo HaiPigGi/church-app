@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin\panitia;
 use App\Http\Controllers\Controller;
 use App\Models\panitiaModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class panitiaController extends Controller
 {
@@ -16,7 +17,7 @@ class panitiaController extends Controller
 
     public function toggleStatus(Request $request)
     {
-        $currentStatus = panitiaModel::latest()->value('status') ?? panitiaModel::TAMPILAN_A;
+        Log::info('cek data masuk ', $request->all());
 
         // Validate the new status from the request
         $request->validate([
@@ -26,8 +27,17 @@ class panitiaController extends Controller
         // Use the validated new status value
         $newStatus = $request->input('newStatus');
 
-        // Update the existing panitia with the new status
-        panitiaModel::latest()->update(['status' => $newStatus]);
+        // Get the latest panitia or create a new one if not exists
+        $latestPanitia = panitiaModel::latest()->firstOrNew();
+
+        // If the panitia is newly created, set default values
+        if (!$latestPanitia->exists) {
+            $latestPanitia->status = 0; // Set default status for a new panitia
+            $latestPanitia->save();
+        }
+
+        // Update the panitia status
+        $latestPanitia->update(['status' => $newStatus]);
 
         return response()->json(['status' => $newStatus]);
     }
