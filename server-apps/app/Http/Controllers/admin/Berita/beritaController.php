@@ -33,7 +33,7 @@ class beritaController extends Controller
                 // Check if the file exists before getting the size
                 if (File::exists($imagePath)) {
                     return [
-                        'id' => $post->id,
+                        'berita_id' => $post->berita_id,
                         'title' => $post->title,
                         'content' => $post->content,
                         'event' => $post->event,
@@ -81,7 +81,7 @@ class beritaController extends Controller
             // Retrieve image details for the post
             $imagePath = 'storage/berita/' . $post->image;
             $postWithImage = [
-                'id'      => $post->id,
+                'berita_id'      => $post->berita_id,
                 'title'   => $post->title,
                 'content' => $post->content,
                 'event'   => $post->event,

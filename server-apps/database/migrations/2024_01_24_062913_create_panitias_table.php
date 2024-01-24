@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create("berita", function (Blueprint $table) {
-            $table->uuid('berita_id')->primary();
-            $table->string('image')->nullable();
-            $table->string("title");
-            $table->string('content', 255); 
-            $table->string("event");
-            $table->softDeletes();
+        Schema::create('panitias', function (Blueprint $table) {
+            $table->uuid('panitia_id')->primary();
+            $table->unsignedSmallInteger('status')->default(0)->comment('0: Tampilan A, 1: Tampilan B, 2: Tampilan C');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists("berita");
+        Schema::dropIfExists('panitias');
     }
 };
