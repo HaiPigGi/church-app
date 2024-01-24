@@ -6,12 +6,14 @@ use App\Http\Controllers\admin\jadwal_misa\JenisMisaController;
 use App\Http\Controllers\admin\organitation\MembersController;
 use App\Http\Controllers\admin\organitation\organitationController;
 use App\Http\Controllers\admin\organitation\PositionController;
+use App\Http\Controllers\admin\panitia\panitiaController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegistrationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Auth\VallidationJWTController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -51,6 +53,9 @@ Route::middleware(['cors'])->group(function () {
         Route::prefix('berita')->group(function () {
             Route::get('/getAllBerita', [beritaController::class, 'getAllBerita'])->name('user.berita');
             Route::get('/getAllBerita/{id}', [beritaController::class, 'getAllBeritaById'])->name('user.berita');
+        });
+        Route::prefix('panitia')->group(function () {
+            Route::get('/status', [PanitiaController::class, 'getStatus']);
         });
     });
 
@@ -107,6 +112,11 @@ Route::middleware(['cors'])->group(function () {
             Route::post('/', [JadwalMisaController::class, 'store'])->name('admin.jadwal-misa.store');
             Route::put('/{id}', [JadwalMisaController::class, 'update'])->name('admin.jadwal-misa.update');
             Route::delete('/{id}', [JadwalMisaController::class, 'destroy'])->name('admin.jadwal-misa.destroy');
+        });
+
+        Route::prefix('panitia')->group(function () {
+            Route::get('/status', [PanitiaController::class, 'getStatus']);
+            Route::put('/toggle-status', [panitiaController::class,'toggleStatus'])->name('admin.panita.toggle');
         });
     });
 });

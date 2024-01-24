@@ -7,7 +7,7 @@ import Organisasi from './organisasi';
 import Posisi from './posisi';
 import Member from './member';
 import Berita from './berita'
-import Hidden from './hidden2';
+import Hidden from './hiddenView/hidden';
 import WithAuth from '@/app/api/Auth/withAuth.js';
 import { useAppSelector } from '@/lib/hook';
 import Loading from '@/components/Fragments/Loading/loading';
