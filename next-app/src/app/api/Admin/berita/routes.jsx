@@ -100,7 +100,7 @@ export async function post_berita(dataPost) {
 export async function put_berita(dataPost) {
   try {
     const res = fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${dataPost.id}`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${dataPost.berita_id}`,
       {
         method: 'PUT',
         mode: 'cors',

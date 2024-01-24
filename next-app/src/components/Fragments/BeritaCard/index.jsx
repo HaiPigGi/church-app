@@ -7,7 +7,7 @@ function BeritaCard({ data }) {
 
   return (
     <Link
-      href={`/pages/berita/${data.id}`}
+      href={`/pages/berita/${data.berita_id}`}
       data-testid="pathnameTest"
       className="block shadow-xl mx-auto w-full max-w-[500px] md:w-4/5 mb-5 bg-white/90 rounded-xl overflow-hidden"
     >
