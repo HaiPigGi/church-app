@@ -85,7 +85,7 @@ const berita = () => {
       setOpenModal(true);
       setModalMessage(
         <Modal
-          type={createBerita.status == 'success' ? 'danger' : 'success'}
+          type={createBerita.status == 'success' ? 'success' : 'danger'}
           action={() => {
             setOpenModal(!openModal);
             clearForm();
@@ -149,7 +149,6 @@ const berita = () => {
     var fileSizeInMB = fileSize / (1024 * 1024);
 
     if (fileSizeInMB < 20) {
-      console.log(typeof fileInput.files[0]);
 
       // Update beritaData.image with the File object
       setBeritaData({
