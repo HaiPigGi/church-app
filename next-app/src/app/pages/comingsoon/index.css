@@ -11,7 +11,7 @@
   
   .individual-letter {
     display: inline-block;
-    animation: moveIn 0.5s ease-out infinite;
+    animation: moveIn 1s ease-out infinite;
   }
   
   .animation-delay-1 { animation-delay: 1.1s; }

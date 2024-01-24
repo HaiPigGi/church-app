@@ -5,6 +5,7 @@ import MainLayout from '@/components/Layouts/MainLayout/index';
 import Modal from '@/components/Fragments/Modal';
 import 'remixicon/fonts/remixicon.css';
 import AuthService from '@/app/api/Auth/route';
+import { useRouter } from 'next/navigation';
 
 export default function Register() {
   const [dataRegis, setDataRegis] = useState({
@@ -15,7 +16,9 @@ export default function Register() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const [openModal, setOpenModal] = useState(false);
-
+  const [modalContent, setModalContent] = useState();
+  const router = useRouter();
+  
   const handleChanges = (e) => {
     const { name, value } = e.target;
     setDataRegis((prevData) => ({
@@ -26,6 +29,8 @@ export default function Register() {
 
   const handleModal = () => {
     setOpenModal(!openModal);
+    router.push("/pages/login");
+    return;    
   };
 
   const clsSection = (openModal) => {
@@ -64,6 +69,7 @@ export default function Register() {
           </p>
         </>,
       );
+      setOpenModal(true);
       return;
     }
     setErrorMessage(res.message);
@@ -165,7 +171,7 @@ export default function Register() {
           </section>
         </div>
       </section>
-      {openModal ? <Modal action={handleModal} type="success"></Modal> : ''}
+      {openModal ? <Modal action={handleModal} type="success">{modalContent}</Modal> : ''}
     </MainLayout>
   );
 }

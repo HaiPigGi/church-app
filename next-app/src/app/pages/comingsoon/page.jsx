@@ -4,9 +4,7 @@ import ComingSoon from './coming';
 
 function App() {
   return (
-    <div>
       <ComingSoon />
-    </div>
   );
 }
 
