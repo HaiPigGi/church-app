@@ -19,6 +19,7 @@ function getJwtToken() {
         },
       );
       const data = await response.json();
+      console.log(data);
       return data; // Return data instead of updating state directly
     } catch (error) {
       console.error('Error toggling status:', error);
