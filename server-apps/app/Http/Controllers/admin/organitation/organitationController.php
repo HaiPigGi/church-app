@@ -132,6 +132,7 @@ class organitationController extends Controller
             ];
             $organitation = organitationModel::create($organitationData);
             DB::commit();
+            Log::info('cek data setelah commit : '.json_encode($organitation));
             return response()->json(['organitation' => $organitation], 201);
         } catch (\Throwable $th) {
             DB::rollBack();
