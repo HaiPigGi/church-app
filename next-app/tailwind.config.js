@@ -29,7 +29,6 @@ module.exports = {
       },
       backgroundColor: {
         asek: '#DBA150',
-        gelap: rgba
       },
       textColor: {
         custom: '#FF9843',
