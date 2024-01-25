@@ -36,7 +36,12 @@ function BeritaSection() {
       );
       const responseData = await res.json();
       if (res.status == 200) {
+        if (responseData.data == null) {
+          setBeritaData(undefined);
+          return;
+        }
         setBeritaData(responseData.data);
+        console.log('beritaData Val : ', beritaData);
       } else {
         return;
       }
@@ -70,15 +75,23 @@ function BeritaSection() {
             className="h-full overflow-y-auto"
           >
             {beritaData ? (
-              <div className={cardContainerClass()}>
+              <div
+                className={
+                  beritaData.length < 2
+                    ? 'grid grid-cols-1'
+                    : 'grid md:grid-cols-2 grid-cols-1'
+                }
+              >
                 {beritaData.map((dat) => {
                   return <BeritaCard key={dat.id} data={dat} />;
                 })}
               </div>
             ) : (
-              <h1 className="text-primary text-2xl font-semibold">
-                Belum ada berita
-              </h1>
+              <div className="flex justify-center items-center">
+                <h1 className="text-secondary text-2xl font-semibold text-center">
+                  Belum ada berita
+                </h1>
+              </div>
             )}
           </motion.div>
         </div>

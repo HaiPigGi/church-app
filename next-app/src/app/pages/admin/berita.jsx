@@ -149,7 +149,6 @@ const berita = () => {
     var fileSizeInMB = fileSize / (1024 * 1024);
 
     if (fileSizeInMB < 20) {
-
       // Update beritaData.image with the File object
       setBeritaData({
         ...beritaData,
@@ -261,4 +260,5 @@ const berita = () => {
     </div>
   );
 };
+
 export default berita;
