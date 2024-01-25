@@ -1,8 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // import beritaServices  from '@/app/api/Admin/berita/routes'
-import { post_berita } from '@/app/api/Admin/berita/routes';
+import { get_AllBerita, post_berita } from '@/app/api/Admin/berita/routes';
 import Modal from '@/components/Fragments/Modal';
+import BeritaCard from '@/components/Fragments/BeritaCard';
+import { get_AllBerita_user } from '@/app/api/routes';
 
 const berita = () => {
   const [beritaData, setBeritaData] = useState({
@@ -11,16 +13,16 @@ const berita = () => {
     content: '',
     event: '',
   });
-
   const [errorMessage, setErrorMessage] = useState({
     contentError: '',
     titleError: '',
     imageError: '',
   });
-
   const [createBerita, setCreateBerita] = useState('');
-
   const [modalMessage, setModalMessage] = useState();
+  const [openModal, setOpenModal] = useState(true);
+  const [loadingFetching, setLoadingFetching] = useState(true);
+  const [beritaDataList, setBeritaDataList] = useState();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -63,14 +65,22 @@ const berita = () => {
   //     }
   //   };
 
-  const [openModal, setOpenModal] = useState(true);
-
   const clearForm = () => {
     document.querySelector('#title').value = '';
     document.querySelector('#content').value = '';
     document.querySelector('#event').value = '';
     document.querySelector('#image').value = '';
   };
+
+  async function getBeritaData() {
+    const res = await get_AllBerita();
+    setLoadingFetching(false);
+    setBeritaDataList(res.data);
+  }
+
+  useEffect(() => {
+    getBeritaData();
+  }, [loadingFetching]);
 
   // method for add new news
   const handleSaveChanges = async () => {
@@ -85,7 +95,7 @@ const berita = () => {
       setOpenModal(true);
       setModalMessage(
         <Modal
-          type={createBerita.status == 'success' ? 'danger' : 'success'}
+          type={createBerita.status == 'success' ? 'success' : 'danger'}
           action={() => {
             setOpenModal(!openModal);
             clearForm();
@@ -149,8 +159,6 @@ const berita = () => {
     var fileSizeInMB = fileSize / (1024 * 1024);
 
     if (fileSizeInMB < 20) {
-      console.log(typeof fileInput.files[0]);
-
       // Update beritaData.image with the File object
       setBeritaData({
         ...beritaData,
@@ -169,97 +177,118 @@ const berita = () => {
   }
 
   return (
-    <div className="pt-10 flex flex-col items-center justify-center h-auto w-auto">
+    <div className="relative z-20 pt-10 flex flex-col items-center justify-center h-screen w-auto">
       <h1 className="font-bold text-3xl mb-2">Tambah Berita</h1>
-      <form
-        id="form"
-        action={handleSaveChanges}
-        className="shadow-2xl opacity-50 h-[80vh] w-[95vh] p-10 "
-      >
-        <div className="flex flex-col mb-3">
-          <label className="text-red-700 font-semibold mb-2 ">image :</label>
-          <label htmlFor="content" className="block text-red-500">
-            {errorMessage.imageError}
+      <div className="grid grid-cols-2 ">
+        <form
+          id="form"
+          action={handleSaveChanges}
+          className="shadow-2xl opacity-50 w-full h-full p-10 "
+        >
+          <div className="flex flex-col mb-3">
+            <label className="text-red-700 font-semibold mb-2 ">image :</label>
+            <label htmlFor="content" className="block text-red-500">
+              {errorMessage.imageError}
+            </label>
+            <input
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
+              onChange={checkFileSize}
+              placeholder="Images"
+              required
+            />
+          </div>
+
+          <label htmlFor="title" className="block text-red-500">
+            {errorMessage.titleError}
           </label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="image/*"
-            className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
-            onChange={checkFileSize}
-            placeholder="Images"
-            required
-          />
-        </div>
+          <div className="flex flex-col mb-3">
+            <input
+              id="title"
+              name="title"
+              type="text"
+              className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
+              placeholder="Judul Berita"
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <label htmlFor="title" className="block text-red-500">
-          {errorMessage.titleError}
-        </label>
-        <div className="flex flex-col mb-3">
-          <input
-            id="title"
-            name="title"
-            type="text"
-            className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
-            placeholder="Judul Berita"
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <label htmlFor="content" className="block text-red-500">
+            {errorMessage.contentError}
+          </label>
+          <div className="flex flex-col mb-3">
+            <textarea
+              id="content"
+              name="content"
+              required
+              placeholder="Content"
+              className="w-full h-20 px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none  focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
+              onChange={handleInputChange}
+            ></textarea>
+          </div>
+          <div className="flex flex-col mb-3">
+            <textarea
+              id="event"
+              name="event"
+              required
+              placeholder="Event"
+              className="w-full h-20 px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none  focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
+              onChange={handleInputChange}
+            ></textarea>
+          </div>
 
-        <label htmlFor="content" className="block text-red-500">
-          {errorMessage.contentError}
-        </label>
-        <div className="flex flex-col mb-3">
-          <textarea
-            id="content"
-            name="content"
-            required
-            placeholder="Content"
-            className="w-full h-20 px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none  focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
-            onChange={handleInputChange}
-          ></textarea>
-        </div>
-        <div className="flex flex-col mb-3">
-          <textarea
-            id="event"
-            name="event"
-            required
-            placeholder="Event"
-            className="w-full h-20 px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none  focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
-            onChange={handleInputChange}
-          ></textarea>
-        </div>
-
-        <div>
-          <button
-            type="submit"
-            // name='created_at'
-            className="border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200"
-          >
-            Save changes
-          </button>
-          <button
-            // onClick={handleUpdate}
-            type="submit"
-            name="updated_at"
-            className="border-2 ml-[4rem] border-green-600 rounded-lg px-3 py-2 text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200"
-          >
-            Update
-          </button>
-          <button
-            type="submit"
-            name="deleted_at"
-            // onClick={handleCancel}
-            className=" border-2 ml-[5rem] border-red-600 rounded-lg px-3 py-2 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200"
-          >
-            Batal
-          </button>
-        </div>
-      </form>
+          <div>
+            <button
+              type="submit"
+              // name='created_at'
+              className="border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200"
+            >
+              Save changes
+            </button>
+            <button
+              // onClick={handleUpdate}
+              type="submit"
+              name="updated_at"
+              className="border-2 ml-[4rem] border-green-600 rounded-lg px-3 py-2 text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200"
+            >
+              Update
+            </button>
+            <button
+              type="submit"
+              name="deleted_at"
+              // onClick={handleCancel}
+              className=" border-2 ml-[5rem] border-red-600 rounded-lg px-3 py-2 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200"
+            >
+              Batal
+            </button>
+          </div>
+        </form>
+        <AllBerita dataBerita={beritaDataList} />
+      </div>
       {openModal ? modalMessage : ''}
     </div>
   );
 };
+
+const AllBerita = ({ dataBerita }) => {
+  return (
+    <div className="relative z-10 flex-col w-full px-5 py-2  h-full overflow-y-auto bg-white rounded-md">
+      <h1 className="sticky top-0 left-0 px-2 py-2 mb-2 border-b border-primary w-full h-auto text-primary font-bold text-xl bg-white ">
+        ALL Berita
+      </h1>
+      {dataBerita?.length > 0 ? (
+        dataBerita.map((berita) => <BeritaCard data={berita} />)
+      ) : (
+        <h1 className="w-full h-full text-red-500 text-lg text-bold ">
+          No berita yet
+        </h1>
+      )}
+    </div>
+  );
+};
+
 export default berita;

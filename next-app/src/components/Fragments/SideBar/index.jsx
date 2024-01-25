@@ -107,6 +107,7 @@ function BeritaSideBar() {
                   <div className="py-2 border-b border-black hover:text-primary hover:border-primary">
                     {/* define routes with /pages/berita/[berita_id] */}
                     <Link
+                      key={data.id}
                       className="text-pretty  text-sm "
                       href={`/pages/berita/${data.id}`}
                     >
