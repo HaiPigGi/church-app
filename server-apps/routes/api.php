@@ -73,7 +73,7 @@ Route::middleware(['cors'])->group(function () {
         Route::prefix('organitations')->group(function () {
             Route::get('/', [OrganitationController::class, 'getAllOrganitation'])->name('admin.organitations.index');
             Route::get('/{id}', [OrganitationController::class, 'getAllOrganitationById'])->name('admin.organitations.show');
-            Route::post('/', [OrganitationController::class, 'store'])->name('admin.organitations.store');
+            Route::post('/store', [OrganitationController::class, 'store'])->name('admin.organitations.store');
             Route::put('/{organitationId}', [OrganitationController::class, 'update'])->name('admin.organitations.update');
             Route::delete('/{organitationId}', [OrganitationController::class, 'destroy'])->name('admin.organitations.delete');
         });

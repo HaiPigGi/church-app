@@ -287,194 +287,196 @@ const InputOrganisasi = () => {
   }, []);
 
   return (
-    <div className="container mx-auto mt-8 p-8 sm:p-8 flex">
-      {/* <h1 className="text-3xl font-semibold mb-4 sm:text-3xl">Input Organisasi</h1> */}
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-md mr-8 grid grid-cols-1  bg w-[65vh] bg-white shadow-lg rounded-md "
-      >
-        <div className="mx-auto">
-          <div className="mb-4">
-            <label
-              htmlFor="name_organitation"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Nama Organisasi
-            </label>
-            <select
-              id="name_organitation"
-              name="name_organitation"
-              value={organisasi.nama}
-              onChange={handleChange}
-              className="mt-1 p-2 block w-[50vh] border border-gray-300 rounded-md"
-            >
-              <option value="" disabled>
-                Select...
-              </option>
-              {namaOrganisasiOptions.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
+    <>
+      <div className="container mx-auto mt-8 p-8 sm:p-8 flex">
+        {/* <h1 className="text-3xl font-semibold mb-4 sm:text-3xl">Input Organisasi</h1> */}
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-md mr-8 grid grid-cols-1  bg w-[65vh] bg-white shadow-lg rounded-md "
+        >
+          <div className="mx-auto">
+            <div className="mb-4">
+              <label
+                htmlFor="name_organitation"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Nama Organisasi
+              </label>
+              <select
+                id="name_organitation"
+                name="name_organitation"
+                value={organisasi.nama}
+                onChange={handleChange}
+                className="mt-1 p-2 block w-[50vh] border border-gray-300 rounded-md"
+              >
+                <option value="" disabled>
+                  Select...
                 </option>
-              ))}
-            </select>
-          </div>
+                {namaOrganisasiOptions.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className="mb-4">
-            <label
-              htmlFor="date_of_establishment"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Tanggal Berdiri
-            </label>
-            <div className="flex space-x-2">
-              <input
-                type="date"
-                id="date_of_establishment"
-                name="date_of_establishment"
-                // value={`${organisasi.tahun}-${organisasi.bulan}-${organisasi.hari}`}
-                onChange={(e) => {
-                  // const [tahun, bulan, hari] = e.target.value.split('-');
-                  setOrganisasi({
-                    ...organisasi,
-                    [e.target.name]: e.target.value,
-                  });
-                }}
-                className="p-2 border border-gray-300 rounded-md w-[50vh] "
+            <div className="mb-4">
+              <label
+                htmlFor="date_of_establishment"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Tanggal Berdiri
+              </label>
+              <div className="flex space-x-2">
+                <input
+                  type="date"
+                  id="date_of_establishment"
+                  name="date_of_establishment"
+                  // value={`${organisasi.tahun}-${organisasi.bulan}-${organisasi.hari}`}
+                  onChange={(e) => {
+                    // const [tahun, bulan, hari] = e.target.value.split('-');
+                    setOrganisasi({
+                      ...organisasi,
+                      [e.target.name]: e.target.value,
+                    });
+                  }}
+                  className="p-2 border border-gray-300 rounded-md w-[50vh] "
+                />
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Deskripsi Organisasi
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                value={organisasi.deskripsi}
+                onChange={handleChange}
+                className="mt-1 p-2 block w-[50vh] border border-gray-300 rounded-md"
               />
             </div>
-          </div>
 
-          <div className="mb-4">
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Deskripsi Organisasi
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              value={organisasi.deskripsi}
-              onChange={handleChange}
-              className="mt-1 p-2 block w-[50vh] border border-gray-300 rounded-md"
-            />
-          </div>
+            <div className="mb-4">
+              <label
+                htmlFor="image"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Foto Organisasi
+              </label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                onChange={handleFotoChange}
+                accept="image/*"
+                className="mt-1 p-2 block w-[50vh]  border border-gray-300 rounded-md"
+              />
+            </div>
 
-          <div className="mb-4">
-            <label
-              htmlFor="image"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Foto Organisasi
-            </label>
-            <input
-              type="file"
-              id="image"
-              name="image"
-              onChange={handleFotoChange}
-              accept="image/*"
-              className="mt-1 p-2 block w-[50vh]  border border-gray-300 rounded-md"
-            />
+            <div className="mb-4">
+              <button
+                type="submit"
+                className="bg-secondary text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
+              >
+                Submit
+              </button>
+              <button
+                onClick={() => handleUpdateEntry(index)}
+                className="bg-green-500 text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
+              >
+                Update
+              </button>
+            </div>
           </div>
+          {errorMessage ? (
+            <h1 className="text-red-500 text-xl font-bold">{errorMessage}</h1>
+          ) : (
+            <></>
+          )}
+        </form>
 
-          <div className="mb-4">
-            <button
-              type="submit"
-              className="bg-secondary text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
-            >
-              Submit
-            </button>
-            <button
-              onClick={() => handleUpdateEntry(index)}
-              className="bg-green-500 text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
-            >
-              Update
-            </button>
-          </div>
-        </div>
-        {errorMessage ? (
-          <h1 className="text-red-500 text-xl font-bold">{errorMessage}</h1>
-        ) : (
-          <></>
-        )}
-      </form>
-
-      <div className="h-screen overflow-y-auto">
-        <h2 className="text-xl font-semibold mb-2">Data Organisasi</h2>
-        <table className=" w-full border-collapse border rounded-md">
-          <thead>
-            <tr className="bg-gray-200 ">
-              <th className="p-2">Nama</th>
-              <th className="p-2">Tanggal Berdiri</th>
-              <th className="p-2">Deskripsi</th>
-              <th className="p-2">Foto</th>
-              <th className="p-2">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loadingOrganisasiDat ? (
-              <>
-                <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-              </>
-            ) : organisasiList == [] ? (
-              <>
-                <tr>
-                  {organisasiList ? <h1>true</h1> : <h1>false</h1>}
-                  {loadingOrganisasiDat ? <h1>true</h1> : <h1>false</h1>}
-                </tr>
-                {organisasiList.map((org, index) => (
-                  <tr
-                    key={index}
-                    className="border text-sm font-sans text-center hover:bg-slate-300 hover:cursor-pointer"
-                    onClick={(e) => console.log(e.target)}
-                  >
-                    <td className="p-2">{org.nama}</td>
-                    <td className="p-2">{`${org.tahun}-${org.bulan}-${org.hari}`}</td>
-                    <td className="p-2">{org.deskripsi}</td>
-                    <td className="p-2">
-                      {/* yang foto ini bagusnya di admin gak muncul, soalnya makan layar */}
-                      <img
-                        src={org.foto}
-                        alt={`Foto ${org.nama}`}
-                        className="w-full max-w-md"
-                      />
-                    </td>
-                    <td className="p-2">
-                      <button
-                        onClick={() => handleUpdate(index)}
-                        className="text-green-500 underline mr-2"
-                      >
-                        Update
-                      </button>
-                      <button
-                        onClick={() => handleDeleteEntry(index)}
-                        className="text-red-500 underline"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </>
-            ) : (
-              <tr className=" text-red-500 w-full text-center font-bold">
-                <td>No organitations yet</td>
+        <div className="h-screen overflow-y-auto">
+          <h2 className="text-xl font-semibold mb-2">Data Organisasi</h2>
+          <table className=" w-full border-collapse border rounded-md">
+            <thead>
+              <tr className="bg-gray-200 ">
+                <th className="p-2">Nama</th>
+                <th className="p-2">Tanggal Berdiri</th>
+                <th className="p-2">Deskripsi</th>
+                <th className="p-2">Foto</th>
+                <th className="p-2">Aksi</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {loadingOrganisasiDat ? (
+                <>
+                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
+                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
+                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
+                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
+                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
+                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
+                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
+                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
+                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
+                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
+                </>
+              ) : organisasiList == [] ? (
+                <>
+                  <tr>
+                    {organisasiList ? <h1>true</h1> : <h1>false</h1>}
+                    {loadingOrganisasiDat ? <h1>true</h1> : <h1>false</h1>}
+                  </tr>
+                  {organisasiList.map((org, index) => (
+                    <tr
+                      key={index}
+                      className="border text-sm font-sans text-center hover:bg-slate-300 hover:cursor-pointer"
+                      onClick={(e) => console.log(e.target)}
+                    >
+                      <td className="p-2">{org.nama}</td>
+                      <td className="p-2">{`${org.tahun}-${org.bulan}-${org.hari}`}</td>
+                      <td className="p-2">{org.deskripsi}</td>
+                      <td className="p-2">
+                        {/* yang foto ini bagusnya di admin gak muncul, soalnya makan layar */}
+                        <img
+                          src={org.foto}
+                          alt={`Foto ${org.nama}`}
+                          className="w-full max-w-md"
+                        />
+                      </td>
+                      <td className="p-2">
+                        <button
+                          onClick={() => handleUpdate(index)}
+                          className="text-green-500 underline mr-2"
+                        >
+                          Update
+                        </button>
+                        <button
+                          onClick={() => handleDeleteEntry(index)}
+                          className="text-red-500 underline"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              ) : (
+                <tr className=" text-red-500 w-full text-center font-bold">
+                  <td>No organitations yet</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
       {modalContent}
-    </div>
+    </>
   );
 };
 

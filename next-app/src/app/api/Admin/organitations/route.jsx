@@ -61,7 +61,7 @@ export async function post_Organitation(dataOrganitations) {
     console.log(dataOrganitations);
     try {
       let res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/organitations/`,
+        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/organitations/store`,
         {
           method: 'POST',
           mode: 'cors',
@@ -100,6 +100,7 @@ export async function put_Organitation(organitationsID, organitationData) {
           body: organitationData,
         },
       );
+      console.log(res);
       res = await res.json();
       if (res.status == 200) {
         return res;
