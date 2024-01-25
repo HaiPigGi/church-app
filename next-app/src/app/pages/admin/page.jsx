@@ -8,6 +8,7 @@ import Posisi from './posisi';
 import Member from './member';
 import Berita from './berita'
 import Hidden from './hiddenView/hidden';
+import Jadwal from './jadwalmisa';
 import WithAuth from '@/app/api/Auth/withAuth.js';
 import { useAppSelector } from '@/lib/hook';
 import Loading from '@/components/Fragments/Loading/loading';
@@ -76,11 +77,7 @@ function Admin() {
     </h1>
   );
 
-  const Jadwal = () => (
-    <h1 className="p-7 text-2xl font-semibold flex-1 h-screen text-center">
-      Jadwal page
-    </h1>
-  );
+
 
 
 
