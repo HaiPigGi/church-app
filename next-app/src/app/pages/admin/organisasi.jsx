@@ -292,7 +292,10 @@ const InputOrganisasi = () => {
   }, []);
 
   return (
-    <>
+    <div className=''>
+        <div className='min-[765px]:hidden '>
+        <label className='absolute top-7 ml-5 text-2xl font-semibold  '>Tambah Organisasi</label>
+        </div>
       <div className="container mx-auto mt-8 p-8 sm:p-8 flex">
         {/* <h1 className="text-3xl font-semibold mb-4 sm:text-3xl">Input Organisasi</h1> */}
         <form
@@ -478,7 +481,7 @@ const InputOrganisasi = () => {
         </div>
       </div>
       {modalContent}
-    </>
+    </div>
   );
 };
 

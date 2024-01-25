@@ -8,11 +8,22 @@ export default function Pesan() {
       email: 'pengirim2@example.com',
       message: 'Lorem ipsum dolor sit amet consectetur  !',
     },
+    {
+      name: 'Pengirim 2',
+      email: 'pengirim2@example.com',
+      message: 'Lorem ipsum dolor sit amet consectetur  !',
+    },
+    {
+      name: 'Pengirim 2',
+      email: 'pengirim2@example.com',
+      message: 'Lorem ipsum dolor sit amet consectetur  !',
+    },
   ];
 
   return (
     <div>
-      <h1 className="pt-7 pb-7 text-2xl font-semibold flex-1 text-center">Pesan Dan Kritik</h1>
+      <div className='min-[360px]:max-[765px]:hidden'>
+      <h1 className="pt-7 pb-7 text-2xl font-semibold flex-1 text-center ">Pesan Dan Kritik</h1>
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
@@ -34,5 +45,22 @@ export default function Pesan() {
         </tbody>
       </table>
     </div>
+
+      {/* for mobile */}
+      <div className='min-[765px]:hidden'>
+      <h1 className="pt-7 pb-7 text-2xl font-semibold flex-1 text-center ">Pesan Dan Kritik</h1>
+      <div>
+      {data.map((row, i) => (
+            <tr key={i}>
+              <label className="px-6 py-4 whitespace-nowrap font-bold text-lg text-red-500">{row.name}</label>
+              <p className="px-6 py-4 whitespace-wrap font-Open Sans" style={{ lineHeight: '1.4', maxHeight: '4.2em', overflow: 'hidden' }}>
+                {row.message}
+              </p>
+            </tr>
+          ))}
+      </div>
+      </div>
+    </div>
+   
   );
 }
