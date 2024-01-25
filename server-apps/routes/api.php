@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Auth\VallidationJWTController;
+use App\Http\Controllers\User\saranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,10 @@ Route::middleware(['cors'])->group(function () {
         });
         Route::prefix('panitia')->group(function () {
             Route::get('/status', [PanitiaController::class, 'getStatus']);
+        });
+
+        Route::prefix('saran')->middleware(['jwt'])->group(function () {
+            Route::post('/store', [saranController::class, 'store'])->name('user.saran');
         });
     });
 
@@ -116,7 +121,13 @@ Route::middleware(['cors'])->group(function () {
 
         Route::prefix('panitia')->group(function () {
             Route::get('/status', [PanitiaController::class, 'getStatus']);
-            Route::put('/toggle-status', [panitiaController::class,'toggleStatus'])->name('admin.panita.toggle');
+            Route::put('/toggle-status', [panitiaController::class, 'toggleStatus'])->name('admin.panita.toggle');
+        });
+
+        Route::prefix('saran')->group(function () {
+            Route::get('/', [saranController::class, 'getAllDataSaran'])->name('admin.saran.getData');
+            Route::get('/{id}', [saranController::class, 'getAllDataSaranByID'])->name('admin.saran.getData');
+            Route::delete('/{id}', [saranController::class, 'destroy'])->name('admin.saran.delete');
         });
     });
 });
