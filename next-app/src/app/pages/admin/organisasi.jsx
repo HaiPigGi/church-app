@@ -7,6 +7,7 @@ import {
   post_Organitation,
 } from '@/app/api/Admin/organitations/route';
 import Modal from '@/components/Fragments/Modal';
+import Image from 'next/image';
 
 const InputOrganisasi = () => {
   const [organisasi, setOrganisasi] = useState({
@@ -165,10 +166,11 @@ const InputOrganisasi = () => {
     // Lakukan sesuatu dengan file foto (misalnya, menyimpan ke state atau mengunggah ke server)
   };
 
+  // konversi ke dalam bentuk Form Data
   const convertToFormData = () => {
     var formData = new FormData();
     formData.append('name_organitation', organisasi.name_organitation);
-    formData.append('date_establishment', organisasi.date_of_establishment);
+    formData.append('date_of_establishment', organisasi.date_of_establishment);
     formData.append('image', organisasi.image);
     formData.append('description', organisasi.description);
     return formData;
@@ -214,6 +216,7 @@ const InputOrganisasi = () => {
         type="success"
         action={() => {
           setModalContent('');
+          getOrganitationsData();
           clearInput();
         }}
       >
@@ -256,8 +259,10 @@ const InputOrganisasi = () => {
       );
     if (organisasi.image == '') return setErrorMessage('Foto masih kosong');
 
+    const formData = convertToFormData();
+
     // memanggil fungsi simpanOrganisasi
-    simpanOrganisasi(convertToFormData());
+    simpanOrganisasi(formData);
     // Logika untuk mengirim data organisasi ke server atau melakukan tindakan lainnya
     console.log('Data Organisasi:', organisasi);
   };
@@ -426,26 +431,23 @@ const InputOrganisasi = () => {
                   <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
                   <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
                 </>
-              ) : organisasiList == [] ? (
+              ) : organisasiList?.length > 0 ? (
                 <>
-                  <tr>
-                    {organisasiList ? <h1>true</h1> : <h1>false</h1>}
-                    {loadingOrganisasiDat ? <h1>true</h1> : <h1>false</h1>}
-                  </tr>
                   {organisasiList.map((org, index) => (
                     <tr
                       key={index}
                       className="border text-sm font-sans text-center hover:bg-slate-300 hover:cursor-pointer"
                       onClick={(e) => console.log(e.target)}
                     >
-                      <td className="p-2">{org.nama}</td>
-                      <td className="p-2">{`${org.tahun}-${org.bulan}-${org.hari}`}</td>
-                      <td className="p-2">{org.deskripsi}</td>
-                      <td className="p-2">
+                      <td className="p-2">{org.name_organitation}</td>
+                      <td className="p-2">{org.date_of_establishment}</td>
+                      <td className="p-2">{org.description}</td>
+                      <td className="relative p-2 ">
                         {/* yang foto ini bagusnya di admin gak muncul, soalnya makan layar */}
-                        <img
-                          src={org.foto}
-                          alt={`Foto ${org.nama}`}
+                        <Image
+                          src={org.image.url}
+                          fill={true}
+                          alt={`Foto ${org.name_organitation}`}
                           className="w-full max-w-md"
                         />
                       </td>
