@@ -39,6 +39,9 @@ module.exports = {
           '100%': { transform: 'translateX(100%)' },
         },
       },
+      fontFamily:{
+         'Open Sans': ['Open Sans', 'sans-serif'],
+      },
     },
   },
   plugins: [],

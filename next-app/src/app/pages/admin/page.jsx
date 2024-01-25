@@ -79,9 +79,6 @@ function Admin() {
 
 
 
-
-
-
   const renderContent = () => {
     switch (activeMenu) {
       case 'Dashboard':
@@ -110,7 +107,7 @@ function Admin() {
   return (
     <div className="flex">
       <div
-        className={` ${open ? 'w-72' : 'w-20'} p-3 pt-5 h-screen duration-300 bg-secondary relative`}
+        className={` ${open ? 'w-72' : 'w-20'} p-3 pt-5 h-screen duration-300 bg-secondary relative `}
       >
         <FaAnglesLeft
           className={` absolute cursor-pointer -right-3 top-9 w-7 border-2 border-black rounded-full ${!open && 'rotate-180'}`}

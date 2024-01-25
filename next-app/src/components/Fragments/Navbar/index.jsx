@@ -157,6 +157,10 @@ function Navbar({ props }) {
                     text: 'Kepengurusan Mesdinar',
                     href: '/pages/mesdinar',
                   },
+                  {
+                    text: 'Panitia Kegiatan',
+                    href: '/pages/panitia',
+                  },
                 ]}
               >
                 <i className="ri-home-5-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>

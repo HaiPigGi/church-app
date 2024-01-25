@@ -29,27 +29,30 @@ const hidden = () => {
   }, []);
 
   return (
-    <div className='flex items-center justify-center mt-52'>
+    <div className='flex items-center justify-center mt-52 '>
       <div className="mb-4">
         <button
           onClick={() => triggredToggle(0)} // Tampilan A
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2
+          min-[360px]:max-[765px]:mb-5"
         >
           Toggle Coming Soon
         </button>
         <button
           onClick={() => triggredToggle(1)} // Tampilan B
-          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded ml-2"
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded ml-2
+          min-[360px]:max-[765px]:mb-5"
         >
           Toggle Panitia Natal
         </button>
         <button
           onClick={() => triggredToggle(2)} // Tampilan C
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2
+          min-[360px]:max-[765px]:mb-5"
         >
           Toggle Paskah
         </button>
-        <p>Status: {getStatusText(showViewA)}</p>
+        <p className='ml-2 '>Status: {getStatusText(showViewA)}</p>
       </div>
     </div>
   );
