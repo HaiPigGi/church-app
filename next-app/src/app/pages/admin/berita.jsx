@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 // import beritaServices  from '@/app/api/Admin/berita/routes'
 import {
+  delete_berita,
   get_AllBerita,
   post_berita,
   put_berita,
@@ -63,12 +64,84 @@ const berita = () => {
     setBeritaData({ ...beritaData, [name]: value });
   };
 
+  const handleDelete = async () => {
+    if (beritaData?.berita_id) {
+      try {
+        const res = await delete_berita(beritaData);
+        if (res.status == 'success') {
+          setModalMessage(
+            <Modal
+              type="success"
+              action={() => {
+                clearForm();
+                setModalMessage('');
+              }}
+            >
+              <div className="">
+                <div className="flex justify-center items-center w-full h-24 text-green-500 animate-pulse">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    height="full"
+                    fill="currentColor"
+                  >
+                    <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
+                  </svg>
+                </div>
+
+                <h1 className="text-green-500 text-center">{res.message}</h1>
+                <h1 className="text-slate-500 text-center ">
+                  klik ok untuk melanjutkan
+                </h1>
+              </div>
+              ,
+            </Modal>,
+          );
+          getBeritaData();
+          return;
+        } else {
+          setModalMessage(
+            <Modal
+              type="danger"
+              action={() => {
+                clearForm();
+                setModalMessage('');
+              }}
+            >
+              <div className="">
+                <div className="flex justify-center items-center w-full h-24 text-red-500 animate-pulse">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    height="full"
+                  >
+                    <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path>
+                  </svg>
+                </div>
+                <h1 className="text-red-500 text-center">{res.message}</h1>
+                <h1 className="text-slate-500 text-center ">
+                  klik ok untuk melanjutkan
+                </h1>
+              </div>
+              ,
+            </Modal>,
+          );
+        }
+      } catch (e) {
+        return console.log('error at handleDelete with message : ', e.message);
+      }
+    }
+  };
+
   const handleUpdate = async () => {
     setLoadingFetching(true);
     const data = convertToFormData();
+    console.log('image in FormData at handleUpdate : ', data.get('image'));
+    console.log('beritaData at handleUpdate : ', beritaData);
     if (data.get('berita_id')) {
       try {
-        const updatedBerita = await put_berita(beritaData);
+        const updatedBerita = await put_berita(data);
         setModalMessage(
           <Modal
             type={updatedBerita.status == 'success' ? 'success' : 'danger'}
@@ -162,6 +235,7 @@ const berita = () => {
       event: '',
       image: '',
     });
+    setShownImage('');
   };
 
   async function getBeritaData() {
@@ -270,11 +344,13 @@ const berita = () => {
     var fileSizeInMB = fileSize / (1024 * 1024);
     if (fileSizeInMB < 20) {
       // Update beritaData.image with the File object
-      console.log('file Input on CheckFileSize : ', fileInput.files[0]);
+      const dataImage = fileInput.files[0];
+      console.log('file Input on CheckFileSize : ', dataImage);
       setBeritaData({
         ...beritaData,
-        image: fileInput.files[0],
+        image: dataImage,
       });
+      console.log('file Input on CheckFileSize : ', beritaData);
     } else {
       setErrorMessage({
         ...errorMessage,
@@ -466,7 +542,7 @@ const berita = () => {
                     <h1>Apakah yakin ingin melanjutkan proses?</h1>
                     <div className="flex justify-center items-center">
                       <button
-                        onClick={''}
+                        onClick={handleDelete}
                         className="px-5 py-2 text-white rounded-md bg-green-500 hover:bg-green-300"
                       >
                         Lanjut

@@ -98,31 +98,21 @@ export async function post_berita(dataPost) {
 
 // to update berita based on berita_id
 export async function put_berita(dataPost) {
-  const image = dataPost.get('image');
-  const title = dataPost.get('title');
-  const content = dataPost.get('content');
-  const event = dataPost.get('event');
-  const berita_id = dataPost.get('berita_id');
-
-  console.log('cek image update : ', image);
-  console.log('cek title update : ', title);
+  console.log(dataPost.get('title'));
+  console.log(dataPost.get('content'));
+  console.log(dataPost.get('event'));
+  console.log(dataPost.get('image'));
   try {
     const res = await fetch(
       // Extract title, content, event, and berita_id from FormData
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${dataPost.berita_id}`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${dataPost.get('berita_id')}`,
       {
         method: 'PUT',
         mode: 'cors',
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `bearer ${getJwtToken()}`,
         },
-        body: JSON.stringify({
-          title: title,
-          content: content,
-          event: event,
-          image: image,
-        }),
+        body: dataPost,
       },
     );
 
@@ -137,17 +127,18 @@ export async function put_berita(dataPost) {
 export async function delete_berita(data) {
   //
   try {
-    const res = fetch(
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${data.berita_id}`,
       {
         method: 'DELETE',
         mode: 'cors',
         headers: {
-          'X-CSRF-TOKEN': csrf_token,
+          Authorization: `bearer ${getJwtToken()}`,
         },
       },
     );
     const responseData = await res.json();
+    console.log(responseData);
     return responseData;
   } catch (e) {
     console.log('error in delete_berita with message : ', e.message);
