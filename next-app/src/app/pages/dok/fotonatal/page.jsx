@@ -66,7 +66,7 @@ const GalleryNatal = () => {
 
   return (
     <div className="container mx-auto py-8 overflow-x-auto ">
-      <button className='flex ml-5 text-secondary font-semibold mt-3' onClick={handleGoBack}>
+      <button className='flex ml-5 text-secondary font-semibold mt-3 mb-5' onClick={handleGoBack}>
         <img src="/img/assets/left-arrow (1).png" className='mr-2'/> Kembali
       </button>
       <h1 className="text-3xl font-semibold mb-6 text-center">Dokumentasi Natal</h1>
@@ -75,11 +75,11 @@ const GalleryNatal = () => {
         <input
           type="text"
           placeholder="Cari berdasarkan tahun"
-          className="border border-gray-300 p-2"
+          className="border border-gray-300 p-2 rounded-md"
           value={searchYear}
           onChange={(e) => setSearchYear(e.target.value)}
         />
-        <button className="ml-2 bg-blue-500 text-white px-4 py-2" onClick={handleSearch}>
+        <button className="ml-2 bg-secondary text-white px-4 py-2 rounded-md" onClick={handleSearch}>
           Cari
         </button>
       </div>

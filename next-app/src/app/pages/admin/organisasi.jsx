@@ -300,7 +300,7 @@ const InputOrganisasi = () => {
         {/* <h1 className="text-3xl font-semibold mb-4 sm:text-3xl">Input Organisasi</h1> */}
         <form
           onSubmit={handleSubmit}
-          className="max-w-md mr-8 grid grid-cols-1  bg w-[65vh] bg-white shadow-lg rounded-md "
+          className="max-w-md mr-8 grid grid-cols-1  bg w-[65vh] h-[77vh] bg-white shadow-lg rounded-md "
         >
           <div className="mx-auto">
             <div className="mb-4">
@@ -408,7 +408,7 @@ const InputOrganisasi = () => {
           )}
         </form>
 
-        <div className="h-screen overflow-y-auto">
+        <div className="h-[75vh] overflow-y-auto">
           <h2 className="text-xl font-semibold mb-2">Data Organisasi</h2>
           <table className=" w-full border-collapse border rounded-md">
             <thead>
