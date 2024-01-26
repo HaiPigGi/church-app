@@ -122,6 +122,7 @@ export async function delete_Organitation(organitationsID) {
         headers: {
           'content-type': 'application/json',
           'X-CSRF-token': AuthServices().CSRF_token(),
+          Authorization: `bearer ${token}`,
         },
       },
     );
