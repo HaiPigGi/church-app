@@ -136,12 +136,13 @@ const berita = () => {
 
   const handleUpdate = async () => {
     setLoadingFetching(true);
-    const data = convertToFormData();
-    console.log('image in FormData at handleUpdate : ', data.get('image'));
-    console.log('beritaData at handleUpdate : ', beritaData);
-    if (data.get('berita_id')) {
+    const data= convertToFormDataUpdate();
+    // Log the beritaData object in JSON format
+    console.log('beritaData:', JSON.stringify(beritaData));
+
+    if (JSON.stringify(beritaData.berita_id)) {
       try {
-        const updatedBerita = await put_berita(data);
+        const updatedBerita = await put_berita(beritaData,data);
         setModalMessage(
           <Modal
             type={updatedBerita.status == 'success' ? 'success' : 'danger'}
@@ -264,6 +265,12 @@ const berita = () => {
     formData.append('title', beritaData.title);
     formData.append('content', beritaData.content);
     formData.append('event', beritaData.event);
+    return formData;
+  };
+
+  const convertToFormDataUpdate = () => {
+    const formData = new FormData();
+    if (beritaData?.berita_id) formData.append('image', beritaData.image);
     return formData;
   };
 

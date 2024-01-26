@@ -96,23 +96,55 @@ export async function post_berita(dataPost) {
   }
 }
 
-// to update berita based on berita_id
-export async function put_berita(dataPost) {
-  console.log(dataPost.get('title'));
-  console.log(dataPost.get('content'));
-  console.log(dataPost.get('event'));
-  console.log(dataPost.get('image'));
+const convertImageToDataURL = async (image) => {
+  if (image instanceof Blob || image instanceof File) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+
+      reader.readAsDataURL(image);
+    });
+  } else if (typeof image === 'object' && image['Illuminate\\Http\\UploadedFile']) {
+    // If image is an object with the structure {"Illuminate\\Http\\UploadedFile": "C:\\xampp\\tmp\\php40B6.tmp"}
+    const filePath = image['Illuminate\\Http\\UploadedFile'];
+    const blob = await fetch(filePath).then((response) => response.blob());
+    return convertImageToDataURL(blob);
+  } else if (typeof image === 'string') {
+    // If image is a string, assume it's a file path and fetch it
+    const response = await fetch(image);
+    const blob = await response.blob();
+
+    return convertImageToDataURL(blob);
+  } else {
+    throw new Error('Invalid image type');
+  }
+};
+
+// Updated put_berita function
+export async function put_berita(dataPost,image) {
+  const newImage=image.get('image');
+  console.log(image.get('image'));
+  console.log("CEk new Image :  ",newImage);
   try {
     const res = await fetch(
-      // Extract title, content, event, and berita_id from FormData
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${dataPost.get('berita_id')}`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${dataPost.berita_id}`,
       {
         method: 'PUT',
         mode: 'cors',
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `bearer ${getJwtToken()}`,
         },
-        body: dataPost,
+        body: {
+          title: dataPost.title,
+          content: dataPost.content,
+          event: dataPost.event,
+          berita_id: dataPost.berita_id,
+          image: image,
+        },
       },
     );
 
@@ -120,8 +152,11 @@ export async function put_berita(dataPost) {
     return responseData;
   } catch (e) {
     console.log('Error in put_berita with message:', e.message);
+    throw e; // rethrow the error to handle it in the calling function
   }
 }
+
+
 
 // to delete berita based on id berita
 export async function delete_berita(data) {
