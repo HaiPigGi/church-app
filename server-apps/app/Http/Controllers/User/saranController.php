@@ -22,20 +22,20 @@ class saranController extends Controller
             'message' => $request->input('message'),
         ]);
 
-        return response()->json(['message' => 'Saran successfully submitted.']);
+        return response()->json(['message' => 'Saran successfully submitted.'],201);
     }
 
     public function getAllDataSaran()
     {
         $sarans = saranModel::all();
 
-        return response()->json(['sarans' => $sarans]);
+        return response()->json(['sarans' => $sarans],200);
     }
 
     public function getAllDataSaranByID($id)
     {
         $sarans = saranModel::find($id);
-        return response()->json(['sarans' => $sarans]);
+        return response()->json(['sarans' => $sarans],200);
     }
 
     public function destroy($id)
