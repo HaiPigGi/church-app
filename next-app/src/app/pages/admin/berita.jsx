@@ -14,6 +14,7 @@ import ModalKonfirmasi from '@/components/Fragments/Modal/ModalKonfirmasi';
 
 const berita = () => {
   const [beritaData, setBeritaData] = useState({
+    berita_id: '',
     image: null,
     title: '',
     content: '',
@@ -65,13 +66,9 @@ const berita = () => {
   const handleUpdate = async () => {
     setLoadingFetching(true);
     const data = convertToFormData();
-    console.log(data.get('berita_id'));
-    console.log(data.get('title'));
-    console.log(data.get('content'));
-    console.log(data.get('event'));
     if (data.get('berita_id')) {
       try {
-        const updatedBerita = await put_berita(data);
+        const updatedBerita = await put_berita(beritaData);
         setModalMessage(
           <Modal
             type={updatedBerita.status == 'success' ? 'success' : 'danger'}
@@ -107,8 +104,8 @@ const berita = () => {
               <h1
                 className={
                   updatedBerita.status == 'success'
-                    ? 'text-green-500'
-                    : 'text-red-500'
+                    ? 'text-green-500 text-center'
+                    : 'text-red-500 text-center'
                 }
               >
                 {updatedBerita.message}
@@ -159,10 +156,12 @@ const berita = () => {
   };
 
   const clearForm = () => {
-    document.querySelector('#title').value = '';
-    document.querySelector('#content').value = '';
-    document.querySelector('#event').value = '';
-    document.querySelector('#image').value = '';
+    setBeritaData({
+      title: '',
+      content: '',
+      event: '',
+      image: '',
+    });
   };
 
   async function getBeritaData() {
@@ -271,11 +270,11 @@ const berita = () => {
     var fileSizeInMB = fileSize / (1024 * 1024);
     if (fileSizeInMB < 20) {
       // Update beritaData.image with the File object
+      console.log('file Input on CheckFileSize : ', fileInput.files[0]);
       setBeritaData({
         ...beritaData,
         image: fileInput.files[0],
       });
-      console.log(beritaData.image);
     } else {
       setErrorMessage({
         ...errorMessage,
@@ -288,17 +287,14 @@ const berita = () => {
   }
 
   const handleImageChange = (e) => {
-    console.log(e.target);
     const file = e.target.files[0];
-    console.log(file);
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
         setShownImage(reader.result);
-        console.log(shownImage);
       };
       reader.readAsDataURL(file);
-      beritaData.image = file;
+      console.log('file at handleImageChange : ', file);
     }
   };
 
@@ -425,9 +421,9 @@ const berita = () => {
                   </ModalKonfirmasi>,
                 );
               }}
-              className="border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200"
+              className=" bg-green-500 rounded-lg w-24 py-2 text-white cursor-pointer hover:bg-green-400 hover:text-black"
             >
-              Save changes
+              Add
             </button>
             <button
               onClick={() => {
@@ -457,7 +453,7 @@ const berita = () => {
               }}
               type="button"
               name="updated_at"
-              className="border-2 mx-4 border-green-600 rounded-lg px-3 py-2 text-green-400 cursor-pointer hover:bg-green-600 hover:text-green-200"
+              className="border-2 mx-4 border-secondary rounded-lg w-24 py-2 text-secondary cursor-pointer hover:bg-secondary hover:text-black"
             >
               Update
             </button>
@@ -485,9 +481,9 @@ const berita = () => {
                   </ModalKonfirmasi>,
                 );
               }}
-              className=" border-2 mx-4 border-red-600 rounded-lg px-3 py-2 text-red-400 cursor-pointer hover:bg-red-600 hover:text-red-200"
+              className=" border-2 border-red-600 rounded-lg w-24 py-2 text-red-500 cursor-pointer hover:bg-red-600 hover:text-black"
             >
-              Batal
+              Delete
             </button>
           </div>
         </form>

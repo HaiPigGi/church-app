@@ -98,21 +98,17 @@ export async function post_berita(dataPost) {
 
 // to update bertia based on id berita
 export async function put_berita(dataPost) {
-  console.log(dataPost.get('content'));
-  console.log(dataPost.get('title'));
-  console.log(dataPost.get('event'));
-  console.log(dataPost.get('image'));
-  console.log(dataPost.get('berita_id'));
   try {
+    console.log(dataPost);
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${dataPost.get('berita_id')}`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${dataPost.berita_id}`,
       {
         method: 'PUT',
         mode: 'cors',
         headers: {
           Authorization: `bearer ${getJwtToken()}`,
         },
-        body: dataPost,
+        body: JSON.stringify(dataPost),
       },
     );
     const responseData = await res.json();
