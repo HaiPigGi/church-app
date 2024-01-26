@@ -138,13 +138,13 @@ export async function put_berita(dataPost,image) {
           'Content-Type': 'application/json',
           Authorization: `bearer ${getJwtToken()}`,
         },
-        body: {
+        body: JSON.stringify({
           title: dataPost.title,
           content: dataPost.content,
           event: dataPost.event,
           berita_id: dataPost.berita_id,
           image: image,
-        },
+        }),
       },
     );
 
