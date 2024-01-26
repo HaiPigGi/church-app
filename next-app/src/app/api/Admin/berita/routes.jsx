@@ -57,7 +57,7 @@ export async function get_beritaID(beritaID) {
 // to post new berita
 export async function post_berita(dataPost) {
   try {
-    console.log(dataPost.get('image'));
+    console.log("cek image store : ", dataPost.get('image'));
     console.log(dataPost.get('title'));
     console.log(dataPost.get('content'));
     console.log(dataPost.get('event'));
@@ -96,29 +96,41 @@ export async function post_berita(dataPost) {
   }
 }
 
-// to update bertia based on id berita
+// to update berita based on berita_id
 export async function put_berita(dataPost) {
-  console.log(dataPost.get('content'));
-  console.log(dataPost.get('title'));
-  console.log(dataPost.get('event'));
-  console.log(dataPost.get('image'));
-  console.log(dataPost.get('berita_id'));
+  // Extract title, content, event, and berita_id from FormData
+  const image = dataPost.get('image');
+  const title = dataPost.get('title');
+  const content = dataPost.get('content');
+  const event = dataPost.get('event');
+  const berita_id = dataPost.get('berita_id');
+
+  console.log("cek image update : ",image);
+  console.log("cek title update : ",title);
+
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${dataPost.get('berita_id')}`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${berita_id}`,
       {
         method: 'PUT',
         mode: 'cors',
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `bearer ${getJwtToken()}`,
         },
-        body: dataPost,
+        body: JSON.stringify({
+          title: title,
+          content: content,
+          event: event,
+          image: image,
+        }),
       },
     );
+
     const responseData = await res.json();
     return responseData;
   } catch (e) {
-    console.log('error in put_berita with message : ', e.message);
+    console.log('Error in put_berita with message:', e.message);
   }
 }
 

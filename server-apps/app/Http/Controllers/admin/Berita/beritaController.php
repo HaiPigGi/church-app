@@ -24,8 +24,6 @@ class beritaController extends Controller
         try {
             // Get all posts
             $posts = beritaModel::all();
-            Log::info("cek All data post : " . json_encode($posts));
-
             // Retrieve image details for each post
             $postsWithImages = $posts->map(function ($post) {
                 $imagePath = 'storage/berita/' . $post->image;
@@ -49,9 +47,6 @@ class beritaController extends Controller
                     return null; // or handle it as needed
                 }
             })->filter(); // Filter out null values (non-existent images)
-
-            Log::info("cek All data post : " . json_encode($postsWithImages));
-
             return response()->json(['data' => $postsWithImages], 200);
         } catch (\Exception $e) {
             // Log the error
@@ -161,8 +156,6 @@ class beritaController extends Controller
         try {
             DB::beginTransaction();
 
-            // Log request data for debugging
-            Log::info('Request data in controller: ', $request->all());
             // Validate form data
             $validator = Validator::make($request->all(), [
                 'image'   => 'image|mimes:jpeg,png,jpg,svg|max:20480',
@@ -170,6 +163,9 @@ class beritaController extends Controller
                 'content' => 'required|min:10',
                 'event'   => 'required',
             ]);
+
+            Log::info('Validated data in update Berita: ', $request->all());
+
 
             if ($validator->fails()) {
                 // Log validation errors for debugging
