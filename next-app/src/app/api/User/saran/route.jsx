@@ -1,7 +1,11 @@
 
 
+const get_session = () => {
+  return sessionStorage.getItem('jwtToken');
+};
 export async function inputSaran(Saran){
     console.log(Saran)
+    const token = get_session();
 
     try{
         let res = await fetch(
