@@ -45,6 +45,7 @@ async function simpanSaran(dataSaran) {
     postData.append('full_name',data.full_name);
     postData.append('email',data.email);
     postData.append('message',data.message);
+    
     // koneksi ke backend nya
     const res = await inputSaran(dataSaran);
     console.log(res);
