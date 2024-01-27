@@ -1,27 +1,29 @@
 
-
-export async function inputSaran(Saran){
-    console.log(Saran)
-
-    try{
-        let res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/user/saran/store`,
-            {
-                method:'POST',
-                mode:'cors',
-                headers:{
-                    Authorization: `bearer ${token}`,
-                },
-                body:Saran,
-            },
-        );
-        res = await res.json();
-        console.log(res);
-        if(res.status== 201){
-            return res;
-        }
-        return res.error;
-    }catch(e){
-        console.log('error sayang : ', e.message);
+// To get the JWTTOKEN from session storage.
+function getJwtToken() {
+  return sessionStorage.getItem('jwtToken');
+}
+export async function post_saran(postData) {
+  console.log("cek data postData ",postData);
+  try {
+    let res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/user/saran/store`,
+      {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            Authorization: `bearer ${getJwtToken()}`,
+        },
+        body: postData,
+      },
+    );
+    res = await res.json();
+    console.log(res);
+    if (res.status == 201) {
+      return res;
     }
+    return res.error;
+  } catch (e) {
+    console.log('error in Saran Post : ', e.message);
+  }
 }
