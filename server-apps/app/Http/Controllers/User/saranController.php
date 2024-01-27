@@ -43,6 +43,6 @@ class saranController extends Controller
         $saran = saranModel::findOrFail($id);
         $saran->delete();
 
-        return response()->json(['message' => 'Saran successfully deleted.']);
+        return response()->json(['message' => 'Saran successfully deleted.'],200);
     }
 }
