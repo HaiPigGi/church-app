@@ -3,8 +3,7 @@ import MainLayout from '@/components/Layouts/MainLayout';
 import Footer from '@/components/Fragments/Footer';
 import Navbar from '@/components/Fragments/Navbar';
 import React, { useState } from 'react';
-import { inputSaran } from '@/app/api/User/saran/route';
-
+import { post_saran } from '@/app/api/User/saran/route';
 
 
 export default function saran() {
@@ -37,17 +36,17 @@ async function simpanSaran(dataSaran) {
   try {
     console.log('Data saran yang akan disimpan:', dataSaran);
 
-    const data=dataSaran;
-    console.log("cek data yang di simpan",data)
-    console.log("data full name",data.full_name)
+    const data= dataSaran;
+    console.log("cek data simpanSaran : ",data);
+    console.log("data full name : ",data.full_name);
 
-    const postData = new formData();
+    const postData= new FormData();
     postData.append('full_name',data.full_name);
     postData.append('email',data.email);
     postData.append('message',data.message);
-    
+
     // koneksi ke backend nya
-    const res = await inputSaran(dataSaran);
+    const res = await post_saran(postData);
     console.log(res);
     // tambahkan logika tambahan di sini jika diperlukan untuk menangani respons yang diterima
   } catch (error) {
