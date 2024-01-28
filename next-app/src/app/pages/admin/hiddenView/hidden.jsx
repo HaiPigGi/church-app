@@ -30,7 +30,7 @@ const hidden = () => {
 
   return (
     <div className='flex items-center justify-center mt-52 '>
-      <div className="mb-4">
+      <div className="mb-4 min-[360px]:max-[765px]:items-center">
         <button
           onClick={() => triggredToggle(0)} // Tampilan A
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2

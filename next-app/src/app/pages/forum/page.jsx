@@ -1,8 +1,61 @@
+'use client'
 import MainLayout from '@/components/Layouts/MainLayout';
 import Footer from '@/components/Fragments/Footer';
 import Navbar from '@/components/Fragments/Navbar';
+import React, { useState } from 'react';
+import { post_saran } from '@/app/api/User/saran/route';
+
 
 export default function saran() {
+const [formData,setfromData]= useState({
+  full_name: '',
+  email: '',
+  message: '',
+});
+
+const handleInput=(e)=>{
+const { name, value } = e.target;
+    setfromData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+const handleSubmit = (e) =>{
+  e.preventDefault();
+  simpanSaran(formData);
+  // console.log(formData);
+  setfromData({
+    full_name:'',
+    email:'',
+    message:''
+  })
+}
+
+async function simpanSaran(dataSaran) {
+  try {
+    console.log('Data saran yang akan disimpan:', dataSaran);
+
+    const data= dataSaran;
+    console.log("cek data simpanSaran : ",data);
+    console.log("data full name : ",data.full_name);
+
+    const postData= new FormData();
+    postData.append('full_name',data.full_name);
+    postData.append('email',data.email);
+    postData.append('message',data.message);
+
+    // koneksi ke backend nya
+    const res = await post_saran(postData);
+    console.log(res);
+    // tambahkan logika tambahan di sini jika diperlukan untuk menangani respons yang diterima
+  } catch (error) {
+    console.error('Terjadi kesalahan saat menyimpan saran:', error);
+    // tambahkan logika penanganan kesalahan di sini, seperti menampilkan pesan kesalahan kepada pengguna
+  }
+}
+
+
   return (
     <MainLayout >
       <a className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
@@ -65,7 +118,7 @@ export default function saran() {
             </div>
           </div>
 
-          <form id="form" action="" className="needs-validation">
+          <form id="form" action="" onSubmit={handleSubmit} className="needs-validation">
             <input type="hidden" name="access_key" />
             <input
               type="checkbox"
@@ -79,11 +132,14 @@ export default function saran() {
                 type="text"
                 placeholder="Full Name"
                 required=""
+                name='full_name'
+                value={formData.full_name}
+                onChange={handleInput}
                 className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
               />
-              <div className="empty-feedback invalid-feedback text-red-400 text-sm mt-1">
+              {/* <div className="empty-feedback invalid-feedback text-red-400 text-sm mt-1">
                 Please provide your full name.
-              </div>
+              </div> */}
             </div>
 
             <div className="mt-5">
@@ -93,29 +149,34 @@ export default function saran() {
               </label>
               <input
                 type="email"
+                name='email'
+                value={formData.email}
+                onChange={handleInput}
                 placeholder="Email Address"
                 required=""
                 className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
               />
             </div>
-            <div className="empty-feedback text-red-400 text-sm mt-1">
+            {/* <div className="empty-feedback text-red-400 text-sm mt-1">
               {' '}
               Please provide your email address.
             </div>
             <div className="invalid-feedback text-red-400 text-sm mt-1">
               Please provide a valid email address.
-            </div>
+            </div> */}
 
-            <div className="mb-5">
+            <div className="mt-5">
               <textarea
                 name="message"
                 required=""
                 placeholder="Your message"
+                value={formData.message}
+                onChange={handleInput}
                 className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none h-36 focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
               ></textarea>
-              <div className="empty-feedback invalid-feedback text-red-400 text-sm mt-1">
+              {/* <div className="empty-feedback invalid-feedback text-red-400 text-sm mt-1">
                 Please enter your message.
-              </div>
+              </div> */}
               <button
                 type="submit"
                 className=" transition duration-150 ease-in-out  rounded text-center  focus-visible:ring-2 ring-offset-2 ring-gray-200 w-full px-6 py-3 bg-black text-white hover:bg-slate-900  border-2 border-transparent"
