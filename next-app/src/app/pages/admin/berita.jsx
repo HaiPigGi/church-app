@@ -334,7 +334,6 @@ const berita = () => {
   };
 
   function findBeritaBasedID(id) {
-    console.log(beritaDataList.find((data) => data.berita_id == id));
     return beritaDataList.find((data) => data.berita_id == id);
   }
 

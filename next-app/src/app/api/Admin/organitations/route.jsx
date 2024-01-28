@@ -21,9 +21,6 @@ export async function get_AllOrganitations() {
         },
       );
       res = await res.json();
-      if (res?.error) {
-        return res.error;
-      }
       return res;
     } catch (e) {
       console.log('error at get_AllOrganitations with message : ', e.message);
@@ -93,14 +90,11 @@ export async function put_Organitation(organitationsID, organitationData) {
           method: 'PUT',
           mode: 'cors',
           headers: {
-            'content-type': 'application/json',
-            'X-CSRF-token': AuthServices().CSRF_token(),
             Authorization: `bearer ${token}`,
           },
           body: organitationData,
         },
       );
-      console.log(res);
       res = await res.json();
       if (res.status == 200) {
         return res;
