@@ -88,7 +88,7 @@ Route::middleware(['cors'])->group(function () {
             Route::get('/', [PositionController::class, 'index'])->name('admin.positions.index');
             Route::post('/', [PositionController::class, 'store'])->name('admin.positions.store');
             Route::get('/{position}', [PositionController::class, 'show'])->name('admin.positions.show');
-            Route::put('/{position}', [PositionController::class, 'update'])->name('admin.positions.update');
+            Route::put('/{id}', [PositionController::class, 'update'])->name('admin.positions.update');
             Route::delete('/{position}', [PositionController::class, 'destroy'])->name('admin.positions.destroy');
         });
 
