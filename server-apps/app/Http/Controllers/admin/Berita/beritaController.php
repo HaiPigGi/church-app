@@ -156,6 +156,8 @@ class beritaController extends Controller
         try {
             DB::beginTransaction();
 
+            Log::info("Check Request Data: ", $request->all());
+
             // Validate form data
             $validator = Validator::make($request->all(), [
                 'image'   => 'image|mimes:jpeg,png,jpg,svg|max:20480',

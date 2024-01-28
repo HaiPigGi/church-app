@@ -136,13 +136,11 @@ const berita = () => {
 
   const handleUpdate = async () => {
     setLoadingFetching(true);
-    const data= convertToFormDataUpdate();
-    // Log the beritaData object in JSON format
-    console.log('beritaData:', JSON.stringify(beritaData));
-
-    if (JSON.stringify(beritaData.berita_id)) {
+    // convert to FormData
+    if (beritaData.berita_id) {
       try {
-        const updatedBerita = await put_berita(beritaData,data);
+        const data = convertToFormData();
+        const updatedBerita = await put_berita(data, beritaData.berita_id);
         setModalMessage(
           <Modal
             type={updatedBerita.status == 'success' ? 'success' : 'danger'}
@@ -191,8 +189,6 @@ const berita = () => {
             ,
           </Modal>,
         );
-
-        // Tambah logika atau tindakan selanjutnya jika diperlukan
       } catch (error) {
         console.error('Error updating berita:', error.message);
       }
@@ -235,6 +231,7 @@ const berita = () => {
       content: '',
       event: '',
       image: '',
+      berita_id: '',
     });
     setShownImage('');
   };
@@ -257,10 +254,10 @@ const berita = () => {
     getBeritaData();
   }, [loadingFetching]);
 
+  // Convert beritaData to FormData
   const convertToFormData = () => {
     const formData = new FormData();
-    if (beritaData?.berita_id)
-      formData.append('berita_id', beritaData.berita_id);
+
     formData.append('image', beritaData.image);
     formData.append('title', beritaData.title);
     formData.append('content', beritaData.content);
@@ -318,8 +315,8 @@ const berita = () => {
             <h1
               className={
                 createBerita.status == 'success'
-                  ? 'text-red-500'
-                  : 'text-green-500'
+                  ? 'text-green-500'
+                  : 'text-reed-500'
               }
             >
               {createBerita.message}
@@ -377,12 +374,11 @@ const berita = () => {
         setShownImage(reader.result);
       };
       reader.readAsDataURL(file);
-      console.log('file at handleImageChange : ', file);
     }
   };
 
   return (
-    <div className="relative z-20 pt-5 flex flex-col items-center justify-center h-screen w-auto px-1">
+    <div className="relative z-20 pt-5 flex flex-col items-center justify-center h-screen w-full px-2">
       <h1 className="font-bold text-3xl mb-2">Tambah Berita</h1>
       <div className="grid grid-cols-2 ">
         <form id="form" className="shadow-2xl w-full h-full px-5 py-2   ">
@@ -592,9 +588,9 @@ const BeritaCard = ({ data }) => {
   return (
     <div
       data-testid="pathnameTest"
-      className="block mx-auto w-full max-w-[500px] h-full mb-5 bg-white/90 rounded-xl overflow-hidden text-left"
+      className="block mx-auto w-full  h-full mb-5 text-left"
     >
-      <div className="flex justify-center items-center h-full">
+      <div className="flex justify-start items-center h-full">
         <div className="relative w-56 min-w-36 max-w-56 h-full  rounded-xl overflow-hidden me-2">
           <Image
             src={imageLoader(data.image.path)}
@@ -673,17 +669,17 @@ const BeritaCardSkeleton = () => {
 
 const AllBerita = ({ dataBerita, action }) => {
   return (
-    <div className="relative z-10 flex-col w-full px-5 py-2  h-[82.5vh]  bg-white rounded-md border-l border-slate-500">
+    <div className=" z-10 flex-col w-full px-5 py-2  h-full  bg-white rounded-md border-l border-slate-500">
       <h1 className="sticky top-0 left-0 px-2 py-2 mb-2 border-b border-primary w-full h-auto text-primary font-bold text-xl bg-white ">
         ALL Berita
       </h1>
-      <div className="w-full flex-col items-center justify-center overflow-y-auto px-2 h-full">
+      <div className="w-full flex-col items-center justify-center overflow-y-auto px-2 max-h-[85vh]">
         {dataBerita?.length > 0 ? (
           dataBerita.map((berita) => (
             <button
               key={berita.berita_id}
               onClick={() => action(berita.berita_id)}
-              className="w-full shadow-xl h-40"
+              className="w-full shadow-xl h-40 bg-white/90 rounded-xl overflow-hidden"
             >
               <BeritaCard data={berita} />
             </button>

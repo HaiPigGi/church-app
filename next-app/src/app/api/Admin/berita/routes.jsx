@@ -73,24 +73,8 @@ export async function post_berita(dataPost) {
         body: dataPost, //Pass FormData directly as the body //other change to stringyfy to pass just body
       },
     );
-
-    console.log(res.status);
-
-    if (res.status === 200) {
-      return {
-        status: 'success',
-        message: 'Data Successfully Added',
-      };
-    } else if (res.status === 422) {
-      return {
-        status: 'error',
-        message: 'Data is not valid',
-      };
-    } else {
-      return {
-        message: res.status,
-      };
-    }
+    const resData = await res.json();
+    return resData;
   } catch (e) {
     console.log('error in post_berita with message : ', e.message);
   }
@@ -107,7 +91,10 @@ const convertImageToDataURL = async (image) => {
 
       reader.readAsDataURL(image);
     });
-  } else if (typeof image === 'object' && image['Illuminate\\Http\\UploadedFile']) {
+  } else if (
+    typeof image === 'object' &&
+    image['Illuminate\\Http\\UploadedFile']
+  ) {
     // If image is an object with the structure {"Illuminate\\Http\\UploadedFile": "C:\\xampp\\tmp\\php40B6.tmp"}
     const filePath = image['Illuminate\\Http\\UploadedFile'];
     const blob = await fetch(filePath).then((response) => response.blob());
@@ -124,27 +111,27 @@ const convertImageToDataURL = async (image) => {
 };
 
 // Updated put_berita function
-export async function put_berita(dataPost,image) {
-  const newImage=image.get('image');
-  console.log(image.get('image'));
-  console.log("CEk new Image :  ",newImage);
+export async function put_berita(dataPost, idBerita) {
+  console.log(dataPost.get('image'));
+  console.log(dataPost.get('title'));
+  console.log(dataPost.get('content'));
+  console.log(dataPost.get('event'));
+  // const data = {
+  //   title: dataPost.get('title'),
+  //   content: dataPost.get('content'),
+  //   event: dataPost.get('event'),
+  // };
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${dataPost.berita_id}`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${idBerita}`,
       {
         method: 'PUT',
         mode: 'cors',
         headers: {
-          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/json',
           Authorization: `bearer ${getJwtToken()}`,
         },
-        body: {
-          title: dataPost.title,
-          content: dataPost.content,
-          event: dataPost.event,
-          berita_id: dataPost.berita_id,
-          image: image,
-        },
+        body: dataPost,
       },
     );
 
@@ -155,8 +142,6 @@ export async function put_berita(dataPost,image) {
     throw e; // rethrow the error to handle it in the calling function
   }
 }
-
-
 
 // to delete berita based on id berita
 export async function delete_berita(data) {
