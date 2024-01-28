@@ -10,7 +10,7 @@ export default function saran() {
 const [formData,setfromData]= useState({
   full_name: '',
   email: '',
-  message: ''
+  message: '',
 });
 
 const handleInput=(e)=>{
