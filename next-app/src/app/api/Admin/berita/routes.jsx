@@ -1,3 +1,5 @@
+import AuthService from '@/app/api/Auth/route.jsx';
+
 // To get the JWTTOKEN from session storage.
 function getJwtToken() {
   return sessionStorage.getItem('jwtToken');
@@ -111,30 +113,23 @@ const convertImageToDataURL = async (image) => {
 };
 
 // Updated put_berita function
-export async function put_berita(dataPost, idBerita) {
-  console.log(dataPost.get('image'));
-  console.log(dataPost.get('title'));
-  console.log(dataPost.get('content'));
-  console.log(dataPost.get('event'));
-  // const data = {
-  //   title: dataPost.get('title'),
-  //   content: dataPost.get('content'),
-  //   event: dataPost.get('event'),
-  // };
+export async function put_berita(idBerita,formData) {
+
+  console.log("cek isi form data di put_berita : ",formData);
+
   try {
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${getJwtToken()}`);
+    headers.append('X-CSRF-TOKEN', AuthService().CSRF_token());
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/${idBerita}`,
       {
         method: 'PUT',
         mode: 'cors',
-        headers: {
-          // 'Content-Type': 'application/json',
-          Authorization: `bearer ${getJwtToken()}`,
-        },
-        body: dataPost,
+        headers: headers,
+        body: JSON.stringify(formData),
       },
     );
-
     const responseData = await res.json();
     return responseData;
   } catch (e) {
@@ -142,6 +137,7 @@ export async function put_berita(dataPost, idBerita) {
     throw e; // rethrow the error to handle it in the calling function
   }
 }
+
 
 // to delete berita based on id berita
 export async function delete_berita(data) {
