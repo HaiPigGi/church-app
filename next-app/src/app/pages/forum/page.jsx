@@ -24,7 +24,7 @@ const { name, value } = e.target;
 const handleSubmit = (e) =>{
   e.preventDefault();
   simpanSaran(formData);
-  // console.log(formData);
+ 
   setfromData({
     full_name:'',
     email:'',
@@ -48,6 +48,13 @@ async function simpanSaran(dataSaran) {
     // koneksi ke backend nya
     const res = await post_saran(postData);
     console.log(res);
+
+    if(res.status === 200){
+      alert("data berhasil di tambahkan")
+    }else{
+      alert("data gagal di tambahkan")
+    }
+
     // tambahkan logika tambahan di sini jika diperlukan untuk menangani respons yang diterima
   } catch (error) {
     console.error('Terjadi kesalahan saat menyimpan saran:', error);

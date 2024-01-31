@@ -20,12 +20,7 @@ export async function get_AllBerita() {
       },
     );
     const responseData = await res.json();
-    if (res.status == 200) {
-      return responseData;
-    }
-
-    console.log(responseData.error);
-    return;
+    return responseData;
   } catch (e) {
     console.log('error in get_AllBerita with message : ', e.message);
   }
@@ -59,11 +54,6 @@ export async function get_beritaID(beritaID) {
 // to post new berita
 export async function post_berita(dataPost) {
   try {
-    console.log(dataPost.get('image'));
-    console.log(dataPost.get('title'));
-    console.log(dataPost.get('content'));
-    console.log(dataPost.get('event'));
-    console.log('data post at POST_BERITA : ', dataPost);
     let res = await fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/store`,
       {
