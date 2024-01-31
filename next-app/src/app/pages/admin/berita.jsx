@@ -12,7 +12,6 @@ import { get_AllBerita_user } from '@/app/api/routes';
 import { imageLoader } from '@/lib/ImageLoader';
 import Image from 'next/image';
 import ModalKonfirmasi from '@/components/Fragments/Modal/ModalKonfirmasi';
-
 const berita = () => {
   const [beritaData, setBeritaData] = useState({
     berita_id: '',
@@ -170,96 +169,20 @@ const berita = () => {
     }
   };
 
-  const handleUpdate = async () => {
-    setLoadingFetching(true);
-    // convert to FormData
+  const handleUpdate = () => {
     if (beritaData.berita_id) {
       try {
-        const data = convertToFormData();
-        const updatedBerita = await put_berita(data, beritaData.berita_id);
-        setModalMessage(
-          <Modal
-            type={updatedBerita.status == 'success' ? 'success' : 'danger'}
-            action={() => {
-              clearForm();
-              setModalMessage('');
-            }}
-          >
-            <div className="">
-              {updatedBerita.status == 'success' ? (
-                <div className="flex justify-center items-center w-full h-24 text-green-500 animate-pulse">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    height="full"
-                    fill="currentColor"
-                  >
-                    <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-                  </svg>
-                </div>
-              ) : (
-                <div className="flex justify-center items-center w-full h-24 text-red-500 animate-pulse">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    height="full"
-                  >
-                    <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path>
-                  </svg>
-                </div>
-              )}
-              <h1
-                className={
-                  updatedBerita.status == 'success'
-                    ? 'text-green-500 text-center'
-                    : 'text-red-500 text-center'
-                }
-              >
-                {updatedBerita.message}
-              </h1>
-              <h1 className="text-slate-500 text-center ">
-                klik ok untuk melanjutkan
-              </h1>
-            </div>
-            ,
-          </Modal>,
-        );
+        // Store beritaData in sessionStorage
+        sessionStorage.setItem('beritaData', JSON.stringify(beritaData));
+  
+        // Navigate to the update page with the berita ID
+        window.location.href = `/pages/admin/updateBerita/${beritaData.berita_id}/`;
       } catch (error) {
-        console.error('Error updating berita:', error.message);
+        console.error('Error navigating to update page:', error.message);
       }
-      return;
     }
-    setModalMessage(
-      <Modal
-        type="danger"
-        action={() => {
-          clearForm();
-          setModalMessage('');
-        }}
-      >
-        <div className="">
-          <div className="flex justify-center items-center w-full h-24 text-red-500 animate-pulse">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              height="full"
-            >
-              <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path>
-            </svg>
-          </div>
-          <h1 className="text-red-500">
-            Belum memilih berita yang akan dirubah
-          </h1>
-          <h1 className="text-slate-500 text-center ">
-            klik ok untuk melanjutkan
-          </h1>
-        </div>
-        ,
-      </Modal>,
-    );
   };
+  
 
   const clearForm = () => {
     setBeritaData({
@@ -586,14 +509,15 @@ const berita = () => {
         {loadingFetching ? (
           <BeritaCardSkeleton />
         ) : (
-          <AllBerita
-            dataBerita={beritaDataList}
-            action={(id) => {
-              const data = findBeritaBasedID(id);
-              setBeritaData(data);
-              setShownImage(data.image.url);
-            }}
-          />
+            <AllBerita
+              dataBerita={beritaDataList}
+              action={(id) => {
+                const data = findBeritaBasedID(id);
+                setBeritaData(data);
+                setShownImage(data.image.url);
+              }}
+            />
+
         )}
       </div>
       {modalMessage}
