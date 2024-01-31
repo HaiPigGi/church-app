@@ -265,12 +265,6 @@ const berita = () => {
     return formData;
   };
 
-  const convertToFormDataUpdate = () => {
-    const formData = new FormData();
-    if (beritaData?.berita_id) formData.append('image', beritaData.image);
-    return formData;
-  };
-
   // method for add new news
   const handleSaveChanges = async () => {
     setCreateBerita('');
