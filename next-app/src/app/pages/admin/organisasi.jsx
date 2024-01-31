@@ -8,6 +8,7 @@ import {
 } from '@/app/api/Admin/organitations/route';
 import Modal from '@/components/Fragments/Modal';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const InputOrganisasi = () => {
   const [organisasi, setOrganisasi] = useState({
@@ -338,6 +339,7 @@ const InputOrganisasi = () => {
 
   useEffect(() => {
     getOrganitationsData();
+    console.log('loadingState : ', loadingOrganisasiDat);
   }, []);
 
   return (
@@ -465,7 +467,7 @@ const InputOrganisasi = () => {
 
         <div className="h-[75vh] overflow-y-auto">
           <h2 className="text-xl font-semibold mb-2">Data Organisasi</h2>
-          <table className=" w-full border-collapse border rounded-md">
+          <table className="w-full border-collapse border rounded-md">
             <thead>
               <tr className="bg-gray-200 ">
                 <th className="p-2">Nama</th>
@@ -475,20 +477,11 @@ const InputOrganisasi = () => {
                 <th className="p-2">Aksi</th>
               </tr>
             </thead>
-            <tbody className={loadingOrganisasiDat ? 'h-full' : 'h-auto'}>
+            <tbody
+              className={loadingOrganisasiDat ? 'h-full border-2' : 'h-auto'}
+            >
               {loadingOrganisasiDat ? (
-                <>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                </>
+                <></>
               ) : organisasiList?.length > 0 ? (
                 <>
                   {organisasiList.map((org) => (
@@ -529,6 +522,28 @@ const InputOrganisasi = () => {
               )}
             </tbody>
           </table>
+          {loadingOrganisasiDat && (
+            <div className="w-full h-full flex justify-center items-center">
+              <motion.div
+                className="bg-slate-900 w-2 h-2 rounded-full"
+                initial={{ y: 0 }}
+                animate={{ y: [0, -25, 0] }}
+                transition={{ delay: 0.4, duration: 1, repeat: Infinity }}
+              ></motion.div>
+              <motion.div
+                className="bg-slate-900 w-2 h-2 rounded-full mx-1"
+                initial={{ y: 0 }}
+                animate={{ y: [0, -25, 0] }}
+                transition={{ delay: 0.5, duration: 1, repeat: Infinity }}
+              ></motion.div>
+              <motion.div
+                className="bg-slate-900 w-2 h-2 rounded-full"
+                initial={{ y: 0 }}
+                animate={{ y: [0, -25, 0] }}
+                transition={{ delay: 0.6, duration: 1, repeat: Infinity }}
+              ></motion.div>
+            </div>
+          )}
         </div>
       </div>
       {modalContent}

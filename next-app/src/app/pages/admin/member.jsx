@@ -21,6 +21,7 @@ const Member = () => {
   });
 
   const [employeeList, setEmployeeList] = useState([]);
+  const [showTooltip, setShowTooltip] = useState();
 
   const handleCreate = () => {
     setEmployeeList([...employeeList, { ...employee }]);
@@ -224,14 +225,26 @@ const Member = () => {
               <tr className="mb-4  p-4 rounded-md border-b">
                 <td
                   className="font-semibold py-2 px-4 line-clamp-2"
-                  data-tooltip-target=""
+                  onMouseEnter={(e) => {
+                    setShowTooltip(false);
+                    console.log('at Mouse Enter : ', showTooltip);
+                    if (showTooltip) {
+                      console.log(e.currentTarget.textContent);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    setShowTooltip(true);
+                    console.log('at Mouse Leave : ', showTooltip);
+                  }}
                 >
                   Hyeronemus abdi sang savia
                 </td>
                 <td className="py-2 px-4">Wakil Ketua</td>
                 <td className="py-2 px-4">Mesdinar</td>
                 <td className="py-2 px-4 text-xs">2050/31/31</td>
-                <td className="py-2 px-4">Kalbar</td>
+                <td className="py-2 px-4 line-clamp-2">
+                  Warak kidul sumberadi mlati sleman
+                </td>
                 <td>
                   <button
                     type="button"

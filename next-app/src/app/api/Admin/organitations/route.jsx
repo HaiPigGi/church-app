@@ -107,6 +107,7 @@ export async function put_Organitation(organitationsID, organitationData) {
 }
 
 export async function delete_Organitation(organitationsID) {
+  const token = get_session();
   try {
     let res = await fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/organitations/${organitationsID}`,
@@ -115,16 +116,11 @@ export async function delete_Organitation(organitationsID) {
         mode: 'cors',
         headers: {
           'content-type': 'application/json',
-          'X-CSRF-token': AuthServices().CSRF_token(),
           Authorization: `bearer ${token}`,
         },
       },
     );
-    res = await res.json();
-    if (res.status == 200) {
-      return res;
-    }
-    return res.error;
+    return res;
   } catch (e) {
     console.log('error at delete_Organitations with message : ', e.message);
   }
