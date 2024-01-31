@@ -12,8 +12,6 @@ import { get_AllBerita_user } from '@/app/api/routes';
 import { imageLoader } from '@/lib/ImageLoader';
 import Image from 'next/image';
 import ModalKonfirmasi from '@/components/Fragments/Modal/ModalKonfirmasi';
-import UpdateBeritaForm from './UpdateBeritaForm';
-
 const berita = () => {
   const [beritaData, setBeritaData] = useState({
     berita_id: '',

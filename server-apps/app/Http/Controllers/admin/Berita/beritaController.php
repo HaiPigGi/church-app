@@ -144,7 +144,7 @@ class beritaController extends Controller
         }
     }
 
-     /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -157,7 +157,7 @@ class beritaController extends Controller
             // Start the database transaction
             DB::beginTransaction();
             Log::info('Request data update :', $request->all());
-    
+
             // Validate form
             $validator = Validator::make($request->all(), [
                 'image'   => 'required|image|mimes:jpeg,png,jpg,svg|max:20480',
@@ -165,23 +165,23 @@ class beritaController extends Controller
                 'content' => 'required|min:10',
                 'event'   => 'required',
             ]);
-    
+
             if ($validator->fails()) {
                 // Log validation errors
                 Log::error('Validation errors:', ['errors' => $validator->errors()->all()]);
-    
+
                 return response()->json(['error' => 'Data yang diberikan tidak valid.'], 422);
             }
-    
+
             // Check if image is uploaded
             if ($request->hasFile('image')) {
                 // Upload new image
                 $image = $request->file('image');
                 $image->storeAs('public/post', $image->hashName());
-    
+
                 // Delete old image
                 Storage::delete('public/post/' . $post->image);
-    
+
                 // Update post with new image
                 $post->update([
                     'image'   => $image->hashName(),
@@ -197,41 +197,43 @@ class beritaController extends Controller
                     'event'   => $request->event
                 ]);
             }
-    
+
             // Commit the database transaction
             DB::commit();
-    
+
             return response()->json(['message' => 'Data Berhasil Diubah!'], 200);
         } catch (\Exception $e) {
             // An error occurred, rollback the transaction
             DB::rollBack();
-    
+
             // Log the error
             Log::error('Error updating post:', ['error' => $e->getMessage()]);
-    
+
             // Return a JSON response with an error message
             return response()->json(['error' => 'Terjadi kesalahan saat mengubah data.'], 500);
         }
     }
-    
+
 
     /**
      * Remove the specified resource from storage
      *
-     *@return \Illuminate\Http\JsonResponse
+     * @param  string $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(beritaModel $beritaModel)
+    public function destroy($id)
     {
         try {
             DB::beginTransaction();
 
+            $beritaModel = beritaModel::findOrFail($id);
             Storage::delete('public/berita/' . $beritaModel->image);
 
             $beritaModel->delete();
 
             DB::commit();
 
-            return response()->json(['status' => 'success', 'message' => 'Successfull Delete'], 200);
+            return response()->json(['status' => 'success', 'message' => 'Successfully Deleted'], 200);
         } catch (\Throwable $th) {
             DB::rollBack();
             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
