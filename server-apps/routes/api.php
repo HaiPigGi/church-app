@@ -70,7 +70,7 @@ Route::middleware(['cors'])->group(function () {
             Route::get('/', [beritaController::class, 'getAllBerita']);
             Route::get('/{id}', [beritaController::class, 'getAllBeritaById']);
             Route::post('/store', [BeritaController::class, 'store'])->name('admin.berita.store');
-            Route::put('/{id}', [BeritaController::class, 'update'])->name('admin.berita.update');
+            Route::patch('/{id}', [BeritaController::class, 'update'])->name('admin.berita.update');
             Route::delete('/{id}', [BeritaController::class, 'destroy'])->name('admin.berita.delete');
         });
 

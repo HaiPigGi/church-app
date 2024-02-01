@@ -192,6 +192,7 @@ class organitationController extends Controller
 
     /**
      * Delete organization from the database
+     * @param string $organitationId
      * @return \Illuminate\Http\JsonResponse
      */
     protected function destroy($organitationId)
