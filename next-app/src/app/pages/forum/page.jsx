@@ -47,7 +47,7 @@ async function simpanSaran(dataSaran) {
 
     // koneksi ke backend nya
     const res = await post_saran(postData);
-    console.log(res);
+    console.log('hasil datanya : ',res);
 
     if(res.status === 200){
       alert("data berhasil di tambahkan")
