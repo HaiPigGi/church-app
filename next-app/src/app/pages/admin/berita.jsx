@@ -65,6 +65,7 @@ const berita = () => {
 
   const handleDelete = async () => {
     try {
+      console.log(beritaData);
       if (beritaData?.berita_id) {
         const res = await delete_berita(beritaData);
         if (res.status == 'success') {
@@ -174,7 +175,7 @@ const berita = () => {
       try {
         // Store beritaData in sessionStorage
         sessionStorage.setItem('beritaData', JSON.stringify(beritaData));
-  
+
         // Navigate to the update page with the berita ID
         window.location.href = `/pages/admin/updateBerita/${beritaData.berita_id}/`;
       } catch (error) {
@@ -182,7 +183,6 @@ const berita = () => {
       }
     }
   };
-  
 
   const clearForm = () => {
     setBeritaData({
@@ -462,7 +462,7 @@ const berita = () => {
               type="button"
               onClick={() => {
                 setModalMessage(
-                  <Konfirmasi
+                  <ModalKonfirmasi
                     actionAcc={() => handleSave()}
                     actionDecline={() => setModalMessage('')}
                   />,
@@ -476,7 +476,7 @@ const berita = () => {
               onClick={() => {
                 console.log('execute');
                 setModalMessage(
-                  <Konfirmasi
+                  <ModalKonfirmasi
                     actionAcc={() => clearForm()}
                     actionDecline={() => setModalMessage('')}
                   />,
@@ -494,8 +494,10 @@ const berita = () => {
               name="deleted_at"
               onClick={() => {
                 setModalMessage(
-                  <Konfirmasi
-                    actionAcc={() => handleDelete()}
+                  <ModalKonfirmasi
+                    actionAcc={() => {
+                      handleDelete();
+                    }}
                     actionDecline={() => setModalMessage('')}
                   />,
                 );
@@ -509,15 +511,14 @@ const berita = () => {
         {loadingFetching ? (
           <BeritaCardSkeleton />
         ) : (
-            <AllBerita
-              dataBerita={beritaDataList}
-              action={(id) => {
-                const data = findBeritaBasedID(id);
-                setBeritaData(data);
-                setShownImage(data.image.url);
-              }}
-            />
-
+          <AllBerita
+            dataBerita={beritaDataList}
+            action={(id) => {
+              const data = findBeritaBasedID(id);
+              setBeritaData(data);
+              setShownImage(data.image.url);
+            }}
+          />
         )}
       </div>
       {modalMessage}
@@ -526,27 +527,27 @@ const berita = () => {
 };
 
 const Konfirmasi = ({ actionAcc, actionDecline }) => {
-  return (
-    <ModalKonfirmasi>
-      <h1 className="text-xl font-semibold text-pretty text-center w-2/3 mx-auto">
-        Apakah yakin ingin melanjutkan proses?
-      </h1>
-      <div className="flex justify-center items-center mt-3">
-        <button
-          onClick={actionAcc}
-          className="px-5 py-2 text-white rounded-md bg-green-500 hover:bg-green-300 me-3 "
-        >
-          Lanjut
-        </button>
-        <button
-          onClick={actionDecline}
-          className="px-5 py-2 text-white rounded-md bg-red-500 hover:bg-red-300 "
-        >
-          Batal
-        </button>
-      </div>
-    </ModalKonfirmasi>
-  );
+  // return (
+  //   <ModalKonfirmasi>
+  //     <h1 className="text-xl font-semibold text-pretty text-center w-2/3 mx-auto">
+  //       Apakah yakin ingin melanjutkan proses?
+  //     </h1>
+  //     <div className="flex justify-center items-center mt-3">
+  //       <button
+  //         onClick={actionAcc}
+  //         className="px-5 py-2 text-white rounded-md bg-green-500 hover:bg-green-300 me-3 "
+  //       >
+  //         Lanjut
+  //       </button>
+  //       <button
+  //         onClick={actionDecline}
+  //         className="px-5 py-2 text-white rounded-md bg-red-500 hover:bg-red-300 "
+  //       >
+  //         Batal
+  //       </button>
+  //     </div>
+  //   </ModalKonfirmasi>
+  // );
 };
 
 const BeritaCard = ({ data }) => {

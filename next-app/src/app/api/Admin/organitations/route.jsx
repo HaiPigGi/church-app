@@ -20,7 +20,6 @@ export async function get_AllOrganitations() {
           },
         },
       );
-      res = await res.json();
       return res;
     } catch (e) {
       console.log('error at get_AllOrganitations with message : ', e.message);

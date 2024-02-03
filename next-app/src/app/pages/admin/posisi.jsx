@@ -38,14 +38,12 @@ const Posisi = () => {
 
       // Create connection to the server
       const res = await post_position(formData);
-      console.log(res);
 
       // Fetch the updated position list after successful creation
-      const positionsResponse = await get_Position();
-      console.log(positionsResponse);
-
+      let positionsResponse = await get_Position();
+      positionsResponse = await positionsResponse.json();
       // Update the state with the new position list
-      setJabatanList(positionsResponse);
+      setJabatanList(positionsResponse.positions);
 
       // Reset the input field
       setPosisi({
@@ -94,7 +92,7 @@ const Posisi = () => {
   const handleDelete = async (position_id) => {
     // Make the delete request
     const deletionResult = await delete_position(position_id);
-  
+
     // Handle the deletion result
     if (deletionResult.success) {
       console.log(deletionResult.message);
@@ -109,7 +107,6 @@ const Posisi = () => {
       // Handle the error as needed, update UI, or show a message to the user
     }
   };
-  
 
   const handleEdit = (index) => {
     setPosisi(jabatanList[index]);

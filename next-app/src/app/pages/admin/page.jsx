@@ -6,7 +6,7 @@ import Pesan from '@/app/pages/admin/pesan';
 import Organisasi from './organisasi';
 import Posisi from './posisi';
 import Member from './member';
-import Berita from './berita'
+import Berita from './berita';
 import Hidden from './hiddenView/hidden';
 import Jadwal from './jadwalmisa';
 import WithAuth from '@/app/api/Auth/withAuth.js';
@@ -77,8 +77,6 @@ function Admin() {
     </h1>
   );
 
-
-
   const renderContent = () => {
     switch (activeMenu) {
       case 'Dashboard':
@@ -105,7 +103,7 @@ function Admin() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex w-full h-screen overflow-hidden">
       <div
         className={` ${open ? 'w-72' : 'w-20'} p-3 pt-5 h-screen duration-300 bg-secondary relative `}
       >

@@ -17,10 +17,9 @@ export default function Login() {
 
   const [errorMessage, setErrorMessage] = useState('');
   const [openModal, setOpenModal] = useState(false);
-  const [modalContent, setModalContent] = useState('');
-  const [path, setPath] = useState('');
+  const [modalContent, setModalContent] = useState(<></>);
   const dispatch = useAppDispatch();
-  const router = useRouter();
+  const status = useSelector((state) => state.session.status);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,60 +29,58 @@ export default function Login() {
     }));
   };
 
-  const handleClickLogin = async () => {
-    try {
-      setErrorMessage('');
-      const res = await AuthService().Sign_in(dataLogin);
-
-      if (res.status == 200) {
-        setModalContent(
-          <>
-            <div className="flex justify-center items-center w-full h-24 text-green-500 animate-pulse">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width=""
-                height="full"
-                fill="currentColor"
-              >
-                <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-              </svg>
-            </div>
-            <h1 className="text-center my-2 text-2xl font-bold text-green-500">
-              {res.message}
-            </h1>
-            <p className="text-center my-2 text-md w-3/4 font-light mx-auto text-slate-400">
-              {res.href == '/'
-                ? 'selanjutnya anda akan diarahkan ke dashboard admin'
-                : 'Selanjutnya anda akan diarahkan ke dashboard'}
-            </p>
-          </>,
-        );
-        const token = sessionStorage.getItem('jwtToken');
-        dispatch(
-          setSession({
-            message: res.message,
-            user: {
-              name: res.name,
-              status: res.status,
-            },
-            error: null,
-          }),
-        );
-        setOpenModal(true);
-        setPath(res.href);
-        return;
-      }
-      setErrorMessage(res.message);
-      return;
-    } catch (e) {
-      console.log(e.message);
+  const isResponseError = (res) => {
+    if (res?.error) {
+      setErrorMessage(res.error);
+      return true;
     }
+    return false;
   };
 
-  const handleModal = () => {
+  const storeSessionData = (res) => {
+    dispatch(
+      setSession({
+        message: res.message,
+        user: {
+          name: res.name,
+          status: res.status,
+        },
+        error: null,
+      }),
+    );
+  };
+
+  const showValidationModal = (res) => {
+    setOpenModal(true);
+    setModalContent(
+      <Modal
+        action={() => handleModal(res.role)}
+        type="success"
+        message={res.message}
+      />,
+    );
+  };
+
+  const handleClickLogin = async () => {
+    setErrorMessage('');
+    const res = await AuthService().Sign_in(dataLogin);
+    console.log(res);
+    if (isResponseError(res)) return;
+    storeSessionData(res);
+    showValidationModal(res);
+    return;
+  };
+
+  const isAdmin = (role) => {
+    if (role == 1) {
+      return '/pages/admin';
+    }
+    return '/';
+  };
+
+  const handleModal = (role) => {
     setOpenModal(!openModal);
-    window.location.href = path;
+    window.location.href = isAdmin(role);
   };
 
   const clsSection = () => {
@@ -178,13 +175,7 @@ export default function Login() {
           </section>
         </div>
       </section>
-      {openModal ? (
-        <Modal action={handleModal} type="success">
-          {modalContent}
-        </Modal>
-      ) : (
-        ''
-      )}
+      <div>{modalContent}</div>
     </MainLayout>
   );
 }

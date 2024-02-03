@@ -18,7 +18,7 @@ export default function Register() {
   const [openModal, setOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState();
   const router = useRouter();
-  
+
   const handleChanges = (e) => {
     const { name, value } = e.target;
     setDataRegis((prevData) => ({
@@ -29,8 +29,8 @@ export default function Register() {
 
   const handleModal = () => {
     setOpenModal(!openModal);
-    router.push("/pages/login");
-    return;    
+    router.push('/pages/login');
+    return;
   };
 
   const clsSection = (openModal) => {
@@ -46,34 +46,19 @@ export default function Register() {
       setErrorMessage('Username dan Password tidak sama');
       return;
     }
+
     const res = await AuthService().Sign_up(dataRegis);
-    if (res.status == 201) {
-      setModalContent(
-        <>
-          <div className="flex justify-center items-center w-full h-24 text-green-500 animate-pulse">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width=""
-              height="full"
-              fill="currentColor"
-            >
-              <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-            </svg>
-          </div>
-          <h1 className="text-center my-2 text-2xl font-bold text-green-500">
-            Registrasi Berhasil
-          </h1>
-          <p className="text-center my-2 text-md w-3/4 font-light mx-auto text-slate-400">
-            Selanjutnya anda akan diarahkan ke login
-          </p>
-        </>,
-      );
-      setOpenModal(true);
+    if (res?.error) {
+      setErrorMessage(res.message);
       return;
     }
-    setErrorMessage(res.message);
-    return;
+    setModalContent(
+      <Modal
+        type="success"
+        message="Pendaftaran berhasil"
+        action={handleModal}
+      />,
+    );
   };
 
   return (
@@ -171,7 +156,13 @@ export default function Register() {
           </section>
         </div>
       </section>
-      {openModal ? <Modal action={handleModal} type="success">{modalContent}</Modal> : ''}
+      {openModal ? (
+        <Modal action={handleModal} type="success">
+          {modalContent}
+        </Modal>
+      ) : (
+        ''
+      )}
     </MainLayout>
   );
 }
