@@ -14,13 +14,8 @@ export default function usePosition() {
     console.log(state);
   }, [state]);
 
-  const setPosition = (id = '', name) => {
-    console.log(id);
-    console.log(name);
-    setState({
-      ...state,
-      position: { position_id: id, position_name: name },
-    });
+  const setPosition = (value) => {
+    setState({ ...state, position: value });
   };
 
   const setPositionList = (allPosition) => {

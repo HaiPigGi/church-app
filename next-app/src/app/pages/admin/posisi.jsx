@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   post_position,
   get_Position,
@@ -117,16 +117,6 @@ const handleDelete = async (
   clearPosition();
 };
 
-const handleEdit = (
-  setPosition,
-  position_id,
-  searchPosition,
-  position_list,
-) => {
-  const { position_name } = searchPosition(position_id, position_list);
-  setPosition(position_id, position_name);
-};
-
 const Position = () => {
   const {
     position,
@@ -141,15 +131,11 @@ const Position = () => {
     fetchData(setPositionList, setModalContent);
   }, []);
 
-  useEffect(() => {
-    console.log(position);
-  }, [position]);
-
   return (
     <div>
       <div
         className="container mx-auto mt-8 p-8 sm:p-8"
-        onClick={clearPosition}
+        // onClick={() => clearPosition()}
       >
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-semibold mb-4 text-center min-[360px]:max-[765px]:ml-[-3rem]">
@@ -157,7 +143,6 @@ const Position = () => {
           </h1>
           <div className="flex space-x-2 mb-4">
             <input
-              type="text"
               placeholder="Posisi"
               value={position.position_name}
               onChange={(e) =>
@@ -166,22 +151,30 @@ const Position = () => {
               className="p-2 border border-gray-300 rounded-md flex-1 min-[360px]:max-[765px]:w-[4rem]"
             />
 
-            {position.position_id != '' ? (
-              <button
-                onClick={() =>
-                  handleUpdate(
-                    searchPosition,
-                    position.position_id,
-                    position.position_name,
-                    setModalContent,
-                    clearState,
-                    setPositionList,
-                  )
-                }
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-              >
-                Update
-              </button>
+            {position?.position_id != '' ? (
+              <>
+                <button
+                  onClick={() =>
+                    handleUpdate(
+                      searchPosition,
+                      position.position_id,
+                      position.position_name,
+                      setModalContent,
+                      clearState,
+                      setPositionList,
+                    )
+                  }
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                >
+                  Update
+                </button>
+                <button
+                  onClick={clearPosition}
+                  className="bg-slate-500 text-white px-4 py-2 rounded-md"
+                >
+                  Clear
+                </button>
+              </>
             ) : (
               <button
                 onClick={() =>
@@ -219,14 +212,12 @@ const Position = () => {
                     <td className="py-2 px-4">{ps.position_name}</td>
                     <td className="py-2 px-4 flex justify-center space-x-5">
                       <button
-                        onClick={() => {
-                          handleEdit(
-                            setPosition,
-                            ps.position_id,
-                            searchPosition,
-                            position_list,
-                          );
-                        }}
+                        onClick={() =>
+                          setPosition({
+                            position_id: ps.position_id,
+                            position_name: ps.position_name,
+                          })
+                        }
                         className="text-blue-500 underline"
                       >
                         Edit
