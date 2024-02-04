@@ -20,14 +20,15 @@ const searchPosition = (positionID, position_list) => {
 const handleCreate = async (
   clearPosition,
   setModalContent,
-  clearState,
+  clearModal,
   position_name,
   setPositionList,
 ) => {
   const res = await post_position(convertToFormData(position_name));
   // check if the response is error
-  if (isResponseError(res, setModalContent, clearState)) return;
+  if (isResponseError(res, setModalContent, clearModal)) return;
   fetchData(setPositionList, setModalContent);
+  clearModal();
   clearPosition();
 };
 
@@ -57,14 +58,9 @@ const isResponseError = (res, setModalContent, clearState) => {
 };
 
 // for fetchData from backedn
-async function fetchData(setPositionList, setModalContent) {
+async function fetchData(setPositionList, setModalContent, clearModal) {
   let response = await get_Position();
-  if (
-    isResponseError(response, setModalContent, () => {
-      setModalContent('');
-    })
-  )
-    return;
+  if (isResponseError(response, setModalContent, clearModal)) return;
   response = await response.json();
   setPositionList(response.positions);
 }
@@ -80,9 +76,8 @@ const convertToFormData = (position_name) => {
 const handleUpdate = async (
   searchPosition,
   position_id,
-  position_name,
   setModalContent,
-  clearState,
+  clearModal,
   setPositionList,
 ) => {
   const selectedPosition = searchPosition(position_id);
@@ -91,9 +86,14 @@ const handleUpdate = async (
     position_id,
     selectedPosition.position_name,
   );
-  if (isResponseError(res, setModalContent, clearState)) return;
+  if (isResponseError(res, setModalContent, clearModal)) return;
   // Fetch the updated position list after successful creation
   fetchData(setPositionList, setModalContent);
+  setModalContent('validation', {
+    typeMessage: 'success',
+    message: 'Data berhasil diupdate',
+    action: clearModal,
+  });
   // Reset the input field
   clearInput();
 };
@@ -158,7 +158,6 @@ const Position = () => {
                     handleUpdate(
                       searchPosition,
                       position.position_id,
-                      position.position_name,
                       setModalContent,
                       clearState,
                       setPositionList,
@@ -178,13 +177,17 @@ const Position = () => {
             ) : (
               <button
                 onClick={() =>
-                  handleCreate(
-                    clearPosition,
-                    setModalContent,
-                    clearState,
-                    position.position_name,
-                    setPositionList,
-                  )
+                  setModalContent('confirmation', {
+                    actionAcc: () =>
+                      handleCreate(
+                        clearPosition,
+                        setModalContent,
+                        clearState,
+                        position.position_name,
+                        setPositionList,
+                      ),
+                    actionDecline: clearState,
+                  })
                 }
                 className="bg-green-500 text-white px-4 py-2 rounded-md"
               >
@@ -224,13 +227,18 @@ const Position = () => {
                       </button>
                       <button
                         onClick={() =>
-                          handleDelete(
-                            ps.position_id,
-                            setModalContent,
-                            clearPosition,
-                            clearState,
-                            setPositionList,
-                          )
+                          setModalContent('confirmation', {
+                            actionAcc: () => {
+                              handleDelete(
+                                ps.position_id,
+                                setModalContent,
+                                clearPosition,
+                                clearState,
+                                setPositionList,
+                              );
+                            },
+                            actionDecline: clearState,
+                          })
                         }
                         className="text-red-500 underline"
                       >

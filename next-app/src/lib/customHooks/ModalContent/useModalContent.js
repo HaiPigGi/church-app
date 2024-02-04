@@ -3,7 +3,8 @@ import { useState } from 'react';
 import Modal from '@/components/Fragments/Modal';
 
 const renderContentBasedOnType = (type, attribute) => {
-  if ((!type) instanceof Object) return '';
+  if (type == 'clear') return '';
+  if ((!attribute) instanceof Object) return '';
 
   if (type == 'confirmation') {
     const { actionAcc, actionDecline } = attribute;
