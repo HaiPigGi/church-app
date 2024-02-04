@@ -5,117 +5,152 @@ import {
   update_position,
   delete_position,
 } from '@/app/api/Admin/position/route';
+import Modal from '@/components/Fragments/Modal';
+import usePosition from '../../../lib/customHooks/Position/usePosition';
+import useModalContent from '@/lib/customHooks/ModalContent/useModalContent';
 
-const Posisi = () => {
-  const [posisi, setPosisi] = useState({
-    position_name: '',
+// function for handle action to positionList
+
+// function for handle action to modalContent
+const searchPosition = (positionID, position_list) => {
+  return position_list.find((data) => data.position_id == positionID);
+};
+
+// function for create new position
+const handleCreate = async (
+  clearPosition,
+  setModalContent,
+  clearState,
+  position_name,
+  setPositionList,
+) => {
+  const res = await post_position(convertToFormData(position_name));
+  // check if the response is error
+  if (isResponseError(res, setModalContent, clearState)) return;
+  fetchData(setPositionList, setModalContent);
+  clearPosition();
+};
+
+const isResponseError = (res, setModalContent, clearState) => {
+  // if res is undefined or null
+  if (!res) return true;
+  // if res status is success
+  if (res.status == 200 || res.status == 201) {
+    return false;
+  }
+
+  // if res status is Unauthorized
+  if (res.status == 401) {
+    setModalContent('validation', {
+      typeMessage: 'failed',
+      action: () => (window.location.href = '/pages/login'),
+      message: 'Sesi sudah berakhir harap login kembali',
+    });
+    return true;
+  }
+  setModalContent('validation', {
+    typeMessage: 'failed',
+    action: clearState,
+    message: 'terjadi kesalahan',
   });
-  const [jabatanList, setJabatanList] = useState([]);
-  const [selectedIdx, setSelectedIdx] = useState(null);
+  return true;
+};
+
+// for fetchData from backedn
+async function fetchData(setPositionList, setModalContent) {
+  let response = await get_Position();
+  if (
+    isResponseError(response, setModalContent, () => {
+      setModalContent('');
+    })
+  )
+    return;
+  response = await response.json();
+  setPositionList(response.positions);
+}
+
+// for converting data to FormData
+const convertToFormData = (position_name) => {
+  const formData = new FormData();
+  formData.append('position_name', position_name);
+  return formData;
+};
+
+// to handle update
+const handleUpdate = async (
+  searchPosition,
+  position_id,
+  position_name,
+  setModalContent,
+  clearState,
+  setPositionList,
+) => {
+  const selectedPosition = searchPosition(position_id);
+  // Make the update request
+  const res = await update_position(
+    position_id,
+    selectedPosition.position_name,
+  );
+  if (isResponseError(res, setModalContent, clearState)) return;
+  // Fetch the updated position list after successful creation
+  fetchData(setPositionList, setModalContent);
+  // Reset the input field
+  clearInput();
+};
+
+// to handle delete
+const handleDelete = async (
+  position_id,
+  setModalContent,
+  clearPosition,
+  clearState,
+  setPositionList,
+) => {
+  const res = await delete_position(position_id);
+  if (isResponseError(res, setModalContent, clearState)) return;
+  setModalContent('validation', {
+    typeMessage: 'success',
+    action: clearState,
+    message: 'Data berhasil dihapus',
+  });
+  fetchData(setPositionList, setModalContent);
+  clearPosition();
+};
+
+const handleEdit = (
+  setPosition,
+  position_id,
+  searchPosition,
+  position_list,
+) => {
+  const { position_name } = searchPosition(position_id, position_list);
+  setPosition(position_id, position_name);
+};
+
+const Position = () => {
+  const {
+    position,
+    position_list,
+    setPosition,
+    setPositionList,
+    clearPosition,
+  } = usePosition();
+  const { clearState, modalContent, setModalContent } = useModalContent();
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const positionsResponse = await get_Position();
-        console.log(positionsResponse);
-
-        setJabatanList(positionsResponse);
-      } catch (error) {
-        console.error('Error fetching positions:', error);
-      }
-    }
-
-    fetchData();
+    fetchData(setPositionList, setModalContent);
   }, []);
 
-  const handleCreate = async () => {
-    try {
-      console.log('cek Data posisi yang disimpan : ', posisi);
-
-      // Make object FormData
-      const formData = new FormData();
-      formData.append('position_name', posisi.position_name);
-
-      // Create connection to the server
-      const res = await post_position(formData);
-
-      // Fetch the updated position list after successful creation
-      let positionsResponse = await get_Position();
-      positionsResponse = await positionsResponse.json();
-      // Update the state with the new position list
-      setJabatanList(positionsResponse.positions);
-
-      // Reset the input field
-      setPosisi({
-        position_name: '',
-      });
-    } catch (error) {
-      console.error('Terjadi Kesalahan saat Menyimpan Posisi : ', error);
-    }
-  };
-
-  const handleUpdate = async () => {
-    try {
-      const selectedPosition = jabatanList[selectedIdx];
-
-      console.log('Selected Position:', selectedPosition);
-
-      // Modify the updatedPosition object to include 'position_name'
-      const updatedPosition = {
-        position_id: selectedPosition.position_id,
-        position_name: posisi.position_name,
-      };
-
-      // Make the update request
-      const res = await update_position(
-        updatedPosition.position_id,
-        updatedPosition,
-      );
-
-      // Fetch the updated position list after successful creation
-      const positionsResponse = await get_Position();
-      console.log(positionsResponse);
-
-      // Update the state with the new position list
-      setJabatanList(positionsResponse);
-
-      // Reset the input field
-      setPosisi({
-        position_name: '',
-      });
-    } catch (error) {
-      console.error('Error updating position:', error);
-      // Handle the error as needed, update UI, or show a message to the user
-    }
-  };
-
-  const handleDelete = async (position_id) => {
-    // Make the delete request
-    const deletionResult = await delete_position(position_id);
-
-    // Handle the deletion result
-    if (deletionResult.success) {
-      console.log(deletionResult.message);
-      // Fetch the updated position list after successful deletion
-      const positionsResponse = await get_Position();
-      setJabatanList(positionsResponse);
-      // Reset the input field and selected index
-      setPosisi({ position_name: '' });
-      setSelectedIdx(null);
-    } else {
-      console.error('Error deleting position:', deletionResult.message);
-      // Handle the error as needed, update UI, or show a message to the user
-    }
-  };
-
-  const handleEdit = (index) => {
-    setPosisi(jabatanList[index]);
-    setSelectedIdx(index);
-  };
+  useEffect(() => {
+    console.log(position);
+  }, [position]);
 
   return (
     <div>
-      <div className="container mx-auto mt-8 p-8 sm:p-8">
+      <div
+        className="container mx-auto mt-8 p-8 sm:p-8"
+        onClick={clearPosition}
+      >
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-semibold mb-4 text-center min-[360px]:max-[765px]:ml-[-3rem]">
             Input Posisi
@@ -124,24 +159,43 @@ const Posisi = () => {
             <input
               type="text"
               placeholder="Posisi"
-              value={posisi.position_name}
-              onChange={(e) => setPosisi({ position_name: e.target.value })}
+              value={position.position_name}
+              onChange={(e) =>
+                setPosition({ ...position, position_name: e.target.value })
+              }
               className="p-2 border border-gray-300 rounded-md flex-1 min-[360px]:max-[765px]:w-[4rem]"
             />
 
-            {selectedIdx === null ? (
+            {position.position_id != '' ? (
               <button
-                onClick={handleCreate}
-                className="bg-green-500 text-white px-4 py-2 rounded-md"
-              >
-                Create
-              </button>
-            ) : (
-              <button
-                onClick={handleUpdate}
+                onClick={() =>
+                  handleUpdate(
+                    searchPosition,
+                    position.position_id,
+                    position.position_name,
+                    setModalContent,
+                    clearState,
+                    setPositionList,
+                  )
+                }
                 className="bg-blue-500 text-white px-4 py-2 rounded-md"
               >
                 Update
+              </button>
+            ) : (
+              <button
+                onClick={() =>
+                  handleCreate(
+                    clearPosition,
+                    setModalContent,
+                    clearState,
+                    position.position_name,
+                    setPositionList,
+                  )
+                }
+                className="bg-green-500 text-white px-4 py-2 rounded-md"
+              >
+                Create
               </button>
             )}
           </div>
@@ -159,31 +213,48 @@ const Posisi = () => {
               </tr>
             </thead>
             <tbody className="text-center">
-              {jabatanList.map((jabatan, index) => (
-                <tr key={index} className="border-t mx-auto">
-                  <td className="py-2 px-4">{jabatan.position_name}</td>
-                  <td className="py-2 px-4 flex justify-center space-x-5">
-                    <button
-                      onClick={() => handleEdit(index)}
-                      className="text-blue-500 underline"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(jabatan.position_id)}
-                      className="text-red-500 underline"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {position_list.length > 0 &&
+                position_list.map((ps, index) => (
+                  <tr key={index} className="border-t mx-auto">
+                    <td className="py-2 px-4">{ps.position_name}</td>
+                    <td className="py-2 px-4 flex justify-center space-x-5">
+                      <button
+                        onClick={() => {
+                          handleEdit(
+                            setPosition,
+                            ps.position_id,
+                            searchPosition,
+                            position_list,
+                          );
+                        }}
+                        className="text-blue-500 underline"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleDelete(
+                            ps.position_id,
+                            setModalContent,
+                            clearPosition,
+                            clearState,
+                            setPositionList,
+                          )
+                        }
+                        className="text-red-500 underline"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
       </div>
+      {modalContent}
     </div>
   );
 };
 
-export default Posisi;
+export default Position;
