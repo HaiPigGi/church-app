@@ -15,8 +15,6 @@ export const getUserData = createAsyncThunk('session/getUserData', async () => {
   // check if token exist
   if (token) {
     const response = await UserServices().getUserData(token);
-    console.log('response at sessionSlice.js : ', response);
-    // setSession(response);
     return response;
   }
   return {

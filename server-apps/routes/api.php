@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Auth\VallidationJWTController;
 use App\Http\Controllers\User\saranController;
+use App\Http\Controllers\admin\dokumentasi\dokumentasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,10 @@ Route::middleware(['cors'])->group(function () {
 
         Route::prefix('saran')->middleware(['jwt'])->group(function () {
             Route::post('/store', [saranController::class, 'store'])->name('user.saran');
+        });
+        Route::prefix('dokumentasi')->group(function () {
+            Route::get('/',[dokumentasiController::class, 'getAllData']);
+            Route::get('/{id}',[dokumentasiController::class, 'getAllDataByYear']);
         });
     });
 
@@ -128,6 +133,12 @@ Route::middleware(['cors'])->group(function () {
             Route::get('/', [saranController::class, 'getAllDataSaran'])->name('admin.saran.getData');
             Route::get('/{id}', [saranController::class, 'getAllDataSaranByID'])->name('admin.saran.getData');
             Route::delete('/{id}', [saranController::class, 'destroy'])->name('admin.saran.delete');
+        });
+
+        Route::prefix('dokumentasi')->group(function () {
+            Route::get('/',[dokumentasiController::class,'getAllData'])->name('admin.dokumentasi.getAllData');
+            Route::post('/',[dokumentasiController::class,'store'])->name('admin.dokumentasi.store');
+            Route::delete('/{id}',[dokumentasiController::class,'deleteDataById'])->name('admin.dokumentasi.delete');
         });
     });
 });

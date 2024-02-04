@@ -6,7 +6,7 @@ import Pesan from '@/app/pages/admin/pesan';
 import Organisasi from './organisasi';
 import Posisi from './posisi';
 import Member from './member';
-import Berita from './berita'
+import Berita from './berita';
 import Hidden from './hiddenView/hidden';
 import Jadwal from './jadwalmisa';
 import Jenismisa from './jenismisa';
@@ -92,8 +92,6 @@ function Admin() {
       Dashboard page
     </h1>
   );
-
-
 
   const renderContent = () => {
     switch (activeMenu) {

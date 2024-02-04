@@ -8,6 +8,8 @@ import {
 } from '@/app/api/Admin/organitations/route';
 import Modal from '@/components/Fragments/Modal';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
+import ModalKonfirmasi from '@/components/Fragments/Modal/ModalKonfirmasi';
 
 const InputOrganisasi = () => {
   const [organisasi, setOrganisasi] = useState({
@@ -32,104 +34,14 @@ const InputOrganisasi = () => {
     'Panitia Natal',
   ];
 
-  const handleUpdateEntry = (index) => {
-    // Mengambil data organisasi pada index tertentu dari organisasiList
-    const updatedOrganisasi = organisasiList[index];
-
-    // Mengisi formulir dengan data yang diambil
-    setOrganisasi({ ...updatedOrganisasi });
-
-    // Menyimpan index untuk digunakan dalam handleUpdate
-  };
-
-  const handleUpdate = async (organisasiID) => {
-    try {
-      if (organisasiID !== null) {
-        const formData = convertToFormData();
-        console.log(formData.get('image'));
-        const res = await put_Organitation(organisasiID, formData);
-        if (res.error) {
-          setModalContent(
-            <Modal
-              type="danger"
-              action={() => {
-                setModalContent('');
-                clearInput();
-              }}
-            >
-              <div className="">
-                <div className="flex justify-center items-center w-full h-24 text-red-500 animate-pulse">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    height="full"
-                  >
-                    <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path>
-                  </svg>
-                </div>
-                <h1 className="text-red-500">{res.error}</h1>
-                <h1 className="text-slate-500 text-center ">
-                  klik ok untuk melanjutkan
-                </h1>
-              </div>
-              ,
-            </Modal>,
-          );
-          return;
-        }
-        setModalContent(
-          <Modal
-            type="success"
-            action={() => {
-              setModalContent('');
-              clearInput();
-            }}
-          >
-            <div className="">
-              <div className="flex justify-center items-center w-full h-24 text-green-500 animate-pulse">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  height="full"
-                  fill="currentColor"
-                >
-                  <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-                </svg>
-              </div>
-              <h1 className="text-green-500 text-center">
-                Data berhasil diupdate
-              </h1>
-              <h1 className="text-slate-500 text-center ">
-                klik ok untuk melanjutkan
-              </h1>
-            </div>
-            ,
-          </Modal>,
-        );
-
-        // Menyimpan perubahan ke dalam state organisasiList
-        clearInput();
-        getOrganitationsData();
-
-        // Reset updatedIndex
-      } else {
-        // Handle jika updatedIndex tidak valid
-        console.error('Invalid updated Index');
-      }
-    } catch (e) {
-      console.log('error when updating with message : ', e.message);
-    }
-  };
-
-  const handleDeleteEntry = async (index) => {
+  const handleDeleteEntry = async (id) => {
     //mengkosongkan isi modal
     setModalContent('');
     //mengubah loading statement
     setLoadingOrganisasiDat(true);
 
     //Melakukan request delete ke backend
-    const res = await delete_Organitation(index);
+    const res = await delete_Organitation(id);
 
     // Kondisi apabila terjadi error
     if (res?.error) {
@@ -140,29 +52,11 @@ const InputOrganisasi = () => {
             setModalContent('');
             clearInput();
           }}
-        >
-          <div className="">
-            <div className="flex justify-center items-center w-full h-24 text-red-500 animate-pulse">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                height="full"
-              >
-                <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path>
-              </svg>
-            </div>
-            <h1 className="text-red-500">{res.error}</h1>
-            <h1 className="text-slate-500 text-center ">
-              klik ok untuk melanjutkan
-            </h1>
-          </div>
-          ,
-        </Modal>,
+          message={res.error}
+        />,
       );
       return;
     }
-
     setOrganisasiList(res.data);
     setModalContent(
       <Modal
@@ -171,28 +65,10 @@ const InputOrganisasi = () => {
           setModalContent('');
           clearInput();
         }}
-      >
-        <div className="">
-          <div className="flex justify-center items-center w-full h-24 text-green-500 animate-pulse">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              height="full"
-              fill="currentColor"
-            >
-              <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-            </svg>
-          </div>
-          <h1 className="text-green-500 text-center">Delete Success</h1>
-          <h1 className="text-slate-500 text-center ">
-            klik ok untuk melanjutkan
-          </h1>
-        </div>
-        ,
-      </Modal>,
+        message={'Data berhasil dihapus'}
+      />,
     );
     getOrganitationsData();
-
     return;
   };
 
@@ -203,8 +79,8 @@ const InputOrganisasi = () => {
   const handleFotoChange = (e) => {
     // Logika untuk mengelola file foto
     const file = e.target.files[0];
-    setOrganisasi({ ...organisasi, [e.target.name]: file });
     // Lakukan sesuatu dengan file foto (misalnya, menyimpan ke state atau mengunggah ke server)
+    setOrganisasi({ ...organisasi, [e.target.name]: file });
   };
 
   // konversi ke dalam bentuk Form Data
@@ -217,96 +93,55 @@ const InputOrganisasi = () => {
     return formData;
   };
 
-  async function simpanOrganisasi(dataOrganisasi) {
+  async function saveOrganitation() {
     // melakukan koneksi ke backend
-    const res = await post_Organitation(dataOrganisasi);
-    // menampilkan modal berdasarkan kondisi koneksi
-    console.log(res);
-    if (res?.error) {
+    if (isDataOrganitationExist()) {
+      const formData = convertToFormData();
+      const res = await post_Organitation(formData);
+      // menampilkan modal berdasarkan kondisi koneksi
+      if (res?.error) {
+        setModalContent(
+          <Modal
+            type="danger"
+            action={() => {
+              setModalContent('');
+              clearInput();
+            }}
+            message={res.error}
+          />,
+        );
+        return;
+      }
       setModalContent(
         <Modal
-          type="danger"
+          type="success"
           action={() => {
             setModalContent('');
+            getOrganitationsData();
             clearInput();
           }}
-        >
-          <div className="">
-            <div className="flex justify-center items-center w-full h-24 text-red-500 animate-pulse">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                height="full"
-              >
-                <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path>
-              </svg>
-            </div>
-            <h1 className="text-red-500">{res.error}</h1>
-            <h1 className="text-slate-500 text-center ">
-              Harap cek kembali data yang akan dimasukkan
-            </h1>
-          </div>
-          ,
-        </Modal>,
+          message="Data berhasil disimpan"
+        />,
       );
-      return;
+      getOrganitationsData();
     }
-    setModalContent(
-      <Modal
-        type="success"
-        action={() => {
-          setModalContent('');
-          getOrganitationsData();
-          clearInput();
-        }}
-      >
-        <div className="">
-          <div className="flex justify-center items-center w-full h-24 text-green-500 animate-pulse">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              height="full"
-              fill="currentColor"
-            >
-              <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-            </svg>
-          </div>
-          <h1 className="text-green-500 text-center">
-            Data berhasil ditambahkan
-          </h1>
-          <h1 className="text-slate-500 text-center ">
-            klik ok untuk melanjutkan
-          </h1>
-        </div>
-        ,
-      </Modal>,
-    );
-    // getOrganitationsData();
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setModalContent('');
-    // mengecek apakah data yang dimasukkan sudah lengkap
-    console.log(organisasi);
-    if (organisasi.name_organitation == '')
-      return setErrorMessage('Harap masukkan nama organisasi!');
-    if (organisasi.date_of_establishment == '')
-      return setErrorMessage('Tanggal masih kosong!');
-    if (organisasi.description == '')
-      return setErrorMessage(
-        'Deskripsi masih kosong harap masukkan deskripsi!',
-      );
-    if (organisasi.image == '') return setErrorMessage('Foto masih kosong');
-
-    const formData = convertToFormData();
-
-    // memanggil fungsi simpanOrganisasi
-    simpanOrganisasi(formData);
-    // Logika untuk mengirim data organisasi ke server atau melakukan tindakan lainnya
-    console.log('Data Organisasi:', organisasi);
-  };
+  function isDataOrganitationExist() {
+    setErrorMessage('');
+    const { name_organitation, date_of_establishment, description, image } =
+      organisasi;
+    if (
+      name_organitation == '' ||
+      date_of_establishment == '' ||
+      description == '' ||
+      image == ''
+    ) {
+      setErrorMessage('Data masih belum lengkap');
+      return false;
+    }
+    return true;
+  }
 
   const clearInput = () => {
     setErrorMessage('');
@@ -321,11 +156,11 @@ const InputOrganisasi = () => {
 
   async function getOrganitationsData() {
     const res = await get_AllOrganitations();
-    if (res?.error == 'Unauthorized') {
+    if (res.status == 401) {
       window.location.href = '/pages/login';
       return;
     }
-    setOrganisasiList(res.data);
+    setOrganisasiList(await res.data);
     setLoadingOrganisasiDat(false);
   }
 
@@ -387,13 +222,7 @@ const InputOrganisasi = () => {
                   id="date_of_establishment"
                   name="date_of_establishment"
                   value={organisasi.date_of_establishment}
-                  onChange={(e) => {
-                    // const [tahun, bulan, hari] = e.target.value.split('-');
-                    setOrganisasi({
-                      ...organisasi,
-                      [e.target.name]: e.target.value,
-                    });
-                  }}
+                  onChange={handleChange}
                   className="p-2 border border-gray-300 rounded-md w-[50vh] "
                 />
               </div>
@@ -435,17 +264,17 @@ const InputOrganisasi = () => {
             <div className="mb-4">
               <button
                 type="button"
-                onClick={() => handleSubmit()}
+                onClick={() =>
+                  setModalContent(
+                    <ModalKonfirmasi
+                      actionAcc={() => saveOrganitation()}
+                      actionDecline={() => setModalContent('')}
+                    />,
+                  )
+                }
                 className="bg-green-500 text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
               >
                 Add
-              </button>
-              <button
-                type="button"
-                onClick={() => handleUpdate(organisasi.organitation_id)}
-                className="bg-secondary text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
-              >
-                Update
               </button>
               <button
                 type="button"
@@ -465,7 +294,7 @@ const InputOrganisasi = () => {
 
         <div className="h-[75vh] overflow-y-auto">
           <h2 className="text-xl font-semibold mb-2">Data Organisasi</h2>
-          <table className=" w-full border-collapse border rounded-md">
+          <table className="w-full border-collapse border rounded-md">
             <thead>
               <tr className="bg-gray-200 ">
                 <th className="p-2">Nama</th>
@@ -475,20 +304,11 @@ const InputOrganisasi = () => {
                 <th className="p-2">Aksi</th>
               </tr>
             </thead>
-            <tbody className={loadingOrganisasiDat ? 'h-full' : 'h-auto'}>
+            <tbody
+              className={loadingOrganisasiDat ? 'h-full border-2' : 'h-auto'}
+            >
               {loadingOrganisasiDat ? (
-                <>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                  <tr className="w-80 h-14 bg-slate-500 animate-pulse"></tr>
-                </>
+                <></>
               ) : organisasiList?.length > 0 ? (
                 <>
                   {organisasiList.map((org) => (
@@ -511,9 +331,16 @@ const InputOrganisasi = () => {
                       </td>
                       <td className="p-2">
                         <button
-                          onClick={() =>
-                            handleDeleteEntry(organisasi.organitation_id)
-                          }
+                          onClick={(e) => {
+                            setModalContent(
+                              <ModalKonfirmasi
+                                actionAcc={() =>
+                                  handleDeleteEntry(org.organitation_id)
+                                }
+                                actionDecline={() => setModalContent('')}
+                              />,
+                            );
+                          }}
                           className="text-red-500 underline"
                         >
                           Delete
@@ -529,6 +356,28 @@ const InputOrganisasi = () => {
               )}
             </tbody>
           </table>
+          {loadingOrganisasiDat && (
+            <div className="w-full h-full flex justify-center items-center">
+              <motion.div
+                className="bg-slate-900 w-2 h-2 rounded-full"
+                initial={{ y: 0 }}
+                animate={{ y: [0, -25, 0] }}
+                transition={{ delay: 0.4, duration: 1, repeat: Infinity }}
+              ></motion.div>
+              <motion.div
+                className="bg-slate-900 w-2 h-2 rounded-full mx-1"
+                initial={{ y: 0 }}
+                animate={{ y: [0, -25, 0] }}
+                transition={{ delay: 0.5, duration: 1, repeat: Infinity }}
+              ></motion.div>
+              <motion.div
+                className="bg-slate-900 w-2 h-2 rounded-full"
+                initial={{ y: 0 }}
+                animate={{ y: [0, -25, 0] }}
+                transition={{ delay: 0.6, duration: 1, repeat: Infinity }}
+              ></motion.div>
+            </div>
+          )}
         </div>
       </div>
       {modalContent}

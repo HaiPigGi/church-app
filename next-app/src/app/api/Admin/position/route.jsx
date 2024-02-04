@@ -19,12 +19,7 @@ export async function get_Position() {
         },
       },
     );
-    const responseData = await res.json();
-    if (res.status == 200) {
-      return responseData.positions;
-    }
-    console.log(responseData.error);
-    return;
+    return res;
   } catch (e) {
     console.log('error in get_AllBerita with message : ', e.message);
   }
@@ -113,4 +108,3 @@ export async function delete_position(position_id) {
     throw e;
   }
 }
-

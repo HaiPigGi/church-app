@@ -1,10 +1,14 @@
 'use client';
+import { useState } from 'react';
 
 const AuthService = () => {
   var csrf_token = '';
-
   function setCsrf(value) {
     csrf_token = value;
+  }
+
+  function get_Session() {
+    return sessionStorage.getItem('jwtToken');
   }
 
   // function for get csrf token
@@ -38,7 +42,7 @@ const AuthService = () => {
   // function for Login
   async function post_Login(dataLogin) {
     try {
-      // 
+      //
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/auth/login`,
         {
@@ -53,75 +57,12 @@ const AuthService = () => {
           cache: 'no-store',
         },
       );
-
-      const responseData = await res.json();
-      if (res.status === 200) {
-        // Successful login
-
-        const role = responseData.role;
-
-        sessionStorage.setItem('jwtToken', responseData.token);
-
-        var href;
-        if (role === 0) {
-          href = '/';
-        } else if (role === 1) {
-          href = '/pages/admin';
-        } else {
-          href = '/pages/login';
-        }
-
-        return {
-          name: responseData.name,
-          role: responseData.role,
-          message: responseData.message,
-          href: href,
-          status: res.status,
-        };
-      } else if (res.status === 401) {
-        // Handle unauthorized (401) error
-        return {
-          message:
-            'Invalid credentials. Please check your username and password.',
-          status: res.status,
-        };
-      } else if (res.status === 404) {
-        // Handle not found (404) error
-        const Message = responseData.error || 'user not found';
-        return {
-          message: Message,
-          status: res.status,
-        };
-      } else if (res.status === 400) {
-        // Handle validation or other client-side errors
-        const Message = responseData.error || 'Login Failed';
-        return {
-          message: Message,
-          status: res.status,
-        };
-      } else {
-        // Handle other server-side errors
-        const contentType = res.headers.get('content-type');
-        const isJSON = contentType && contentType.includes('application/json');
-
-        if (!isJSON) {
-          const Message = `Login failed with status : ${res.status}`;
-          return {
-            message: Message,
-            status: res.status,
-          };
-        }
-
-        const Message = responseData.message || 'login failed';
-        return {
-          message: Message,
-          status: res.status,
-        };
-      }
+      const resDat = await res.json();
+      sessionStorage.setItem('jwtToken', resDat.token);
+      return resDat;
     } catch (error) {
       // Handle unexpected errors
       console.error('Error in postData:', error.message);
-      setErrorMessage('An unexpected error occurred during login');
     }
   }
 
@@ -163,39 +104,7 @@ const AuthService = () => {
         },
       );
 
-      console.log('Response Status:', res.status);
-      const responseData = await res.json();
-
-      if (res.status === 201) {
-        return {
-          message: responseData.message,
-          status: res.status,
-          href: '/pages/login',
-        };
-      } else if (res.status === 400) {
-        const message = responseData.error || 'Registration Failed';
-        return {
-          message: message,
-          status: res.status,
-        };
-      } else {
-        const contentType = res.headers.get('content-type');
-        const isJSON = contentType && contentType.includes('application/json');
-
-        if (!isJSON) {
-          const message = `Registration failed with status: ${res.status}`;
-          return {
-            message: message,
-            status: res.status,
-          };
-        }
-
-        const message = responseData.message || 'Registration failed';
-        return {
-          message: message,
-          status: res.status,
-        };
-      }
+      return await res.json();
     } catch (error) {
       console.error('Error when post data in register:', error.message);
     }
@@ -206,6 +115,7 @@ const AuthService = () => {
     Logout: delete_Logout,
     Sign_up: post_Register,
     CSRF_token: get_CSRF,
+    getSession: get_Session,
   };
 };
 
