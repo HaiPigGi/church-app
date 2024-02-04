@@ -49,7 +49,7 @@ export async function get_JadwalMisaid(jadwalID) {
 }
 
 export async function post_JadwalMisa(dataJadwal) {
-  console.log('isinya : ',dataJadwal)
+  console.log('isinya : ', dataJadwal);
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jadwal-misa/`,
@@ -59,7 +59,7 @@ export async function post_JadwalMisa(dataJadwal) {
         headers: {
           Authorization: `bearer ${token}`,
         },
-        body:(dataJadwal),
+        body: dataJadwal,
       },
     );
     const responseData = await res.json();
@@ -117,8 +117,7 @@ export async function delete_JadwalMisa(jadwalID) {
   }
 }
 
-
-export async function get_jenisMisa(){
+export async function get_jenisMisa() {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jenis-misa/`,
