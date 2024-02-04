@@ -1,6 +1,7 @@
 'use client'
-import {  useState } from "react"
+import {  useState,useEffect } from "react"
 import { post_JadwalMisa } from "@/app/api/Admin/jadwalMisa/routes";
+import { get_jenisMisa } from "@/app/api/Admin/jenismisa/routes";
 
 
 export default function jadwal(){
@@ -9,9 +10,23 @@ export default function jadwal(){
         hari:'senin',
         waktu_mulai:'12:12',
         waktu_selesai:'12:12',
-        jenis_misa_id:'sadas'
     });
 
+    const [jenisMisaOptions, setJenisMisaOptions] = useState(
+        { jenis_misa_id:''},
+      );
+
+    
+  useEffect(() => {
+    async function fetchJenisMisa() {
+      const worshipTypes = await get_jenisMisa(); // Assuming get_jenisMisa returns a promise that resolves to an array of worship types
+      setJenisMisaOptions(worshipTypes.data);
+    }
+
+    fetchJenisMisa();
+  }, []);
+
+   
     const handleInput=(e)=>{
         const { name, value }= e.target;
         // console.log("Name:", name, "Value:", value); // Tambahkan ini untuk debugging
@@ -41,14 +56,14 @@ export default function jadwal(){
             console.log('hari', Jadwa.hari);
             console.log('waktu mulai', Jadwa.waktu_mulai);
             console.log('waktu selesai', Jadwa.waktu_selesai);
-            console.log('jenis misa', Jadwa.jenis_misa_id);
+            console.log('jenis misa', jenisMisaOptions.jenis_misa_id);
 
             const post_data= new FormData();
 
             post_data.append('hari',data.hari)
             post_data.append('waktu_mulai',data.waktu_mulai)
             post_data.append('waktu_selesai',data.waktu_selesai)
-            post_data.append('jenis_misa_id',data.jenis_misa_id)
+            post_data.append('jenis_misa_id',jenisMisaOptions.jenis_misa_id)
 
             const DATA_JSON = {}
             for (const pd of post_data.entries()) {
@@ -63,28 +78,38 @@ export default function jadwal(){
         }
     }
 
+    
+
     return(
         <div className="pt-10 flex flex-col items-center justify-center h-auto w-auto ">
             <h1 className="font-bold text-3xl mb-2 min-[360px]:max-[765px]:text-xl">Tambah Jadwal Misa</h1>
             <form onSubmit={handleSubmit} className="shadow-2xl opacity-50 h-[82vh] w-[100vh] p-5 min-[360px]:max-[765px]:w-[40vh] min-[360px]:max-[765px]:h-[88vh]  ">
                 <div className="flex flex-col mb-3">
-                    <input
-                    type="text"
-                    className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100
-                    min-[360px]:max-[765px]:w-[33vh]"
-                    placeholder="Jenismisa"
-                    required
-                    name='jenis_misa_id'
-                    value={Jadwa.jenis_misa_id}
-                    onChange={handleInput}
-                />
+                <label className="text-red-700 font-mono mb-2 ">Jenis Misa</label>
+                <select
+                name="jenis_misa_id"
+                className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 min-[360px]:max-[765px]:w-[33vh]"
+                required
+                value={Jadwa.jenis_misa_id}
+                onChange={handleInput}
+                >
+                {Array.isArray(jenisMisaOptions) ? (
+                    jenisMisaOptions.map((option,index) => (
+                    <option key={index}>
+                        {option.jenis}
+                    </option>
+                    ))
+                ) : (
+                    <></>
+                )}
+                </select>
                 </div>
 
                 <div className="flex flex-col mb-3">
                 <label className="text-red-700 font-mono mb-2 ">Hari Misa</label>
                 <select name="hari" className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100
                 min-[360px]:max-[765px]:w-[33vh] " value={Jadwa.hari} onChange={handleInput} >
-                    <option value="senin">select</option>
+                    <option value="select">select</option>
                     <option value="senin">Senin</option>
                     <option value="selasa">Selasa</option>
                     <option value="rabu">Rabu</option>

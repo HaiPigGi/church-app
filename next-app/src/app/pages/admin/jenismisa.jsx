@@ -2,7 +2,7 @@
 import { useState,useEffect,Suspense } from 'react';
 import { post_jenisMisa } from '@/app/api/Admin/jenismisa/routes';
 import { get_jenisMisa } from '@/app/api/Admin/jenismisa/routes';
-import Panel from './panel';
+
 
 export default function Jenismisa() {
   const [posisi, setPosisi] = useState({

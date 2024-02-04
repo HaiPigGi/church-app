@@ -1,4 +1,5 @@
 const token = sessionStorage.getItem('jwtToken');
+
 export async function get_JadwalMisa() {
   try {
     const res = await fetch(
@@ -48,6 +49,7 @@ export async function get_JadwalMisaid(jadwalID) {
 }
 
 export async function post_JadwalMisa(dataJadwal) {
+  console.log('isinya : ',dataJadwal)
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jadwal-misa/`,
@@ -57,7 +59,7 @@ export async function post_JadwalMisa(dataJadwal) {
         headers: {
           Authorization: `bearer ${token}`,
         },
-        body: JSON.stringify(dataJadwal),
+        body:(dataJadwal),
       },
     );
     const responseData = await res.json();
@@ -112,5 +114,28 @@ export async function delete_JadwalMisa(jadwalID) {
     return responseData;
   } catch (e) {
     console.log('error at delete_JadwalMisa with message : ', e.message);
+  }
+}
+
+
+export async function get_jenisMisa(){
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jenis-misa/`,
+      {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `bearer ${token}`,
+        },
+      },
+    );
+    if (res.ok) {
+      const responseData = await res.json();
+      return responseData;
+    }
+  } catch (e) {
+    console.log('error at get_jenisMisa with message : ', e.message);
   }
 }
