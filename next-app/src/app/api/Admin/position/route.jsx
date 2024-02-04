@@ -38,12 +38,8 @@ export async function post_position(postData) {
         body: postData,
       },
     );
-    res = await res.json();
-    console.log(res);
-    if (res.status == 201) {
-      return res;
-    }
-    return res.error;
+
+    return res;
   } catch (e) {
     console.log('error in create position : ', e.message);
   }
@@ -96,13 +92,7 @@ export async function delete_position(position_id) {
       },
     );
 
-    if (res.status === 200) {
-      return { success: true, message: 'Position deleted successfully.' };
-    } else {
-      const data = await res.json();
-      console.error('Error deleting position:', data.error || 'Unknown error');
-      return { success: false, message: data.message || 'Unknown error' };
-    }
+    return res;
   } catch (e) {
     console.error('Error at delete_position:', e.message);
     throw e;
