@@ -1,24 +1,28 @@
-import React from 'react';
+'use client'
+import React, { useState, useEffect } from 'react';
+import { get_Saran } from '@/app/api/Admin/saran/route';
+
 
 export default function Pesan() {
-  const data = [
-    { name: 'Pengirim 1', email: 'pengirim1@example.com', message: 'Pesan 1' },
-    {
-      name: 'Pengirim 2',
-      email: 'pengirim2@example.com',
-      message: 'Lorem ipsum dolor sit amet consectetur  !',
-    },
-    {
-      name: 'Pengirim 2',
-      email: 'pengirim2@example.com',
-      message: 'Lorem ipsum dolor sit amet consectetur  !',
-    },
-    {
-      name: 'Pengirim 2',
-      email: 'pengirim2@example.com',
-      message: 'Lorem ipsum dolor sit amet consectetur  !',
-    },
-  ];
+
+  const [saranList,setSaran] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await get_Saran();
+        console.log('hasilnya :',response)
+          setSaran(response.data);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    fetchData(); // Panggil fungsi fetchData saat komponen dimuat
+  }, []);
+  
+ 
 
   return (
     <div>
@@ -32,25 +36,27 @@ export default function Pesan() {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pesan</th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {data.map((row, i) => (
-            <tr key={i}>
-              <td className="px-6 py-4 whitespace-nowrap">{row.name}</td>
+          {saranList?.length > 0 &&(
+           <tbody className="bg-white divide-y divide-gray-200">
+            {saranList?.map((row,index) => (
+              <tr key={index}>
+              <td className="px-6 py-4 whitespace-nowrap">{row.full_name}</td>
               <td className="px-6 py-4 whitespace-nowrap">{row.email}</td>
               <td className="px-6 py-4 whitespace-wrap" style={{ lineHeight: '1.4', maxHeight: '4.2em', overflow: 'hidden' }}>
-                {row.message}
+              {row.message}
               </td>
-            </tr>
-          ))}
-        </tbody>
+              </tr>
+              ))}
+            </tbody>
+          )}
       </table>
     </div>
 
-      {/* for mobile */}
-      <div className='min-[765px]:hidden'>
-      <h1 className="pt-7 pb-7 text-2xl font-semibold flex-1 text-center ">Pesan Dan Kritik</h1>
-      <div>
-      {data.map((row, i) => (
+       {/* for mobile */}
+       <div className='min-[765px]:hidden'>
+        <h1 className="pt-7 pb-7 text-2xl font-semibold flex-1 text-center ">Pesan Dan Kritik</h1>
+        <div>
+          {saranList?.map((row, i) => (
             <tr key={i}>
               <label className="px-6 py-4 whitespace-nowrap font-bold text-lg text-red-500">{row.name}</label>
               <p className="px-6 py-4 whitespace-wrap font-Open Sans" style={{ lineHeight: '1.4', maxHeight: '4.2em', overflow: 'hidden' }}>
@@ -58,7 +64,7 @@ export default function Pesan() {
               </p>
             </tr>
           ))}
-      </div>
+        </div>
       </div>
     </div>
    

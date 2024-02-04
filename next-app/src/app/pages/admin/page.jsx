@@ -9,10 +9,14 @@ import Member from './member';
 import Berita from './berita';
 import Hidden from './hiddenView/hidden';
 import Jadwal from './jadwalmisa';
+import Jenismisa from './jenismisa';
+import Dokumentasi from './dokumentasi';
 import WithAuth from '@/app/api/Auth/withAuth.js';
 import { useAppSelector } from '@/lib/hook';
 import Loading from '@/components/Fragments/Loading/loading';
 import { useRouter } from 'next/navigation';
+import { ScrollArea } from '@radix-ui/react-scroll-area';
+
 
 function Admin() {
   const [open, setopen] = useState(true);
@@ -50,9 +54,21 @@ function Admin() {
       onClick: () => handleMenuClick('Jadwal'),
     },
     {
+      title: 'Jenismisa',
+      src: 'calendar (1)',
+      gap: false,
+      onClick: () => handleMenuClick('Jenismisa'),
+    },
+    {
       title: 'Hidden',
       src: 'view (1)',
       onClick: () => handleMenuClick('Hidden'),
+    },
+    {
+      title: 'Dokumentasi',
+      src: 'Chart_fill',
+      gab: true,
+      onClick: () => handleMenuClick('Dokumentasi'),
     },
     {
       title: 'Berita',
@@ -91,8 +107,12 @@ function Admin() {
         return <Member />;
       case 'Jadwal':
         return <Jadwal />;
+      case 'Jenismisa':
+        return <Jenismisa />;
       case 'Hidden':
         return <Hidden />;
+      case 'Dokumentasi':
+        return <Dokumentasi />;
       case 'Berita':
         return <Berita />;
       case 'Logout':
@@ -103,9 +123,9 @@ function Admin() {
   };
 
   return (
-    <div className="flex w-full h-screen overflow-hidden">
-      <div
-        className={` ${open ? 'w-72' : 'w-20'} p-3 pt-5 h-screen duration-300 bg-secondary relative `}
+    <div className="flex">
+      <ScrollArea
+        className={` ${open ? 'w-72' : 'w-20'} p-3 pt-5 h-auto duration-300 bg-secondary relative `}
       >
         <FaAnglesLeft
           className={` absolute cursor-pointer -right-3 top-9 w-7 border-2 border-black rounded-full ${!open && 'rotate-180'}`}
@@ -142,13 +162,13 @@ function Admin() {
               <a
                 className={`ml-2 ${!open && 'hidden'} origin-left duration-200`}
                 href={menu.link}
-              >
+                >
                 {menu.title}
               </a>
             </li>
           ))}
         </ul>
-      </div>
+      </ScrollArea>
 
       <div className="flex-1">{renderContent()}</div>
     </div>

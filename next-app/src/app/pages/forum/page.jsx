@@ -36,24 +36,20 @@ async function simpanSaran(dataSaran) {
   try {
     console.log('Data saran yang akan disimpan:', dataSaran);
 
-    const data= dataSaran;
-    console.log("cek data simpanSaran : ",data);
-    console.log("data full name : ",data.full_name);
+    const Data= dataSaran;
+    console.log("cek data simpanSaran : ",Data);
+    console.log("data full name : ",Data.full_name);
 
     const postData= new FormData();
-    postData.append('full_name',data.full_name);
-    postData.append('email',data.email);
-    postData.append('message',data.message);
+    postData.append('full_name',Data.full_name);
+    postData.append('email',Data.email);
+    postData.append('message',Data.message);
 
     // koneksi ke backend nya
     const res = await post_saran(postData);
-    console.log(res);
+    console.log('hasil datanya : ',res);
 
-    if(res.status === 200){
-      alert("data berhasil di tambahkan")
-    }else{
-      alert("data gagal di tambahkan")
-    }
+
 
     // tambahkan logika tambahan di sini jika diperlukan untuk menangani respons yang diterima
   } catch (error) {
