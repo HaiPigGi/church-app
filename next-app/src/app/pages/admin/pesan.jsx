@@ -12,10 +12,8 @@ export default function Pesan() {
       try {
         const response = await get_Saran();
         console.log('hasilnya :',response)
+          setSaran(response.data);
 
-        if (response && Array.isArray(response)) { // Pastikan response adalah array
-          setSaran(response);
-        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -38,10 +36,10 @@ export default function Pesan() {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pesan</th>
           </tr>
         </thead>
-          {saranList.length > 0 &&(
+          {saranList?.length > 0 &&(
            <tbody className="bg-white divide-y divide-gray-200">
-            {saranList.map((row) => (
-              <tr key={row.saran.id}>
+            {saranList?.map((row,index) => (
+              <tr key={index}>
               <td className="px-6 py-4 whitespace-nowrap">{row.full_name}</td>
               <td className="px-6 py-4 whitespace-nowrap">{row.email}</td>
               <td className="px-6 py-4 whitespace-wrap" style={{ lineHeight: '1.4', maxHeight: '4.2em', overflow: 'hidden' }}>
@@ -58,7 +56,7 @@ export default function Pesan() {
        <div className='min-[765px]:hidden'>
         <h1 className="pt-7 pb-7 text-2xl font-semibold flex-1 text-center ">Pesan Dan Kritik</h1>
         <div>
-          {saranList.map((row, i) => (
+          {saranList?.map((row, i) => (
             <tr key={i}>
               <label className="px-6 py-4 whitespace-nowrap font-bold text-lg text-red-500">{row.name}</label>
               <p className="px-6 py-4 whitespace-wrap font-Open Sans" style={{ lineHeight: '1.4', maxHeight: '4.2em', overflow: 'hidden' }}>
