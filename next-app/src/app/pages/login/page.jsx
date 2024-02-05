@@ -85,7 +85,7 @@ export default function Login() {
 
   const clsSection = () => {
     if (openModal == true) {
-      return 'blur-sm h-screen w-full bg-hero bg-fixed bg-center bg-cover bg-no-repeat overflow-hidden';
+      return 'blur-sm h-screen w-full overflow-hidden grid md:grid-cols-3 grid-row-4 p-2 md:p-0 overflow-hidden';
     }
     return 'h-screen w-full overflow-hidden grid md:grid-cols-3 grid-row-4 p-2 md:p-0';
   };
@@ -104,7 +104,7 @@ export default function Login() {
               sekarang untuk eksplorasi lengkap
             </p>
           </div>
-          <div className="absolute w-full h-full left-0 top-0 bg-hero bg-center bg-cover bg-no-repeat rounded-xl"></div>
+          <div className="absolute w-full h-full left-0 top-0 bg-hero bg-center bg-cover bg-no-repeat rounded-xl md:rounded-none"></div>
         </div>
 
         <div className="row-span-1 md:col-span-1 bg-white relative p-4 shadow-md w-full h-full md:h-screen flex items-start md:items-center">
