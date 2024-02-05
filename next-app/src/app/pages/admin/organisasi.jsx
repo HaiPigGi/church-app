@@ -155,12 +155,13 @@ const InputOrganisasi = () => {
   };
 
   async function getOrganitationsData() {
-    const res = await get_AllOrganitations();
+    let res = await get_AllOrganitations();
     if (res.status == 401) {
       window.location.href = '/pages/login';
       return;
     }
-    setOrganisasiList(await res.data);
+    res = await res.json();
+    setOrganisasiList(res.data);
     setLoadingOrganisasiDat(false);
   }
 
