@@ -69,6 +69,7 @@ const Member = () => {
   };
 
   const handleDelete = async (id) => {
+    console.log(id);
     setLoadingState('loading');
     const res = await deleteMemberData(id);
     if (isResponseError(res)) return;
@@ -218,7 +219,8 @@ const Member = () => {
     if (!allPosition.includes(position) || dataSamePosition.length < 2) {
       return true;
     }
-    typeModal('error', `${position} tidak boleh memiliki lebih dari 1 anggota`);
+    typeModal(`${position} tidak boleh memiliki lebih dari 1 member`, 'failed');
+    setLoadingState('failed');
     return false;
   };
 
@@ -231,7 +233,7 @@ const Member = () => {
       );
     }
     if (id) {
-      return employeeList.find((data) => data.members_id == id);
+      return employeeList.find((data) => data.member_id == id);
     }
   };
 
@@ -484,7 +486,7 @@ const Member = () => {
                       onClick={() =>
                         setModalContent(
                           <ModalKonfirmasi
-                            actionAcc={() => handleDelete(emp.members_id)}
+                            actionAcc={() => handleDelete(emp.member_id)}
                             actionDecline={() => setModalContent('')}
                           />,
                         )
@@ -535,14 +537,14 @@ const Member = () => {
           ></IoCloseCircleSharp>
           <form className="max-w-md mr-8">
             {/* Input Nama */}
-            <div className="mb-4 mt-10 ml-5">
+            <div className="mb-4">
               <input
                 type="text"
                 id="nama"
                 name="nama"
-                value={employee.nama}
+                value={employee.members_name}
                 onChange={(e) =>
-                  setEmployee({ ...employee, nama: e.target.value })
+                  setEmployee({ ...employee, members_name: e.target.value })
                 }
                 placeholder="Nama Member"
                 className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
@@ -550,22 +552,39 @@ const Member = () => {
             </div>
 
             {/* Input Posisi */}
-            <div className="mb-4 ml-5">
-              <input
-                type="text"
+            <div className="mb-4">
+              <label
+                htmlFor="posisi"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Posisi
+              </label>
+              <select
                 id="posisi"
                 name="posisi"
-                value={employee.posisi}
-                onChange={(e) =>
-                  setEmployee({ ...employee, posisi: e.target.value })
-                }
-                placeholder="Posisi Member"
+                value={employee.position_name}
+                onChange={(e) => {
+                  setEmployee({
+                    ...employee,
+                    position_name: e.target.value,
+                  });
+                  console.log(employee);
+                }}
                 className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-              />
+              >
+                <option value="" disabled>
+                  Select...
+                </option>
+                {positionList.map((ps) => (
+                  <option key={ps.position_id} value={ps.position_name}>
+                    {ps.position_name}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Input Organisasi */}
-            <div className="mb-4 ml-5">
+            <div className="mb-4">
               <label
                 htmlFor="organisasi"
                 className="block text-sm font-medium text-gray-600"
@@ -575,9 +594,12 @@ const Member = () => {
               <select
                 id="organisasi"
                 name="organisasi"
-                value={employee.organisasi}
+                value={employee.organitation_name}
                 onChange={(e) =>
-                  setEmployee({ ...employee, organisasi: e.target.value })
+                  setEmployee({
+                    ...employee,
+                    organitation_name: e.target.value,
+                  })
                 }
                 className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
               >
@@ -585,15 +607,18 @@ const Member = () => {
                   Select...
                 </option>
                 {organitationList.map((org) => (
-                  <option key={org.organitation_id} value={org.organitation_id}>
-                    {org.organitation_name}
+                  <option
+                    key={org.organitation_id}
+                    value={org.name_organitation}
+                  >
+                    {org.name_organitation}
                   </option>
                 ))}
               </select>
             </div>
 
             {/* Input Tanggal */}
-            <div className="mb-4 ml-5">
+            <div className="mb-4">
               <label className="font-sans text-red-500 text-xs">
                 Tanggal Lahir Member
               </label>
@@ -601,44 +626,48 @@ const Member = () => {
                 type="date"
                 id="tanggal"
                 name="tanggal"
-                value={employee.tanggal}
-                onChange={(e) =>
-                  setEmployee({ ...employee, tanggal: e.target.value })
-                }
+                value={employee.born_date}
+                max={setMinimalYearsOld()}
+                onChange={(e) => {
+                  setEmployee({ ...employee, born_date: e.target.value });
+                }}
                 placeholder="Tanggal Lahir Member"
                 className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
               />
             </div>
+
             {/* Input Alamat */}
-            <div className="mb-4 ml-5">
+            <div className="mb-4">
               <input
                 type="text"
                 id="alamat"
                 name="alamat"
-                value={employee.alamat}
+                value={employee.address}
                 onChange={(e) =>
-                  setEmployee({ ...employee, alamat: e.target.value })
+                  setEmployee({ ...employee, address: e.target.value })
                 }
                 placeholder="Alamat Member"
                 className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
               />
             </div>
+
             {/* Input Foto */}
-            <div className="mb-4 ml-5">
+            <div className="mb-4">
               <input
                 type="file"
                 id="foto"
                 name="foto"
                 onChange={(e) =>
-                  setEmployee({ ...employee, foto: e.target.value })
+                  setEmployee({ ...employee, image: e.target.files[0] })
                 }
                 placeholder="Foto Member"
                 accept="image/*"
                 className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
               />
             </div>
+
             {(organitationList.length == 0) & (positionList.length == 0) ? (
-              <h1 className="text-red-500 text-xl font-bold">
+              <h1 className="text-red-500 text-md font-bold">
                 data organisasi atau posisi masih belum ada harap tambahkan
                 terlebih dahulu
               </h1>
@@ -648,31 +677,46 @@ const Member = () => {
 
             {/* Tombol Create dan Update */}
             <div className="mb-4">
-              {(organitationList.length == 0) & (positionList.length == 0) ? (
-                <button
-                  className="bg-slate-500 text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
-                  disabled
-                >
-                  Create
-                </button>
+              {(organitationList == 0) & (positionList.length == 0) ? (
+                <>
+                  <button
+                    className="bg-slate-500 text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
+                    disabled
+                  >
+                    Create
+                  </button>
+                  <button
+                    className="bg-slate-500 text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
+                    disabled
+                  >
+                    Clear
+                  </button>
+                </>
               ) : (
                 <>
                   <button
                     type="button"
-                    onClick={handleCreate}
+                    onClick={() =>
+                      setModalContent(
+                        <ModalKonfirmasi
+                          actionAcc={handleCreate}
+                          actionDecline={setModalContent('')}
+                        />,
+                      )
+                    }
                     className="bg-green-500 text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
                   >
                     Create
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => clearData()}
+                    className="border border-slate-500 text-slate-500 px-4 py-2 rounded-md"
+                  >
+                    clear
+                  </button>
                 </>
               )}
-              <button
-                type="button"
-                onClick={() => handleUpdate(employeeList.length - 1)}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-              >
-                Update
-              </button>
             </div>
           </form>
         </ReactModal>
@@ -689,9 +733,11 @@ const Member = () => {
 
           {/* Data yang ditampilkan di sebelah kanan form */}
           <div className="w-full">
-            <h2 className="text-xl font-semibold mb-2">Data Member</h2>
-            <table className="w-full">
-              <thead className="w-full">
+            <h2 className="text-xl font-semibold mb-2 sticky left-0">
+              Data Member
+            </h2>
+            <table className="w-auto">
+              <thead>
                 <tr>
                   <th className="py-2 px-4 border-b">Nama</th>
                   <th className="py-2 px-4 border-b">Posisi</th>
@@ -701,27 +747,31 @@ const Member = () => {
                   <th className="py-2 px-4 border-b">Actions</th>
                 </tr>
               </thead>
-              <tbody className="text-sm font-sans">
-                {employeeList.map((emp, index) => (
-                  <tr key={index} className="mb-4  border p-4 rounded-md">
-                    <td className="text-lg font-semibold py-2 px-4">
-                      {emp.nama}
+              <tbody className="text-sm font-sans text-center">
+                {employeeList.map((emp) => (
+                  <tr
+                    key={emp.members_id}
+                    className="mb-4  p-4 rounded-md border-b cursor-pointer hover:bg-slate-100"
+                    onClick={() => setEmployee(emp)}
+                  >
+                    <td className="font-semibold py-2 px-4 line-clamp-2">
+                      {emp.members_name}
                     </td>
-                    <td className="py-2 px-4">{emp.posisi}</td>
-                    <td className="py-2 px-4">{emp.organisasi}</td>
-                    <td className="py-2 px-4 text-xs">{emp.tanggal}</td>
-                    <td className="py-2 px-4">{emp.alamat}</td>
+                    <td className="py-2 px-4">{emp.position_name}</td>
+                    <td className="py-2 px-4">{emp.organitation_name}</td>
+                    <td className="py-2 px-4 text-xs">{emp.born_date}</td>
+                    <td className="py-2 px-4 line-clamp-2">{emp.address}</td>
                     <td>
                       <button
                         type="button"
-                        onClick={() => setEmployee({ ...emp })}
-                        className="text-green-500 underline mr-2"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(index)}
+                        onClick={() =>
+                          setModalContent(
+                            <ModalKonfirmasi
+                              actionAcc={() => handleDelete(emp.member_id)}
+                              actionDecline={() => setModalContent('')}
+                            />,
+                          )
+                        }
                         className="text-red-500 underline"
                       >
                         Delete
@@ -731,6 +781,7 @@ const Member = () => {
                 ))}
               </tbody>
             </table>
+            {loadingState == 'loading' && <LoadingBounce />}
           </div>
         </ReactModal>
       </div>
