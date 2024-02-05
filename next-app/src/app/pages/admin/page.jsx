@@ -17,7 +17,6 @@ import Loading from '@/components/Fragments/Loading/loading';
 import { useRouter } from 'next/navigation';
 import { ScrollArea } from '@radix-ui/react-scroll-area';
 
-
 function Admin() {
   const [open, setopen] = useState(true);
   const [activeMenu, setActiveMenu] = useState('');
@@ -123,9 +122,9 @@ function Admin() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex relative h-screen w-screen ">
       <ScrollArea
-        className={` ${open ? 'w-72' : 'w-20'} p-3 pt-5 h-auto duration-300 bg-secondary relative `}
+        className={` ${open ? 'w-72' : 'w-20'} p-3 pt-5 h-full duration-300 bg-secondary fixed left-0 `}
       >
         <FaAnglesLeft
           className={` absolute cursor-pointer -right-3 top-9 w-7 border-2 border-black rounded-full ${!open && 'rotate-180'}`}
@@ -162,7 +161,7 @@ function Admin() {
               <a
                 className={`ml-2 ${!open && 'hidden'} origin-left duration-200`}
                 href={menu.link}
-                >
+              >
                 {menu.title}
               </a>
             </li>
