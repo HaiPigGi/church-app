@@ -12,7 +12,7 @@ export default function Pesan() {
       try {
         const response = await get_Saran();
         console.log('hasilnya :',response)
-          setSaran(response.data);
+          setSaran(response.sarans);
 
       } catch (error) {
         console.error('Error fetching data:', error);
