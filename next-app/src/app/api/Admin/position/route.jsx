@@ -45,13 +45,10 @@ export async function post_position(postData) {
   }
 }
 
-export async function update_position(position_id, updatedPosition) {
-  console.log('cek id di api : ', position_id);
-  console.log('cek data di api : ', updatedPosition);
-
+export async function update_position(data) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/positions/${position_id}`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/positions/${data.position_id}`,
       {
         method: 'PUT',
         mode: 'cors',
@@ -60,21 +57,12 @@ export async function update_position(position_id, updatedPosition) {
           'X-CSRF-TOKEN': AuthService().CSRF_token(),
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedPosition),
+        body: JSON.stringify(data),
       },
     );
-
-    const data = await res.json();
-
-    if (res.status === 201) {
-      return data;
-    } else {
-      console.error('Error updating position:', data.error || 'Unknown error');
-      return data;
-    }
+    return res;
   } catch (e) {
     console.error('Error at update_position:', e.message);
-    throw e;
   }
 }
 
