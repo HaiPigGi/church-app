@@ -6,6 +6,7 @@ import Modal from '@/components/Fragments/Modal';
 import 'remixicon/fonts/remixicon.css';
 import AuthService from '@/app/api/Auth/route';
 import { useRouter } from 'next/navigation';
+import Navbar from '@/components/Fragments/Navbar';
 
 export default function Register() {
   const [dataRegis, setDataRegis] = useState({
@@ -63,6 +64,7 @@ export default function Register() {
 
   return (
     <MainLayout>
+      <Navbar />
       <section className={clsSection(openModal)}>
         <div className="rounded-md md:rounded-none bg-hero bg-center bg-cover bg-no-repeat flex justify-center items-center md:w-full h-auto md:h-screen col-span-1 md:col-span-3">
           <div id="content-Hero">
