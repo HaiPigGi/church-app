@@ -93,7 +93,7 @@ function Modal({ message, action, type }) {
     <div
       id="bgModal"
       onClick={action}
-      className="absolute z-40 top-0 box-border w-full h-full flex justify-center items-center "
+      className="absolute left-0 z-40 top-0 box-border w-full h-full flex justify-center items-center "
     >
       <div className={clsModal({ type })}>
         <div className="">
