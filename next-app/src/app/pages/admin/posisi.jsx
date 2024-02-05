@@ -74,18 +74,19 @@ const convertToFormData = (position_name) => {
 
 // to handle update
 const handleUpdate = async (
-  searchPosition,
   position_id,
+  position_name,
   setModalContent,
   clearModal,
   setPositionList,
+  clearPosition,
 ) => {
-  const selectedPosition = searchPosition(position_id);
   // Make the update request
-  const res = await update_position(
-    position_id,
-    selectedPosition.position_name,
-  );
+  const res = await update_position({
+    position_id: position_id,
+    position_name: position_name,
+  });
+
   if (isResponseError(res, setModalContent, clearModal)) return;
   // Fetch the updated position list after successful creation
   fetchData(setPositionList, setModalContent);
@@ -95,7 +96,7 @@ const handleUpdate = async (
     action: clearModal,
   });
   // Reset the input field
-  clearInput();
+  clearPosition();
 };
 
 // to handle delete
@@ -132,124 +133,123 @@ const Position = () => {
   }, []);
 
   return (
-    <div>
-      <div
-        className="container mx-auto mt-8 p-8 sm:p-8"
-        // onClick={() => clearPosition()}
-      >
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-semibold mb-4 text-center min-[360px]:max-[765px]:ml-[-3rem]">
-            Input Posisi
-          </h1>
-          <div className="flex space-x-2 mb-4">
-            <input
-              placeholder="Posisi"
-              value={position.position_name}
-              onChange={(e) =>
-                setPosition({ ...position, position_name: e.target.value })
-              }
-              className="p-2 border border-gray-300 rounded-md flex-1 min-[360px]:max-[765px]:w-[4rem]"
-            />
+    <div
+      className="container mx-auto mt-8 p-8 sm:p-8"
+      // onClick={() => clearPosition()}
+    >
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-3xl font-semibold mb-4 text-center min-[360px]:max-[765px]:ml-[-3rem]">
+          Input Posisi
+        </h1>
+        <div className="flex space-x-2 mb-4">
+          <input
+            placeholder="Posisi"
+            value={position.position_name}
+            onChange={(e) =>
+              setPosition({ ...position, position_name: e.target.value })
+            }
+            className="p-2 border border-gray-300 rounded-md flex-1 min-[360px]:max-[765px]:w-[4rem]"
+          />
 
-            {position?.position_id != '' ? (
-              <>
-                <button
-                  onClick={() =>
-                    handleUpdate(
-                      searchPosition,
-                      position.position_id,
-                      setModalContent,
-                      clearState,
-                      setPositionList,
-                    )
-                  }
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md"
-                >
-                  Update
-                </button>
-                <button
-                  onClick={clearPosition}
-                  className="bg-slate-500 text-white px-4 py-2 rounded-md"
-                >
-                  Clear
-                </button>
-              </>
-            ) : (
+          {position?.position_id != '' ? (
+            <>
               <button
                 onClick={() =>
-                  setModalContent('confirmation', {
-                    actionAcc: () =>
-                      handleCreate(
-                        clearPosition,
-                        setModalContent,
-                        clearState,
-                        position.position_name,
-                        setPositionList,
-                      ),
-                    actionDecline: clearState,
-                  })
+                  handleUpdate(
+                    position.position_id,
+                    position.position_name,
+                    setModalContent,
+                    clearState,
+                    setPositionList,
+                    clearPosition,
+                  )
                 }
-                className="bg-green-500 text-white px-4 py-2 rounded-md"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md"
               >
-                Create
+                Update
               </button>
-            )}
-          </div>
+              <button
+                onClick={clearPosition}
+                className="bg-slate-500 text-white px-4 py-2 rounded-md"
+              >
+                Clear
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() =>
+                setModalContent('confirmation', {
+                  actionAcc: () =>
+                    handleCreate(
+                      clearPosition,
+                      setModalContent,
+                      clearState,
+                      position.position_name,
+                      setPositionList,
+                    ),
+                  actionDecline: clearState,
+                })
+              }
+              className="bg-green-500 text-white px-4 py-2 rounded-md"
+            >
+              Create
+            </button>
+          )}
         </div>
+      </div>
 
-        <div className="max-w-3xl mx-auto mt-8">
-          <h1 className="text-3xl font-semibold mb-4 text-center ">
-            Data Posisi
-          </h1>
-          <table className="min-w-full bg-white border border-gray-300 rounded-md">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 border-b">Posisi</th>
-                <th className="py-2 px-4 border-b">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="text-center">
-              {position_list.length > 0 &&
-                position_list.map((ps, index) => (
-                  <tr key={index} className="border-t mx-auto">
-                    <td className="py-2 px-4">{ps.position_name}</td>
-                    <td className="py-2 px-4 flex justify-center space-x-5">
-                      <button
-                        onClick={() =>
-                          setPosition({
-                            position_id: ps.position_id,
-                            position_name: ps.position_name,
-                          })
-                        }
-                        className="text-blue-500 underline"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() =>
-                          setModalContent('confirmation', {
-                            actionAcc: () => {
-                              handleDelete(
-                                ps.position_id,
-                                setModalContent,
-                                clearPosition,
-                                clearState,
-                                setPositionList,
-                              );
-                            },
-                            actionDecline: clearState,
-                          })
-                        }
-                        className="text-red-500 underline"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="max-w-3xl mx-auto mt-8">
+        <h1 className="text-3xl font-semibold mb-4 text-center ">
+          Data Posisi
+        </h1>
+        <table className="min-w-full bg-white border border-gray-300 rounded-md">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b">Posisi</th>
+              <th className="py-2 px-4 border-b">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="text-center">
+            {position_list.length > 0 &&
+              position_list.map((ps, index) => (
+                <tr key={index} className="border-t mx-auto">
+                  <td className="py-2 px-4">{ps.position_name}</td>
+                  <td className="py-2 px-4 flex justify-center space-x-5">
+                    <button
+                      onClick={() =>
+                        setPosition({
+                          position_id: ps.position_id,
+                          position_name: ps.position_name,
+                        })
+                      }
+                      className="text-blue-500 underline"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() =>
+                        setModalContent('confirmation', {
+                          actionAcc: () => {
+                            handleDelete(
+                              ps.position_id,
+                              setModalContent,
+                              clearPosition,
+                              clearState,
+                              setPositionList,
+                            );
+                          },
+                          actionDecline: clearState,
+                        })
+                      }
+                      className="text-red-500 underline"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
       {modalContent}
     </div>
