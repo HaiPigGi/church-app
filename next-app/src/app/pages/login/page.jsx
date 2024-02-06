@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserData, setSession } from '@/lib/features/session/sessionSlice';
 import { useAppDispatch } from '@/lib/hook';
+import LoadingBounce from '@/components/Fragments/Loading/LoadingBounce';
 
 export default function Login() {
   const [dataLogin, setDataLogin] = useState({
@@ -32,6 +33,7 @@ export default function Login() {
   const isResponseError = (res) => {
     if (res?.error) {
       setErrorMessage(res.error);
+      setOpenModal(false);
       return true;
     }
     return false;
@@ -54,7 +56,10 @@ export default function Login() {
     setOpenModal(true);
     setModalContent(
       <Modal
-        action={() => handleModal(res.role)}
+        action={() => {
+          handleModal(res.role);
+          setOpenModal(false);
+        }}
         type="success"
         message={res.message}
       />,
@@ -112,7 +117,13 @@ export default function Login() {
             <div className="flex items-center justify-center  mx-auto w-full h-full">
               <form
                 className="w-full bg-white rounded-lg shadow dark:border md:mt-0  "
-                action={handleClickLogin}
+                action={() => {
+                  setOpenModal(true);
+                  setModalContent(
+                    <Modal type="loading" content={<LoadingBounce />} />,
+                  );
+                  handleClickLogin();
+                }}
                 method="post"
               >
                 <div className="p-6 space-y-4 md:space-y-6  w-full">
