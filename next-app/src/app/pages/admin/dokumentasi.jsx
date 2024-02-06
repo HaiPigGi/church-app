@@ -79,7 +79,7 @@ export default function AllDokumentasi() {
 const handleSubmit = (e) => {
     e.preventDefault();
     // Validasi input form
-    if (!Dok.tahun < 2000 || !Dok.tahun > 2048) {
+    if (!Dok.tahun < 2000 && !Dok.tahun > 2048) {
         setAlert({
             isOpen: true,
             title: 'Tahun tidak valid',
