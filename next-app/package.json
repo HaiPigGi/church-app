@@ -12,6 +12,7 @@
     "format:fix": "prettier --wire --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@react-icons/all-files": "^4.1.0",
     "@react-spring/parallax": "^9.7.3",

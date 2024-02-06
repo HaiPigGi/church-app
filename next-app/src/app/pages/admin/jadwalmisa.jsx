@@ -34,13 +34,12 @@ export default function jadwal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     simpanJadwal(Jadwa);
-
-    // setJadwal({
-    //     hari:'',
-    //     waktu_mulai:'',
-    //     waktu_selesai:'',
-    //     jenis_misa_id:''
-    // });
+    setJadwal({
+        hari:'',
+        waktu_mulai:'',
+        waktu_selesai:'',
+        jenis_misa_id:''
+    });
   };
 
   async function simpanJadwal(datanya) {
