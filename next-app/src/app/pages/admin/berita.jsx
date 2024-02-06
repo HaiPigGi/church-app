@@ -271,46 +271,8 @@ const berita = () => {
             clearForm();
             setModalMessage('');
           }}
-        >
-          <div className="">
-            {createdBerita.status == 'success' ? (
-              <div className="flex justify-center items-center w-full h-24 text-green-500 animate-pulse">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  height="full"
-                  fill="currentColor"
-                >
-                  <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-                </svg>
-              </div>
-            ) : (
-              <div className="flex justify-center items-center w-full h-24 text-red-500 animate-pulse">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  height="full"
-                >
-                  <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path>
-                </svg>
-              </div>
-            )}
-            <h1
-              className={
-                createBerita.status == 'success'
-                  ? 'text-green-500 text-bold text-center text-2xl'
-                  : 'text-reed-500 text-bold text-center text-2xl'
-              }
-            >
-              {createBerita.message ? createBerita.message : createBerita.error}
-            </h1>
-            <h1 className="text-slate-500 text-center ">
-              klik ok untuk melanjutkan
-            </h1>
-          </div>
-          ,
-        </Modal>,
+          message="Data berhasil ditambahkan"
+        />,
       );
     } catch (error) {
       console.error('Error creating berita:', error.message);
@@ -332,12 +294,10 @@ const berita = () => {
     if (fileSizeInMB < 20) {
       // Update beritaData.image with the File object
       const dataImage = fileInput.files[0];
-      console.log('file Input on CheckFileSize : ', dataImage);
       setBeritaData({
         ...beritaData,
         image: dataImage,
       });
-      console.log('file Input on CheckFileSize : ', beritaData);
     } else {
       setErrorMessage({
         ...errorMessage,
@@ -473,23 +433,6 @@ const berita = () => {
               Add
             </button>
             <button
-              onClick={() => {
-                console.log('execute');
-                setModalMessage(
-                  <ModalKonfirmasi
-                    actionAcc={() => clearForm()}
-                    actionDecline={() => setModalMessage('')}
-                  />,
-                );
-                return;
-              }}
-              type="button"
-              name="updated_at"
-              className="border-2 mx-4 border-secondary rounded-lg w-24 py-2 text-secondary cursor-pointer hover:bg-secondary hover:text-black"
-            >
-              Clear Form
-            </button>
-            <button
               type="button"
               name="deleted_at"
               onClick={() => {
@@ -502,9 +445,17 @@ const berita = () => {
                   />,
                 );
               }}
-              className=" border-2 border-red-600 rounded-lg w-24 py-2 text-red-500 cursor-pointer hover:bg-red-600 hover:text-black"
+              className=" border-2 border-red-600 rounded-lg w-24 py-2 text-red-500 cursor-pointer hover:bg-red-600 hover:text-black mx-4"
             >
               Delete
+            </button>
+            <button
+              onClick={clearForm}
+              type="button"
+              name="updated_at"
+              className="border-2 border-slate-500 rounded-lg w-24 py-2 text-slate-500 cursor-pointer hover:bg-slate-500 hover:text-white"
+            >
+              Clear Form
             </button>
           </div>
         </form>
@@ -524,30 +475,6 @@ const berita = () => {
       {modalMessage}
     </div>
   );
-};
-
-const Konfirmasi = ({ actionAcc, actionDecline }) => {
-  // return (
-  //   <ModalKonfirmasi>
-  //     <h1 className="text-xl font-semibold text-pretty text-center w-2/3 mx-auto">
-  //       Apakah yakin ingin melanjutkan proses?
-  //     </h1>
-  //     <div className="flex justify-center items-center mt-3">
-  //       <button
-  //         onClick={actionAcc}
-  //         className="px-5 py-2 text-white rounded-md bg-green-500 hover:bg-green-300 me-3 "
-  //       >
-  //         Lanjut
-  //       </button>
-  //       <button
-  //         onClick={actionDecline}
-  //         className="px-5 py-2 text-white rounded-md bg-red-500 hover:bg-red-300 "
-  //       >
-  //         Batal
-  //       </button>
-  //     </div>
-  //   </ModalKonfirmasi>
-  // );
 };
 
 const BeritaCard = ({ data }) => {
@@ -639,7 +566,7 @@ const AllBerita = ({ dataBerita, action }) => {
       <h1 className="sticky top-0 left-0 px-2 py-2 mb-2 border-b border-primary w-full h-auto text-primary font-bold text-xl bg-white ">
         ALL Berita
       </h1>
-      <div className="w-full flex-col items-center justify-center overflow-y-auto px-2 max-h-[85vh]">
+      <div className="w-full flex-col items-center justify-center overflow-y-auto px-2 max-h-[75vh]">
         {dataBerita?.length > 0 ? (
           dataBerita.map((berita) => (
             <button
