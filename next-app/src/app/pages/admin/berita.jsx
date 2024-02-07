@@ -5,282 +5,124 @@ import {
   delete_berita,
   get_AllBerita,
   post_berita,
-  put_berita,
 } from '@/app/api/Admin/berita/routes';
-import Modal from '@/components/Fragments/Modal';
-import { get_AllBerita_user } from '@/app/api/routes';
 import { imageLoader } from '@/lib/ImageLoader';
 import Image from 'next/image';
-import ModalKonfirmasi from '@/components/Fragments/Modal/ModalKonfirmasi';
+import useModalContent from '@/lib/customHooks/useModalContent';
+import useBerita from '@/lib/customHooks/useBerita';
+import { isResponseError } from './posisi';
+import 'remixicon/fonts/remixicon.css';
+
 const berita = () => {
-  const [beritaData, setBeritaData] = useState({
-    berita_id: '',
-    image: null,
-    title: '',
-    content: '',
-    event: '',
-  });
+  const { berita, berita_list, setBerita, setBeritaList, clearBerita } =
+    useBerita();
   const [errorMessage, setErrorMessage] = useState({
     contentError: '',
     titleError: '',
     imageError: '',
   });
-  const [createBerita, setCreateBerita] = useState('');
-  const [modalMessage, setModalMessage] = useState();
+  const { modalContent, setModalContent, clearState } = useModalContent();
   const [loadingFetching, setLoadingFetching] = useState(true);
-  const [beritaDataList, setBeritaDataList] = useState();
   const [shownImage, setShownImage] = useState();
   const fileInputRef = useRef(null);
 
+  const checkInputs = (name, value) => {
+    switch (name) {
+      case 'title':
+        if (value.length < 5) {
+          setErrorMessage({
+            ...errorMessage,
+            titleError: 'Harus lebih dari 5 huruf',
+          });
+        } else {
+          setErrorMessage({
+            ...errorMessage,
+            titleError: '',
+          });
+        }
+        break;
+      case 'content':
+        if (value.length < 10) {
+          setErrorMessage({
+            ...errorMessage,
+            contentError: 'Harus lebih dari 10 huruf',
+          });
+        } else {
+          setErrorMessage({
+            ...errorMessage,
+            contentError: '',
+          });
+          console.log('success');
+        }
+        break;
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name == 'title') {
-      if (value.length < 5) {
-        setErrorMessage({
-          ...errorMessage,
-          titleError: 'Harus lebih dari 5 huruf',
-        });
-      } else {
-        setErrorMessage({
-          ...errorMessage,
-          titleError: '',
-        });
-      }
-    } else if (name == 'content') {
-      if (value.length < 10) {
-        setErrorMessage({
-          ...errorMessage,
-          contentError: 'Harus lebih dari 10 huruf',
-        });
-      } else {
-        setErrorMessage({
-          ...errorMessage,
-          contentError: '',
-        });
-      }
-    }
-
-    setBeritaData({ ...beritaData, [name]: value });
+    checkInputs(name, value);
+    setBerita({ ...berita, [name]: value });
+    console.log(berita);
   };
 
   const handleDelete = async () => {
-    try {
-      console.log(beritaData);
-      if (beritaData?.berita_id) {
-        const res = await delete_berita(beritaData);
-        if (res.status == 'success') {
-          setModalMessage(
-            <Modal
-              type="success"
-              action={() => {
-                clearForm();
-                setModalMessage('');
-              }}
-            >
-              <div className="">
-                <div className="flex justify-center items-center w-full h-24 text-green-500 animate-pulse">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    height="full"
-                    fill="currentColor"
-                  >
-                    <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-                  </svg>
-                </div>
-
-                <h1 className="text-green-500 text-center">{res.message}</h1>
-                <h1 className="text-slate-500 text-center ">
-                  klik ok untuk melanjutkan
-                </h1>
-              </div>
-              ,
-            </Modal>,
-          );
-          getBeritaData();
-          return;
-        } else {
-          setModalMessage(
-            <Modal
-              type="danger"
-              action={() => {
-                clearForm();
-                setModalMessage('');
-                if (res.error == 'Unauthorized') {
-                  window.location.href = '/pages/login';
-                }
-              }}
-            >
-              <div className="">
-                <div className="flex justify-center items-center w-full h-24 text-red-500 animate-pulse">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    height="full"
-                  >
-                    <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path>
-                  </svg>
-                </div>
-                <h1 className="text-red-500 text-center text-2xl">
-                  {res.error}
-                </h1>
-                <h1 className="text-slate-500 text-center ">
-                  klik ok untuk melanjutkan
-                </h1>
-              </div>
-              ,
-            </Modal>,
-          );
-        }
-
-        return;
-      }
-      setModalMessage(
-        <Modal
-          type={'danger'}
-          action={() => {
-            clearForm();
-            setModalMessage('');
-          }}
-        >
-          <div className="">
-            <div className="flex justify-center items-center w-full h-24 text-red-500 animate-pulse">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                height="full"
-              >
-                <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path>
-              </svg>
-            </div>
-            <h1 className="text-reed-500 text-bold text-center text-2xl">
-              Belum ada berita yang dipilih
-            </h1>
-            <h1 className="text-slate-500 text-center ">
-              klik ok untuk melanjutkan
-            </h1>
-          </div>
-          ,
-        </Modal>,
-      );
-    } catch (e) {
-      return console.log('error at handleDelete with message : ', e.message);
+    if (berita?.berita_id) {
+      let res = await delete_berita(berita);
+      if (isResponseError(res, setModalContent, clearState)) return;
+      setModalContent('validation', {
+        typeMessage: 'success',
+        action: clearState,
+        message: 'Data berhasil dihapus',
+      });
+      getBeritaData();
+      return;
     }
-  };
-
-  const handleUpdate = () => {
-    if (beritaData.berita_id) {
-      try {
-        // Store beritaData in sessionStorage
-        sessionStorage.setItem('beritaData', JSON.stringify(beritaData));
-
-        // Navigate to the update page with the berita ID
-        window.location.href = `/pages/admin/updateBerita/${beritaData.berita_id}/`;
-      } catch (error) {
-        console.error('Error navigating to update page:', error.message);
-      }
-    }
-  };
-
-  const clearForm = () => {
-    setBeritaData({
-      title: '',
-      content: '',
-      event: '',
-      image: '',
-      berita_id: '',
+    setModalContent('validation', {
+      typeMessage: 'failed',
+      action: clearState,
+      message: 'Harap pilih berita yang akan dihapus',
     });
-    setShownImage('');
-    setModalMessage(
-      <Modal
-        type="success"
-        action={() => {
-          clearForm();
-          setModalMessage('');
-        }}
-      >
-        <div className="">
-          <div className="flex justify-center items-center w-full h-24 text-green-500 animate-pulse">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              height="full"
-              fill="currentColor"
-            >
-              <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-            </svg>
-          </div>
-
-          <h1 className="text-green-500 text-center">
-            Data pada form telah dihapus
-          </h1>
-          <h1 className="text-slate-500 text-center ">
-            klik ok untuk melanjutkan
-          </h1>
-        </div>
-        ,
-      </Modal>,
-    );
   };
 
   async function getBeritaData() {
-    const res = await get_AllBerita();
+    let res = await get_AllBerita();
+    if (isResponseError(res, setModalContent, clearState)) return;
+    res = await res.json();
+    setBeritaList(res.data);
     setLoadingFetching(false);
-    if (res) {
-      setBeritaDataList(res.data);
-      return;
-    }
-    if (res.error == 'Unauthorize') {
-      window.location.href = '/';
-    }
-    setLoadingFetching(false);
-    setErrorMessage(res);
+    return;
   }
 
   useEffect(() => {
     getBeritaData();
-  }, [loadingFetching]);
+  }, []);
 
   // Convert beritaData to FormData
   const convertToFormData = () => {
     const formData = new FormData();
-
-    formData.append('image', beritaData.image);
-    formData.append('title', beritaData.title);
-    formData.append('content', beritaData.content);
-    formData.append('event', beritaData.event);
+    formData.append('image', berita.image);
+    formData.append('title', berita.title);
+    formData.append('content', berita.content);
+    formData.append('event', berita.event);
     return formData;
   };
 
   // method for add new news
   const handleSave = async () => {
-    setCreateBerita('');
-    setModalMessage('');
-    setBeritaData({ ...beritaData, berita_id: '' });
-    try {
-      const formData = convertToFormData();
-      let createdBerita = await post_berita(formData);
-      setLoadingFetching(false);
-      setCreateBerita(createdBerita);
-      setModalMessage(
-        <Modal
-          type={createBerita.status == 'success' ? 'success' : 'danger'}
-          action={() => {
-            clearForm();
-            setModalMessage('');
-          }}
-          message="Data berhasil ditambahkan"
-        />,
-      );
-    } catch (error) {
-      console.error('Error creating berita:', error.message);
-    }
+    const formData = convertToFormData();
+    let res = await post_berita(formData);
+    if (isResponseError(res, setModalContent, clearState)) return;
+    setLoadingFetching(false);
+    setModalContent('validation', {
+      typeMessage: 'success',
+      message: 'Data berhasil disimpan',
+      action: clearState,
+    });
+    getBeritaData();
   };
 
   function findBeritaBasedID(id) {
-    return beritaDataList.find((data) => data.berita_id == id);
+    return berita_list.find((data) => data.berita_id == id);
   }
 
   function checkFileSize(e) {
@@ -294,8 +136,8 @@ const berita = () => {
     if (fileSizeInMB < 20) {
       // Update beritaData.image with the File object
       const dataImage = fileInput.files[0];
-      setBeritaData({
-        ...beritaData,
+      setBerita({
+        ...berita,
         image: dataImage,
       });
     } else {
@@ -321,10 +163,13 @@ const berita = () => {
   };
 
   return (
-    <div className="relative z-20 pt-5 flex flex-col items-center justify-center h-screen w-full px-2">
-      <h1 className="font-bold text-3xl mb-2">Tambah Berita</h1>
-      <div className="grid grid-cols-2 ">
-        <form id="form" className="shadow-2xl w-full h-full px-5 py-2   ">
+    <div className="relative pt-5 md:flex items-center justify-center h-screen w-full px-2">
+      <h1 className="font-bold text-3xl mb-2 md:hidden">Tambah Berita</h1>
+      <div className="md:grid md:grid-cols-2 ">
+        <form
+          id="form"
+          className="shadow-2xl w-[95%] h-full px-5 py-2 bg-white "
+        >
           <div className="flex flex-col mb-3">
             <label className="text-red-700 font-semibold mb-2 ">image :</label>
             <label htmlFor="content" className="block text-red-500">
@@ -332,13 +177,13 @@ const berita = () => {
             </label>
             <div
               onClick={() => fileInputRef.current.click()}
-              className="w-full h-56 border-2 border-primary flex justify-center items-center rounded-md"
+              className="w-full h-44 md:h-56 border-2 border-primary flex justify-center items-center rounded-md"
             >
               {shownImage ? (
                 <div className="relative w-full h-full py-2 rounded-md overflow-hidden">
                   <Image
                     src={shownImage}
-                    alt={beritaData.title}
+                    alt={berita.title}
                     fill={true}
                     className="object-cover"
                   />
@@ -369,6 +214,7 @@ const berita = () => {
                   handleImageChange(e);
                   checkFileSize(e);
                 }}
+                value={berita.image != '' && null}
                 placeholder="Images"
                 required
               />
@@ -386,7 +232,7 @@ const berita = () => {
               className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
               placeholder="Judul Berita"
               onChange={handleInputChange}
-              value={beritaData.title}
+              value={berita.title}
               required
             />
           </div>
@@ -402,7 +248,7 @@ const berita = () => {
               placeholder="Content"
               className="w-full h-20 px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none  focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
               onChange={handleInputChange}
-              value={beritaData.content}
+              value={berita.content}
             ></textarea>
           </div>
           <div className="flex flex-col mb-3">
@@ -413,7 +259,7 @@ const berita = () => {
               placeholder="Event"
               className="w-full h-20 px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none  focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
               onChange={handleInputChange}
-              value={beritaData.event}
+              value={berita.event}
             ></textarea>
           </div>
 
@@ -421,58 +267,87 @@ const berita = () => {
             <button
               type="button"
               onClick={() => {
-                setModalMessage(
-                  <ModalKonfirmasi
-                    actionAcc={() => handleSave()}
-                    actionDecline={() => setModalMessage('')}
-                  />,
-                );
+                setModalContent('confirmation', {
+                  actionAcc: () => handleSave(),
+                  actionDecline: clearState,
+                });
               }}
               className=" bg-green-500 rounded-lg w-24 py-2 text-white cursor-pointer hover:bg-green-400 hover:text-black"
             >
-              Add
+              Tambah
             </button>
             <button
               type="button"
               name="deleted_at"
               onClick={() => {
-                setModalMessage(
-                  <ModalKonfirmasi
-                    actionAcc={() => {
-                      handleDelete();
-                    }}
-                    actionDecline={() => setModalMessage('')}
-                  />,
-                );
+                setModalContent('confirmation', {
+                  actionAcc: () => handleDelete(),
+                  actionDecline: clearState,
+                });
               }}
               className=" border-2 border-red-600 rounded-lg w-24 py-2 text-red-500 cursor-pointer hover:bg-red-600 hover:text-black mx-4"
             >
-              Delete
+              Hapus
             </button>
             <button
-              onClick={clearForm}
+              onClick={() => {
+                clearBerita();
+                setShownImage();
+              }}
               type="button"
               name="updated_at"
               className="border-2 border-slate-500 rounded-lg w-24 py-2 text-slate-500 cursor-pointer hover:bg-slate-500 hover:text-white"
             >
-              Clear Form
+              Bersihkan
             </button>
           </div>
         </form>
-        {loadingFetching ? (
-          <BeritaCardSkeleton />
-        ) : (
-          <AllBerita
-            dataBerita={beritaDataList}
-            action={(id) => {
-              const data = findBeritaBasedID(id);
-              setBeritaData(data);
-              setShownImage(data.image.url);
-            }}
-          />
-        )}
+        <div className="hidden md:block">
+          {loadingFetching ? (
+            <BeritaCardSkeleton />
+          ) : (
+            <AllBerita
+              dataBerita={berita_list}
+              action={{
+                selectBerita: (id) => {
+                  console.log('BeritaID : ', id);
+                  const data = findBeritaBasedID(id);
+                  console.log('Berita Data : ', data);
+                  setBerita(data);
+                  setShownImage(data.image.url);
+                },
+                clearState,
+              }}
+            />
+          )}
+        </div>
       </div>
-      {modalMessage}
+      <button
+        type="button"
+        onClick={() =>
+          setModalContent('show', {
+            content: loadingFetching ? (
+              <BeritaCardSkeleton />
+            ) : (
+              <AllBerita
+                dataBerita={berita_list}
+                action={{
+                  selectBerita: (id) => {
+                    const data = findBeritaBasedID(id);
+                    setBerita(data);
+                    setShownImage(data.image.url);
+                  },
+                  clearState,
+                }}
+              />
+            ),
+          })
+        }
+        className="bg-blue-500 text-white px-2 pb-1 pt-2 rounded-md mr-2 sm:mr-2 sm:mb-0 md:hidden absolute right-4 bottom-10"
+      >
+        <i class="ri-list-view ri-xl"></i>
+      </button>
+      {modalContent}
     </div>
   );
 };
@@ -561,17 +436,21 @@ const BeritaCardSkeleton = () => {
 };
 
 const AllBerita = ({ dataBerita, action }) => {
+  const { clearState, selectBerita } = action;
   return (
-    <div className=" z-10 flex-col w-full px-5 py-2  h-full  bg-white rounded-md border-l border-slate-500">
+    <div className=" z-10 flex-col w-full px-2 md:px-5 py-2  h-full  bg-white rounded-md md:border-l md:border-slate-500">
       <h1 className="sticky top-0 left-0 px-2 py-2 mb-2 border-b border-primary w-full h-auto text-primary font-bold text-xl bg-white ">
         ALL Berita
       </h1>
-      <div className="w-full flex-col items-center justify-center overflow-y-auto px-2 max-h-[75vh]">
+      <button className="absolute top-1 right-0" onClick={clearState}>
+        <i class="ri-close-circle-fill text-black ri-xl"></i>{' '}
+      </button>
+      <div className="w-full flex-col items-center justify-center overflow-y-auto max-h-[75vh]">
         {dataBerita?.length > 0 ? (
           dataBerita.map((berita) => (
             <button
               key={berita.berita_id}
-              onClick={() => action(berita.berita_id)}
+              onClick={() => selectBerita(berita.berita_id)}
               className="w-full shadow-xl h-40 bg-white/90 rounded-xl overflow-hidden"
             >
               <BeritaCard data={berita} />
