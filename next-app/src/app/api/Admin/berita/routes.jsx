@@ -59,7 +59,7 @@ export async function post_berita(dataPost) {
         body: dataPost, //Pass FormData directly as the body //other change to stringyfy to pass just body
       },
     );
-    return resData;
+    return res;
   } catch (e) {
     console.log('error in post_berita with message : ', e.message);
   }
@@ -67,8 +67,6 @@ export async function post_berita(dataPost) {
 
 // Updated put_berita function
 export async function put_berita(idBerita, formData) {
-  console.log('cek isi form data di put_berita : ', formData);
-
   try {
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${getJwtToken()}`);
@@ -82,7 +80,7 @@ export async function put_berita(idBerita, formData) {
         body: JSON.stringify(formData),
       },
     );
-    return responseData;
+    return res;
   } catch (e) {
     console.log('Error in put_berita with message:', e.message);
     throw e; // rethrow the error to handle it in the calling function
@@ -104,7 +102,7 @@ export async function delete_berita(data) {
       },
     );
 
-    return responseData;
+    return res;
   } catch (e) {
     console.log('error in delete_berita with message : ', e.message);
   }
