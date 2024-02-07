@@ -67,12 +67,7 @@ export async function post_Organitation(dataOrganitations) {
           body: dataOrganitations,
         },
       );
-      res = await res.json();
-      console.log(res);
-      if (res.status == 201) {
-        return res;
-      }
-      return res.error;
+      return res;
     } catch (e) {
       console.log('error at post_Organitation with message : ', e.message);
     }
@@ -94,11 +89,7 @@ export async function put_Organitation(organitationsID, organitationData) {
           body: organitationData,
         },
       );
-      res = await res.json();
-      if (res.status == 200) {
-        return res;
-      }
-      return res.error;
+      return res;
     } catch (e) {
       console.log('Error at put_Organitation with message : ', e.message);
     }
