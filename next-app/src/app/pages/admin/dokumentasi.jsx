@@ -79,16 +79,14 @@ export default function AllDokumentasi() {
 const handleSubmit = (e) => {
     e.preventDefault();
     // Validasi input form
-    if (2000 < !Dok.tahun || 2048 > !Dok.tahun) {
-    //   setAlert({
-    //     isOpen: true,
-    //     title: 'Tahun tidak valid',
-    //     message: `Tahun ${Dok.tahun} salah \n Masukkan tahun antara 2000 dan 2048 saja`
-        
-    // });    
-      return;  
-  }
-  
+    if (!Dok.tahun < 2000 && !Dok.tahun > 2048) {
+        setAlert({
+            isOpen: true,
+            title: 'Tahun tidak valid',
+            message: 'Masukkan tahun antara 2000 dan 2048 saja.'
+        });
+        return;
+    }
     simpanImages(Dok);
   }
 
