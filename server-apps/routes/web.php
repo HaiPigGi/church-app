@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\dokumentasi\dokumentasiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/dokumentasi/store',[dokumentasiController::class,'store'])->name('dokumentasi.store');
+Route::get('/dokumentasi',[dokumentasiController::class, 'create']);
