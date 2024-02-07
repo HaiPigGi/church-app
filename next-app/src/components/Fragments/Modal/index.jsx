@@ -13,13 +13,14 @@ const clsButton = cva([' px-5 py-2 text-white rounded-md'], {
 
 const clsModal = cva(
   [
-    'relative md:min-w-[350px] shadow-xl md:max-w-[500px] p-5 h-auto w-auto bg-white z-50 rounded-xl',
+    'relative md:min-w-[350px] shadow-xl md:max-w-[500px] md:min-h-[250px] p-5 h-auto w-auto bg-white z-50 rounded-xl grid grid-rows-3',
   ],
   {
     variants: {
       type: {
         success: ['border-t-4 border-green-500'],
         failed: ['border-t-4 border-red-500'],
+        loading: ['border-t-4 border-slate-500'],
       },
     },
   },
@@ -88,7 +89,7 @@ const SuccessIcon = () => (
         }
     }
 */
-function Modal({ message, action, type }) {
+function Modal({ message, action, type, content = '' }) {
   return (
     <div
       id="bgModal"
@@ -96,18 +97,26 @@ function Modal({ message, action, type }) {
       className="absolute left-0 z-40 top-0 box-border w-full h-full flex justify-center items-center "
     >
       <div className={clsModal({ type })}>
-        <div className="">
-          {type == 'success' ? <SuccessIcon /> : <ErrorIcon />}
-          <h1 className={clsMessage({ type })}>{message}</h1>
-          <h1 className="text-slate-500 text-center ">
-            klik ok untuk melanjutkan
-          </h1>
-        </div>
-        <div className="flex justify-center items-center">
-          <button onClick={action} className={clsButton({ type })}>
-            Oke
-          </button>
-        </div>
+        {content != '' ? (
+          <div className="row-span-3 flex justify-center items-center">
+            {content}
+          </div>
+        ) : (
+          <>
+            <div className="row-span-2">
+              {type == 'success' ? <SuccessIcon /> : <ErrorIcon />}
+              <h1 className={clsMessage({ type })}>{message}</h1>
+              <h1 className="text-slate-500 text-center ">
+                klik ok untuk melanjutkan
+              </h1>
+            </div>
+            <div className="flex justify-center items-center row-span-1">
+              <button onClick={action} className={clsButton({ type })}>
+                Oke
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
