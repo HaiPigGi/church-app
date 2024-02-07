@@ -95,7 +95,7 @@ class dokumentasiController extends Controller
             $data = $request->validate([
                 'tahun' => 'required',
                 'jenis_kegiatan' => 'required',
-                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate each image file
+                'images' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate each image file
             ]);
 
             // Creating Dokumentasi instance
