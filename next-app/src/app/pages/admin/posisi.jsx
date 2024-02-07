@@ -5,9 +5,8 @@ import {
   update_position,
   delete_position,
 } from '@/app/api/Admin/position/route';
-import Modal from '@/components/Fragments/Modal';
-import usePosition from '../../../lib/customHooks/Position/usePosition';
-import useModalContent from '@/lib/customHooks/ModalContent/useModalContent';
+import usePosition from '@/lib/customHooks/usePosition';
+import useModalContent from '@/lib/customHooks/useModalContent.jsx';
 
 // function for handle action to positionList
 
@@ -32,29 +31,30 @@ const handleCreate = async (
   clearPosition();
 };
 
-const isResponseError = (res, setModalContent, clearState) => {
+export const isResponseError = (res, setModalContent, clearState) => {
   // if res is undefined or null
   if (!res) return true;
-  // if res status is success
-  if (res.status == 200 || res.status == 201) {
-    return false;
-  }
 
-  // if res status is Unauthorized
-  if (res.status == 401) {
-    setModalContent('validation', {
-      typeMessage: 'failed',
-      action: () => (window.location.href = '/pages/login'),
-      message: 'Sesi sudah berakhir harap login kembali',
-    });
-    return true;
+  switch (res.status) {
+    case 401:
+      setModalContent('validation', {
+        typeMessage: 'failed',
+        action: () => (window.location.href = '/pages/login'),
+        message: 'Sesi sudah berakhir harap login kembali',
+      });
+      return true;
+    case 200:
+      return false;
+    case 201:
+      return false;
+    default:
+      setModalContent('validation', {
+        typeMessage: 'failed',
+        action: clearState,
+        message: 'terjadi kesalahan',
+      });
+      return true;
   }
-  setModalContent('validation', {
-    typeMessage: 'failed',
-    action: clearState,
-    message: 'terjadi kesalahan',
-  });
-  return true;
 };
 
 // for fetchData from backedn
