@@ -8,7 +8,7 @@ export default function AllDokumentasi() {
     const [Dok, setDok] = useState({
         tahun: '',
         jenis_kegiatan: '',
-        images: null //  null sebagai nilai awal untuk input file
+        // images: null //  null sebagai nilai awal untuk input file
     });
 
     const [alert, setAlert] = useState({
@@ -16,65 +16,9 @@ export default function AllDokumentasi() {
         title: '',
         message: ''
       });
-
-    const Alert = ({ isOpen, title, message, onClose }) => {
-        return (
-          <Transition appear show={isOpen} as={Fragment}>
-            <Dialog
-              as="div"
-              className="relative z-10"
-              onClose={onClose}
-            >
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div className="fixed inset-0 bg-black bg-opacity-25" />
-              </Transition.Child>
-      
-              <div className="fixed inset-0 overflow-y-auto">
-                <div className="flex min-h-full items-center justify-center p-4 text-center">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 scale-95"
-                    enterTo="opacity-100 scale-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 scale-100"
-                    leaveTo="opacity-0 scale-95"
-                  >
-                    <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                      <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                        {title}
-                      </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          {message}
-                        </p>
-                      </div>
-      
-                      <div className="mt-4">
-                        <button
-                          onClick={onClose}
-                          className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        >
-                          OK
-                        </button>
-                      </div>
-                    </Dialog.Panel>
-                  </Transition.Child>
-                </div>
-              </div>
-            </Dialog>
-          </Transition>
-        );
-      }
-        
+    const [Image,setImage] = useState({
+      images:''
+    })
 
 const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,17 +31,19 @@ const handleSubmit = (e) => {
         });
         return;
     }
-    simpanImages(Dok);
+    simpanImages(Dok,Image);
   }
 
-    const handleChange = (e) => {
-        const { name, value, files } = e.target;
-        if (name === "images") {
-            setDok({ ...Dok, [name]: files[0] }); // Gunakan files[0] karena input file adalah array
-        } else {
-            setDok({ ...Dok, [name]: value });
-        }
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    
+    if (name === "images" && files.length > 0) {
+        setImage({ images: files[0] }); // Simpan gambar ke state Image
+    } else {
+        setDok({ ...Dok, [name]: value });
     }
+}
+
 
 
     useEffect(() => {
@@ -112,9 +58,9 @@ const handleSubmit = (e) => {
         fetchData();
     }, []);
 
-    async function simpanImages(datanya) {
+    async function simpanImages(datanya,gambar) {
         try {
-            const formData = convert(datanya);
+            const formData = convert(datanya,gambar);
             const res = await post_Images(formData); // Gunakan formData, bukan data
             console.log('ini hasilnya : ', res);
         } catch (error) {
@@ -122,7 +68,7 @@ const handleSubmit = (e) => {
         }
     }
 
-    const convert = ({ tahun, jenis_kegiatan, images }) => {
+    const convert = ({ tahun, jenis_kegiatan}, {images} ) => {
         const b = new FormData();
         const date = new Date(tahun); // Buat objek Date dari tahun
         const y = date.getFullYear();
@@ -145,6 +91,7 @@ const handleSubmit = (e) => {
                     <input
                         type="file"
                         name="images"
+                        multiple
                         onChange={handleChange}
                         className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 min-[360px]:max-[765px]:w-[33vh]"
                         placeholder="Image"
@@ -183,7 +130,64 @@ const handleSubmit = (e) => {
                     >Submit</button>
                 </div>
             </form>
-            <Alert isOpen={alert.isOpen} title={alert.title} message={alert.message} onClose={() => setAlert({ isOpen: false })} />
         </div>
     )
+    const Alert = ({ isOpen, title, message, onClose }) => {
+      return (
+        <Transition appear show={isOpen} as={Fragment}>
+          <Dialog
+            as="div"
+            className="relative z-10"
+            onClose={onClose}
+          >
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
+    
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex min-h-full items-center justify-center p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+                      {title}
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      <p className="text-sm text-gray-500">
+                        {message}
+                      </p>
+                    </div>
+    
+                    <div className="mt-4">
+                      <button
+                        onClick={onClose}
+                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      >
+                        OK
+                      </button>
+                    </div>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+      );
+    }
+    <Alert isOpen={alert.isOpen} title={alert.title} message={alert.message} onClose={() => setAlert({ isOpen: false })} />
 }
