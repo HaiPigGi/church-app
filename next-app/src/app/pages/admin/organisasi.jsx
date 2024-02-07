@@ -2,16 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import {
   get_AllOrganitations,
-  put_Organitation,
   delete_Organitation,
   post_Organitation,
 } from '@/app/api/Admin/organitations/route';
-import Modal from '@/components/Fragments/Modal';
 import Image from 'next/image';
-import ModalKonfirmasi from '@/components/Fragments/Modal/ModalKonfirmasi';
 import useOrganisasi from '@/lib/customHooks/useOrganisasi';
 import useModalContent from '@/lib/customHooks/useModalContent';
 import { isResponseError } from './posisi';
+import 'remixicon/fonts/remixicon.css';
 
 const InputOrganisasi = () => {
   const {
@@ -235,21 +233,36 @@ const InputOrganisasi = () => {
                 }
                 className="bg-green-500 text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
               >
-                Add
+                Tambah
               </button>
               <button
                 type="button"
                 onClick={() => clearInput()}
                 className="bg-slate-500 text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
               >
-                Clear
+                Bersihkan
               </button>
               <button
                 type="button"
-                onClick={() => handleShowOrganisasi()}
-                className="bg-slate-500 text-white px-4 py-2 rounded-md mr-2 sm:mr-2 sm:mb-0"
+                onClick={() =>
+                  setModalContent('show', {
+                    content: (
+                      <AllOrganitations
+                        data={{
+                          loadingOrganisasiDat,
+                          organisasiList,
+                          setModalContent,
+                          clearState,
+                          selectData,
+                        }}
+                      />
+                    ),
+                    action: clearState,
+                  })
+                }
+                className="bg-blue-500 text-white px-2 pb-1 pt-2 rounded-md mr-2 sm:mr-2 sm:mb-0 md:hidden absolute right-4 bottom-10"
               >
-                Seluruh Organisasi
+                <i class="ri-list-view ri-xl"></i>
               </button>
             </div>
             {errorMessage ? (
@@ -258,29 +271,18 @@ const InputOrganisasi = () => {
               <></>
             )}
           </div>
-          <div className="md:hidden absolute w-full h-full left-0 top-0">
-            {showOrganisasi ? (
-              <AllOrganitations
-                data={{
-                  loadingOrganisasiDat,
-                  organisasiList,
-                  setModalContent,
-                  clearState,
-                }}
-              />
-            ) : (
-              <></>
-            )}
-          </div>
+        </form>
+        <div className="hidden md:block">
           <AllOrganitations
             data={{
               loadingOrganisasiDat,
               organisasiList,
               setModalContent,
               clearState,
+              selectData,
             }}
           />
-        </form>
+        </div>
       </div>
       {modalContent}
     </div>
@@ -288,19 +290,28 @@ const InputOrganisasi = () => {
 };
 
 const AllOrganitations = (props) => {
-  const { loadingOrganisasiDat, organisasiList, setModalContent, clearState } =
-    props.data;
+  const {
+    loadingOrganisasiDat,
+    organisasiList,
+    setModalContent,
+    clearState,
+    selectData,
+  } = props.data;
   return (
-    <div className="h-[75vh] overflow-y-auto hidden md:block">
+    <div className="relative h-[75vh] overflow-y-auto ">
       <h2 className="text-xl font-semibold mb-2">Data Organisasi</h2>
+      <button className="absolute top-0 right-5" onClick={clearState}>
+        {' '}
+        <i class="ri-close-circle-fill text-black ri-lg"></i>{' '}
+      </button>
       <table className="w-full border-collapse border rounded-md">
         <thead>
           <tr className="bg-gray-200 ">
-            <th className="p-2">Nama</th>
-            <th className="p-2">Tanggal Berdiri</th>
-            <th className="p-2">Deskripsi</th>
-            <th className="p-2">Foto</th>
-            <th className="p-2">Aksi</th>
+            <th className="px-2">Nama</th>
+            <th className="px-2">Tanggal Berdiri</th>
+            <th className="px-2">Deskripsi</th>
+            <th className="px-2">Foto</th>
+            <th className="px-2">Aksi</th>
           </tr>
         </thead>
         <tbody className={loadingOrganisasiDat ? 'h-full border-2' : 'h-auto'}>
@@ -312,16 +323,16 @@ const AllOrganitations = (props) => {
                   className="border text-sm font-sans text-center hover:bg-slate-300 hover:cursor-pointer"
                   onClick={() => selectData(org.organitation_id)}
                 >
-                  <td className="p-2">{org.name_organitation}</td>
-                  <td className="p-2">{org.date_of_establishment}</td>
-                  <td className="p-2">{org.description}</td>
-                  <td className="relative p-2 ">
+                  <td className="px-2">{org.name_organitation}</td>
+                  <td className="px-2">{org.date_of_establishment}</td>
+                  <td className="px-2 line-clamp-2 ">{org.description}</td>
+                  <td className="relative px-2 ">
                     {/* yang foto ini bagusnya di admin gak muncul, soalnya makan layar */}
                     <Image
                       src={org.image.url}
                       fill={true}
                       alt={`Foto ${org.name_organitation}`}
-                      className="w-full max-w-md"
+                      className="w-full max-w-md object-cover"
                     />
                   </td>
                   <td className="p-2">
