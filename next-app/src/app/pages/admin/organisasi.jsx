@@ -254,10 +254,10 @@ const InputOrganisasi = () => {
                           setModalContent,
                           clearState,
                           selectData,
+                          handleDeleteEntry,
                         }}
                       />
                     ),
-                    action: clearState,
                   })
                 }
                 className="bg-blue-500 text-white px-2 pb-1 pt-2 rounded-md mr-2 sm:mr-2 sm:mb-0 md:hidden absolute right-4 bottom-10"
@@ -280,6 +280,7 @@ const InputOrganisasi = () => {
               setModalContent,
               clearState,
               selectData,
+              handleDeleteEntry,
             }}
           />
         </div>
@@ -296,6 +297,7 @@ const AllOrganitations = (props) => {
     setModalContent,
     clearState,
     selectData,
+    handleDeleteEntry,
   } = props.data;
   return (
     <div className="relative h-[75vh] overflow-y-auto ">
