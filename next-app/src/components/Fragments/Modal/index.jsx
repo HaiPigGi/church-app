@@ -94,11 +94,11 @@ function Modal({ message, action, type, content = '' }) {
     <div
       id="bgModal"
       onClick={action}
-      className="absolute left-0 z-40 top-0 box-border w-full h-full flex justify-center items-center "
+      className="absolute left-0 z-40 top-0 box-border w-full h-full flex justify-center items-center  "
     >
       <div className={clsModal({ type })}>
         {content != '' ? (
-          <div className="row-span-3 flex justify-center items-center">
+          <div className="row-span-3 flex justify-center items-center max-w-[300px]">
             {content}
           </div>
         ) : (
