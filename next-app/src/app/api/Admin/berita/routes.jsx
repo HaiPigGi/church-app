@@ -19,8 +19,7 @@ export async function get_AllBerita() {
         },
       },
     );
-    const responseData = await res.json();
-    return responseData;
+    return res;
   } catch (e) {
     console.log('error in get_AllBerita with message : ', e.message);
   }
@@ -40,12 +39,7 @@ export async function get_beritaID(beritaID) {
         },
       },
     );
-    const responseData = await res.json();
-    if (res.status == 200) {
-      return responseData;
-    }
-    console.log(responseData.error);
-    return;
+    return res;
   } catch (e) {
     console.log('error in get_beritaID with message : ', e.message);
   }
@@ -65,47 +59,15 @@ export async function post_berita(dataPost) {
         body: dataPost, //Pass FormData directly as the body //other change to stringyfy to pass just body
       },
     );
-    const resData = await res.json();
     return resData;
   } catch (e) {
     console.log('error in post_berita with message : ', e.message);
   }
 }
 
-const convertImageToDataURL = async (image) => {
-  if (image instanceof Blob || image instanceof File) {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        resolve(reader.result);
-      };
-
-      reader.readAsDataURL(image);
-    });
-  } else if (
-    typeof image === 'object' &&
-    image['Illuminate\\Http\\UploadedFile']
-  ) {
-    // If image is an object with the structure {"Illuminate\\Http\\UploadedFile": "C:\\xampp\\tmp\\php40B6.tmp"}
-    const filePath = image['Illuminate\\Http\\UploadedFile'];
-    const blob = await fetch(filePath).then((response) => response.blob());
-    return convertImageToDataURL(blob);
-  } else if (typeof image === 'string') {
-    // If image is a string, assume it's a file path and fetch it
-    const response = await fetch(image);
-    const blob = await response.blob();
-
-    return convertImageToDataURL(blob);
-  } else {
-    throw new Error('Invalid image type');
-  }
-};
-
 // Updated put_berita function
-export async function put_berita(idBerita,formData) {
-
-  console.log("cek isi form data di put_berita : ",formData);
+export async function put_berita(idBerita, formData) {
+  console.log('cek isi form data di put_berita : ', formData);
 
   try {
     const headers = new Headers();
@@ -120,14 +82,12 @@ export async function put_berita(idBerita,formData) {
         body: JSON.stringify(formData),
       },
     );
-    const responseData = await res.json();
     return responseData;
   } catch (e) {
     console.log('Error in put_berita with message:', e.message);
     throw e; // rethrow the error to handle it in the calling function
   }
 }
-
 
 // to delete berita based on id berita
 export async function delete_berita(data) {
@@ -143,8 +103,7 @@ export async function delete_berita(data) {
         },
       },
     );
-    const responseData = await res.json();
-    console.log(responseData);
+
     return responseData;
   } catch (e) {
     console.log('error in delete_berita with message : ', e.message);
