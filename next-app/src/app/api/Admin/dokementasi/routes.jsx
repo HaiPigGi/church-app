@@ -4,6 +4,7 @@ function getJwtToken() {
 
 export async function post_Images(data) {
   try {
+    console.log("cek data api post_images : ",data);
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/dokumentasi/`,
       {

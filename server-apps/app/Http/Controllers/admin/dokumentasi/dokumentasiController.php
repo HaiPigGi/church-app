@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\File;
 class dokumentasiController extends Controller
 {
 
-    // public function create()
-    // {
-    //     return view('dokumentasi.create');
-    // }
+    public function create()
+    {
+        return view('dokumentasi.create');
+    }
 
     /**
      * Get all data including image information
@@ -95,7 +95,7 @@ class dokumentasiController extends Controller
             $data = $request->validate([
                 'tahun' => 'required',
                 'jenis_kegiatan' => 'required',
-                'images' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate each image file
+                'image.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate each image file
             ]);
 
             // Creating Dokumentasi instance
@@ -105,8 +105,8 @@ class dokumentasiController extends Controller
                     'jenis_kegiatan' => $data['jenis_kegiatan'],
                 ]);
 
-                if ($data['images'] && is_array($data['images'])) {
-                    foreach ($data['images'] as $image) {
+                if ($data['image'] && is_array($data['image'])) {
+                    foreach ($data['image'] as $image) {
                         $imageName = $dokumentasi->tahun . '-image-' . time() . rand(1, 1000) . '.' . $image->extension();
                         // Store the image in the storage disk (public disk in this case)
                         $imagePath = $image->storeAs('dokumentasi', $imageName, 'public');
@@ -122,11 +122,13 @@ class dokumentasiController extends Controller
             });
 
             // Success response for JSON
+            Log::info("cek data sucess : ".json_encode($dokumentasi));
             return response()->json(['message' => 'Dokumentasi added successfully', 'data' => $dokumentasi], 201);
         } catch (\Exception $e) {
             // Error response for JSON
+            Log::error("Error occurred while processing dokumentasi: " . $e->getMessage() . "\n" . $e->getTraceAsString());
             return response()->json(['message' => 'Failed to add Dokumentasi', 'error' => $e->getMessage()], 500);
-        }
+        }        
     }
     /**
      * Delete data by dokumentasi_id
