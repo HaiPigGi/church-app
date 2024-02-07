@@ -303,7 +303,6 @@ const AllOrganitations = (props) => {
     <div className="relative h-[75vh] overflow-y-auto ">
       <h2 className="text-xl font-semibold mb-2">Data Organisasi</h2>
       <button className="absolute top-0 right-5" onClick={clearState}>
-        {' '}
         <i class="ri-close-circle-fill text-black ri-lg"></i>{' '}
       </button>
       <table className="w-full border-collapse border rounded-md">
