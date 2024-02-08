@@ -18,10 +18,9 @@ export default function AllDokumentasi() {
   });
   const [Image, setImage] = useState([]);
 
-  
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    
+
     if (name === 'image[]' && files.length > 0) {
       // Menambahkan gambar-gambar baru ke array Images
       setImage([...Image, ...Array.from(files)]);
@@ -29,9 +28,7 @@ export default function AllDokumentasi() {
       setDok({ ...Dok, [name]: value });
     }
   };
-  
-  
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,7 +40,7 @@ export default function AllDokumentasi() {
     };
     fetchData();
   }, []);
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Validasi input form
@@ -57,6 +54,7 @@ export default function AllDokumentasi() {
     }
     simpanImages(Dok, Image);
   };
+
   async function simpanImages(datanya, gambar) {
     try {
       const formData = convert(datanya, gambar);
@@ -73,19 +71,14 @@ export default function AllDokumentasi() {
     const y = date.getFullYear();
     formData.append('tahun', y);
     formData.append('jenis_kegiatan', jenis_kegiatan);
-    
+
     // Append each selected image individually
     images.forEach((image, index) => {
       formData.append(`image[]`, image); // Gunakan kunci 'image' diikuti dengan []
     });
-  
-    console.log('tahun : ', y);
-    console.log('kegiatan : ', jenis_kegiatan);
-    console.log('gambar : ', images);
-    
+
     return formData;
   };
-  
 
   return (
     <div className="pt-20 flex flex-col items-center justify-center h-[60%] w-auto ">
@@ -103,7 +96,7 @@ export default function AllDokumentasi() {
           <input
             type="file"
             name="image[]"
-            multiple 
+            multiple
             accept="image/*"
             onChange={handleChange}
             className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 min-[360px]:max-[765px]:w-[33vh]"

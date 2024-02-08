@@ -27,9 +27,10 @@ class dokumentasiController extends Controller
     {
         try {
             $dokumentasiData = dokumentasiModel::with('images')->get();
-
+            
             $responseData = $dokumentasiData->map(function ($dokumentasi) {
-                $imagePath = 'storage/dokumentasi/' . $dokumentasi->image;
+                $imagePath = 'storage/' . $dokumentasi->images->image;
+                Log::info("cek data get dokumentasi : ". $dokumentasi);
 
                 return [
                     'dokumentasi_id'   => $dokumentasi->dokumentasi_id,
@@ -38,7 +39,7 @@ class dokumentasiController extends Controller
                     'images'           => [
                         'url'  => asset($imagePath),
                         'path' => $imagePath,
-                        'size' => File::size($imagePath),
+                        // 'size' => File::size($imagePath),
                     ],
                 ];
             });

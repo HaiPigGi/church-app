@@ -1,96 +1,97 @@
-"use client"
-import MainLayout from "@/components/Layouts/MainLayout"
-import Footer from "@/components/Fragments/Footer"
-import Navbar from "@/components/Fragments/Navbar"
+'use client';
+import MainLayout from '@/components/Layouts/MainLayout';
+import Footer from '@/components/Fragments/Footer';
+import Navbar from '@/components/Fragments/Navbar';
+import { getAllDokumentasi } from '@/app/api/User/Dokumentasi/routes.jsx';
+import { isResponseError } from '../admin/posisi';
+import useModalContent from '@/lib/customHooks/useModalContent';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Loading from '@/components/Fragments/Loading/loading';
 
+export default function Dokumentasi() {
+  const { clearState, modalContent, setModalContent } = useModalContent();
+  const [photos, setPhotos] = useState([]);
+  const [eventCategory] = useState([]);
+  const [loadingState, setLoadingState] = useState(false);
 
-export default function Dokumentasi (){
+  const getDokumentasi = async () => {
+    setLoadingState(true);
+    let res = await getAllDokumentasi();
+    if (isResponseError(res, setModalContent, clearState)) return;
+    const data = await res.json();
+    console.log(data.data);
+    setPhotos(data.data);
+    setLoadingState(false);
+  };
 
-    return(
-        <MainLayout>
-            <a className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
-                <Navbar />
-            </a>
-            <div className="flex grid-cols-3 mt-20 mb-16 items-center justify-center min-[360px]:max-[765px]:flex-col ">
-                
-                {/* event pertama */}
-            <div class="relative flex flex-col mr-5 text-gray-700 bg-secondary shadow-md bg-clip-border rounded-xl w-96 h-96 min-[360px]:max-[765px]:mb-10 ">
-                <div
-                    class="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
-                    <img
-                    src="https://i.pinimg.com/564x/f0/8f/a7/f08fa745964ffbbe57a6ad3a0680464f.jpg "
-                    alt="card-image" class="w-full h-full object-cover object-center"/>
-                </div>
-                <div class="p-6">
-                    <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                    Natal
-                    </h5>
-                    <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                    Natal merayakan kelahiran Yesus, dengan tradisi pohon, hadiah, dan makanan. Simbol kebersamaan dan kasih sayang bersama keluarga.
-                    </p>
-                </div>
-                <div class="p-6 pt-0">
-                <button
-                    className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-                    type="button"
-                    >
-                    <a href="/pages/dok/fotonatal">Read More</a>
-                </button>
-                </div>
-            </div> 
+  const getAllCategory = () => {
+    photos.forEach((value) => {
+      if (eventCategory.includes(value.jenis_kegiatan)) return;
+      eventCategory.push(value);
+    });
+  };
 
-            {/* event ke dua */}
-            <div class="relative flex flex-col mr-5 text-gray-700 bg-secondary shadow-md bg-clip-border rounded-xl w-96 h-96 min-[360px]:max-[765px]:mb-10  ">
-                <div
-                    class="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
-                    <img
-                    src="https://i.pinimg.com/564x/10/d6/b7/10d6b7b5c1c41d63b32128b3fd522962.jpg"
-                    alt="card-image" />
-                </div>
-                <div class="p-6">
-                    <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                    Paskah
-                    </h5>
-                    <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                    Paskah adalah perayaan Kristen yang merayakan kebangkitan Yesus Kristus dari kematian, dan peristiwa kehidupan baru dan keampunan.
-                    </p>
-                </div>
-                <div class="p-6 pt-0">
-                    <button
-                    class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-                    type="button">
-                    <a href="/pages/dok/paskah">Read More</a>
-                    </button>
-                </div>
-            </div> 
+  useEffect(() => {
+    getDokumentasi();
+  }, []);
 
-            {/* event ketiga */}
-            <div class="relative flex flex-col  text-gray-700 bg-secondary shadow-md bg-clip-border rounded-xl w-96 h-96 min-[360px]:max-[765px]:mb-10">
-                <div
-                    class="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
-                    <img
-                    src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80"
-                    alt="card-image" />
-                </div>
-                <div class="p-6">
-                    <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                    Gak tau isi apa ini
-                    </h5>
-                    <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, repellendus?.
-                    </p>
-                </div>
-                <div class="p-6 pt-0">
-                    <button
-                    class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-                    type="button">
-                    Read More
-                    </button>
-                </div>
-            </div> 
+  useEffect(() => {
+    getAllCategory();
+  }, [photos]);
+
+  return (
+    <MainLayout>
+      <Navbar />
+      <div className=" w-full h-screen ">
+        <h1 className="text-center text-2xl font-bold my-10">
+          Dokumentasi Kegiatan
+        </h1>
+        <div className=" flex mb-16 items-center justify-center min-[360px]:max-[765px]:flex-col h-auto w-full ">
+          {loadingState ? (
+            <Loading />
+          ) : eventCategory.length > 0 ? (
+            eventCategory.map((Docs) => (
+              <EventCategoryCard value={Docs} key={Docs.dokumentasi_id} />
+            ))
+          ) : (
+            <h1 className="text-2xl font-bold text-center">
+              Dokumentasi belum tersedia
+            </h1>
+          )}
         </div>
-            <Footer/>
-        </MainLayout>
-    )
-    
+      </div>
+      {modalContent}
+      <Footer />
+    </MainLayout>
+  );
+}
+
+const EventCategoryCard = ({ value }) => {
+  const router = useRouter();
+  return (
+    <div className=" flex flex-col mr-5 bg-secondary shadow-md bg-clip-border rounded-xl w-96 h-96 min-[360px]:max-[765px]:mb-10">
+      <div className="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
+        <img
+          src={value.images.url}
+          alt={value.jenis_kegiatan}
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
+      <div className="p-6">
+        <h1 className="block mb-2 text-2xl antialiased font-semibold leading-snug tracking-normal capitalize text-white ">
+          {value.jenis_kegiatan}
+        </h1>
+      </div>
+      <div className="p-6 pt-0">
+        <button
+          className="align-middle select-none font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+          type="button"
+          onClick={() => router.push(`/pages/dok/${value.jenis_kegiatan}`)}
+        >
+          Read More
+        </button>
+      </div>
+    </div>
+  );
 };
