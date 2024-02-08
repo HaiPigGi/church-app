@@ -11,6 +11,7 @@ import Hidden from './hiddenView/hidden';
 import Jadwal from './jadwalmisa';
 import Jenismisa from './jenismisa';
 import Dokumentasi from './dokumentasi';
+import Dasbor from './das/dabord';
 import WithAuth from '@/app/api/Auth/withAuth.js';
 import { useAppSelector } from '@/lib/hook';
 import Loading from '@/components/Fragments/Loading/loading';
@@ -27,7 +28,7 @@ function Admin() {
     {
       title: 'Dashboard',
       src: 'Home',
-      onClick: () => handleMenuClick('Dashboard'),
+      onClick: () => handleMenuClick('Dasbor'),
     },
     { title: 'Inbox', src: 'Chat(1)', onClick: () => handleMenuClick('Inbox') },
     {
@@ -86,16 +87,12 @@ function Admin() {
     setActiveMenu(title);
   };
 
-  const Dashboard = () => (
-    <h1 className="p-7 text-2xl font-semibold flex-1 h-screen text-center">
-      Dashboard page
-    </h1>
-  );
+
 
   const renderContent = () => {
     switch (activeMenu) {
-      case 'Dashboard':
-        return <Dashboard />;
+      case 'Dasbor':
+        return <Dasbor />;
       case 'Inbox':
         return <Pesan />;
       case 'organisasi':
@@ -124,7 +121,7 @@ function Admin() {
   return (
     <div className="flex relative h-screen w-screen ">
       <ScrollArea
-        className={` ${open ? 'w-72' : 'w-20'} p-3 pt-5 h-full duration-300 bg-secondary fixed left-0 `}
+        className={` ${open ? 'w-72' : 'w-20'} p-3 pt-5 h-[40rem] duration-300 bg-secondary fixed left-0 `}
       >
         <FaAnglesLeft
           className={` absolute cursor-pointer -right-3 top-9 w-7 border-2 border-black rounded-full ${!open && 'rotate-180'}`}
