@@ -67,6 +67,18 @@ Route::middleware(['cors'])->group(function () {
             Route::get('/',[dokumentasiController::class, 'getAllData']);
             Route::get('/{id}',[dokumentasiController::class, 'getAllDataByYear']);
         });
+        Route::prefix('member')->group(function () {
+            Route::get('/',[MembersController::class, 'getAllDataMembers']);
+            Route::get('/{id}',[MembersController::class, 'getAllDataMembersById']);
+        });
+        Route::prefix('jadwal-misa')->group(function () {
+            Route::get('/',[JadwalMisaController::class, 'index']);
+            Route::get('/{id}',[JadwalMisaController::class, 'show']);
+        });
+        Route::prefix('jenis-misa')->group(function () {
+            Route::get('/',[JenisMisaController::class, 'index']);
+            Route::get('/{id}',[JenisMisaController::class, 'show']);
+        });
     });
 
     Route::prefix('admin')->middleware(['jwt'])->group(function () {
