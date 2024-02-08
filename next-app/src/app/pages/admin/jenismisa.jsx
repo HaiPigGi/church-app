@@ -2,6 +2,8 @@
 import { useState,useEffect,Suspense } from 'react';
 import { post_jenisMisa } from '@/app/api/Admin/jenismisa/routes';
 import { get_jenisMisa } from '@/app/api/Admin/jenismisa/routes';
+import { delete_jenismisa } from '@/app/api/Admin/jenismisa/routes';
+import { updated_jenismisa } from '@/app/api/Admin/jenismisa/routes';
 
 
 export default function Jenismisa() {
@@ -38,21 +40,61 @@ export default function Jenismisa() {
     fetchData();
   }, []);
 
-  // const handleEdit = (id) => {
-  //   const newPosisi = prompt('Masukkan posisi baru:');
-  //   if (newPosisi) {
-  //     setJenisMisaList(
-  //       jenisMisaList.map((item) => (item.id === id ? { id, posisi: newPosisi } : item))
-  //     );
-  //   }
-  // };
+  const handleUpdate = async (id) => {
+    try {
+      // Meminta pengguna untuk memasukkan posisi baru
+      const newPosisi = prompt('Masukkan posisi baru:');
+      console.log('hasil : ',newPosisi !== null && newPosisi.trim() !== '')
+  
+      // Memeriksa apakah posisi baru tidak kosong
+      if (newPosisi !== null && newPosisi.trim() !== '') {
+        
+        // Membuat objek data yang akan diperbarui
+        const updatedData = { id, posisi: newPosisi.trim() };
+  
+        // Mengirim permintaan pembaruan ke backend
+        const res = await updated_jenismisa(updatedData);
+  
+        // Memeriksa status respons dari backend
+        if (res.status === 201) {
+          // Jika pembaruan berhasil, tampilkan pesan sukses
+          alert('Data berhasil diupdate');
+        } else {
+          // Jika pembaruan gagal, tampilkan pesan kesalahan
+          alert('Gagal mengupdate jenis misa');
+          console.log("hasilnya : ",res)
+        }
+      } else {
+        // Jika posisi baru kosong atau pengguna membatalkan prompt, tidak melakukan apa-apa
+        console.log('Input posisi baru kosong atau dibatalkan.');
+      }
+    } catch (error) {
+      // Tangani kesalahan yang terjadi selama pembaruan data
+      console.log('Error:', error.message);
+    }
+  };
+  
+  const handleDelete = async (id) => {
+    try {
+      const res = await delete_jenismisa(id);
+      if (res.ok) {
+        alert('Berhasil menghapus jenis misa');
+        getAlljenismisa();
+      } else {
+        alert('Gagal menghapus jenis misa');
+      }
+    } catch (error) {
+      console.log('Error:', error.message);
+    }
+  };
 
-  // const handleDelete = (id) => {
-  //   if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-  //     setJenisMisaList
-  //     (jenisMisaList.filter((item) => item.id !== id));
-  //   }
-  // };
+  const getAlljenismisa = async () => {
+    // calling getMembersData for accessing the api
+    let res = await get_jenisMisa();
+    setJenisMisaList(res.data);
+    return;
+  };
+
 
   async function simpanData(datanya) {
     try {
@@ -120,14 +162,14 @@ export default function Jenismisa() {
                   <td className="py-2 px-4">{item.jenis}</td>
                   <td className="py-2 px-4 flex justify-center space-x-5">
                     <button
+                    onClick={()=> handleUpdate(item.jenis_misa_id)}
                       className="text-blue-500 underline"
-
                     >
                       Edit
                     </button>
                     <button
+                      onClick={() => handleDelete(item.jenis_misa_id)}
                       className="text-red-500 underline"
-                      
                       >
                       Delete
                     </button>
