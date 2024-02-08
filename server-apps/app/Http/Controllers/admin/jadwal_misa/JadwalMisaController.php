@@ -108,7 +108,7 @@ class JadwalMisaController extends Controller
 
             DB::commit();
 
-            return response()->json(['data' => $jadwalMisa, 'message' => 'Jadwal Misa updated successfully']);
+            return response()->json(['data' => $jadwalMisa, 'message' => 'Jadwal Misa updated successfully'],201);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Jadwal Misa update failed', ['error' => $e->getMessage()]);
