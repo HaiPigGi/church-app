@@ -1,41 +1,99 @@
 'use client';
-import React, { useState } from 'react';
-import { IoIosExit } from 'react-icons/io';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import { getAllDokumentasi } from '@/app/api/User/Dokumentasi/routes';
+import { isResponseError } from '@/app/pages/admin/posisi.jsx';
+import useModalContent from '@/lib/customHooks/useModalContent.jsx';
+import { useRouter } from 'next/navigation';
 
-const Dokumentasi_kegiatan = () => {
+const Dokumentasi_kegiatan = ({ params }) => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [searchYear, setSearchYear] = useState('');
-  const [searchResult, setSearchResult] = useState([]);
+  const [groupImage, setGroupImage] = useState([
+    {
+      jenis_kegiatan: '',
+      tahun: '',
+      images: '',
+    },
+  ]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [photos, setPhotos] = useState();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [photos, setPhotos] = useState([]);
+  const { modalContent, setModalContent, clearState } = useModalContent();
+  const router = useRouter();
 
-  const getDokumentasi = async () => {};
+  const getDokumentasi = async (jenisKegiatan) => {
+    let res = await getAllDokumentasi();
+    if (isResponseError(res, setModalContent, clearState)) return;
+    res = await res.json();
+    res = res.data;
+    res = res.filter((data) => jenisKegiatan == data.jenis_kegiatan);
+    console.log(res);
+    res.forEach((photo) => {
+      groupByYear(photo);
+    });
+    setGroupImage(groupImage.slice(1));
+    console.log('groupImage : ', groupImage);
+    setPhotos(res);
+  };
 
-  const photosByYear = photos.reduce((acc, photo) => {
-    const year = photo.year;
-    if (!acc[year]) {
-      acc[year] = [];
+  const groupByYear = (photo) => {
+    console.log('photo : ', photo);
+    console.log('Group Image length : ', groupImage.length);
+    const index = groupImage.findIndex((val) => val.tahun == photo.tahun);
+    console.log('index : ', index);
+    if (index != -1) {
+      photo.images.map((img) => {
+        groupImage[index].images.push(img);
+      });
+      return;
     }
-    acc[year].push(photo);
-    return acc;
-  }, {});
+    groupImage.push({
+      jenis_kegiatan: photo.jenis_kegiatan,
+      tahun: photo.tahun,
+      images: photo.images,
+    });
+    console.log('groupImage : ', groupImage);
+  };
+
+  useEffect(() => {
+    getDokumentasi(params.jenis_kegiatan);
+  }, []);
+
+  const photosByYear = (year) => {
+    if (photos.find((data) => data.tahun == `${year}`)) {
+      router.push(`/pages/dok/${params.jenis_kegiatan}/#${year}`);
+      return;
+    }
+    setModalIsOpen(true);
+  };
 
   const handleClose = () => {
     setSelectedPhoto(null);
   };
 
   const handleGoBack = () => {
-    window.history.back();
+    router.push('/pages/dok/');
   };
-  const handleSearch = () => {
-    const result = photosByYear[searchYear] || [];
-    setSearchResult({ [searchYear]: result });
 
-    // Tambahkan alert jika hasil pencarian kosong
-    if (result.length === 0) {
-      setModalIsOpen(true);
+  const handleChange = (e) => {
+    let year = e.target.value;
+    setSearchYear(year);
+  };
+
+  const handleSearch = () => {
+    if (!searchYear) {
+      setModalContent('validation', {
+        message: 'Harap masukkan tahun pencarian terlebih dahulu',
+        typeMessage: 'failed',
+        action: clearState,
+      });
+      return;
     }
+    let year = searchYear.slice(0, searchYear.indexOf('-'));
+    photosByYear(year);
+    // Tambahkan alert jika hasil pencarian kosong
+    setSearchYear('');
   };
 
   const closeModal = () => {
@@ -56,11 +114,11 @@ const Dokumentasi_kegiatan = () => {
 
       <div className="flex justify-center mb-4">
         <input
-          type="text"
+          type="month"
           placeholder="Cari berdasarkan tahun"
           className="border border-gray-300 p-2 rounded-md"
           value={searchYear}
-          onChange={(e) => setSearchYear(e.target.value)}
+          onChange={handleChange}
         />
         <button
           className="ml-2 bg-secondary text-white px-4 py-2 rounded-md"
@@ -70,27 +128,30 @@ const Dokumentasi_kegiatan = () => {
         </button>
       </div>
 
-      {Object.keys(searchResult).map((year) => (
-        <div key={year} className="mb-4">
-          <h2 className="text-xl font-semibold mb-2 text-center">{year}</h2>
+      {groupImage.length > 1 &&
+        groupImage.map((photos) => (
+          <div id={photos.tahun} key={photos.tahun} className="mb-4">
+            <h2 className="text-xl font-semibold mb-2 text-center">
+              {photos.tahun}
+            </h2>
 
-          <div className="flex space-x-4  overflow-x-auto ml-5">
-            {searchResult[year].map((photo) => (
-              <div
-                key={photo.id}
-                className="flex-shrink-0 overflow-hidden rounded-lg shadow-md cursor-pointer"
-                onClick={() => setSelectedPhoto(photo)}
-              >
-                <img
-                  src={photo.url}
-                  alt={photo.title}
-                  className="w-52 h-56 object-cover"
-                />
-              </div>
-            ))}
+            <div className="flex space-x-4 overflow-x-auto ml-5">
+              {photos.images.map((photo, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 overflow-hidden rounded-lg shadow-md cursor-pointer"
+                  onClick={() => setSelectedPhoto(photo)}
+                >
+                  <img
+                    src={photo.url}
+                    alt={photos.jenis_kegiatan}
+                    className="w-52 h-56 object-cover"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
 
       {/* Modal for Empty Search Result */}
       <Modal
@@ -130,6 +191,7 @@ const Dokumentasi_kegiatan = () => {
           </button>
         </div>
       )}
+      {modalContent}
     </div>
   );
 };
