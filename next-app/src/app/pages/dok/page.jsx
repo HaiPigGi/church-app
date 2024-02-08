@@ -11,8 +11,8 @@ import Loading from '@/components/Fragments/Loading/loading';
 
 export default function Dokumentasi() {
   const { clearState, modalContent, setModalContent } = useModalContent();
-  const [photos, setPhotos] = useState([]);
   const [eventCategory] = useState([]);
+  const [photos, setPhotos] = useState([]);
   const [loadingState, setLoadingState] = useState(false);
 
   const getDokumentasi = async () => {
@@ -20,15 +20,17 @@ export default function Dokumentasi() {
     let res = await getAllDokumentasi();
     if (isResponseError(res, setModalContent, clearState)) return;
     const data = await res.json();
-    console.log(data.data);
-    setPhotos(data.data);
+    getAllCategory(data.data);
     setLoadingState(false);
   };
 
-  const getAllCategory = () => {
-    photos.forEach((value) => {
+  const getAllCategory = (docs) => {
+    docs.forEach((value) => {
       if (eventCategory.includes(value.jenis_kegiatan)) return;
-      eventCategory.push(value);
+      eventCategory.push(value.jenis_kegiatan);
+      photos.push(value);
+      console.log('eventCategory : ', eventCategory);
+      console.log('photos : ', photos);
     });
   };
 
@@ -36,31 +38,31 @@ export default function Dokumentasi() {
     getDokumentasi();
   }, []);
 
-  useEffect(() => {
-    getAllCategory();
-  }, [photos]);
-
   return (
     <MainLayout>
       <Navbar />
-      <div className=" w-full h-screen ">
-        <h1 className="text-center text-2xl font-bold my-10">
-          Dokumentasi Kegiatan
-        </h1>
-        <div className=" flex mb-16 items-center justify-center min-[360px]:max-[765px]:flex-col h-auto w-full ">
-          {loadingState ? (
-            <Loading />
-          ) : eventCategory.length > 0 ? (
-            eventCategory.map((Docs) => (
-              <EventCategoryCard value={Docs} key={Docs.dokumentasi_id} />
-            ))
-          ) : (
-            <h1 className="text-2xl font-bold text-center">
-              Dokumentasi belum tersedia
-            </h1>
-          )}
+      {loadingState ? (
+        <Loading />
+      ) : photos.length > 0 ? (
+        <div className=" w-full h-screen ">
+          <h1 className="text-center text-2xl font-bold my-10">
+            Dokumentasi Kegiatan
+          </h1>
+          <div className="w-full overflow-x-auto relative h-[27rem] mx-5">
+            <div className="absolute left-0 flex  items-center justify-center min-[360px]:max-[765px]:flex-col  h-[27rem]">
+              {photos.map((Docs) => (
+                <EventCategoryCard value={Docs} key={Docs.dokumentasi_id} />
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="w-full h-screen flex items-center">
+          <h1 className="text-2xl font-bold text-center w-full">
+            Dokumentasi belum tersedia
+          </h1>
+        </div>
+      )}
       {modalContent}
       <Footer />
     </MainLayout>
@@ -70,10 +72,10 @@ export default function Dokumentasi() {
 const EventCategoryCard = ({ value }) => {
   const router = useRouter();
   return (
-    <div className=" flex flex-col mr-5 bg-secondary shadow-md bg-clip-border rounded-xl w-96 h-96 min-[360px]:max-[765px]:mb-10">
+    <div className="mx-2 flex flex-col bg-secondary shadow-md bg-clip-border rounded-xl min-w-96 min-h-96 min-[360px]:max-[765px]:mb-10">
       <div className="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
         <img
-          src={value.images.url}
+          src={value.images[0].url}
           alt={value.jenis_kegiatan}
           className="w-full h-full object-cover object-center"
         />
