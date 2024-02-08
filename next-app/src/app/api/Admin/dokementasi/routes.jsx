@@ -4,7 +4,7 @@ function getJwtToken() {
 
 export async function post_Images(data) {
   try {
-    console.log("cek data api post_images : ",data);
+    console.log('cek data api post_images : ', data);
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/dokumentasi/`,
       {
@@ -17,12 +17,8 @@ export async function post_Images(data) {
       },
     );
 
-    if (res.ok) {
-      const dataRespon = await res.json();
-      return dataRespon;
-    } else {
-      throw new Error('Failed to fetch data');
-    }
+    const dataRespon = await res.json();
+    return dataRespon;
   } catch (error) {
     console.log('biasalah gak bisa post data : ', error.message);
   }
