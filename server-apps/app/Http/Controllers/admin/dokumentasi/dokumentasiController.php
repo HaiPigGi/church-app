@@ -27,19 +27,20 @@ class dokumentasiController extends Controller
     {
         try {
             $dokumentasiData = dokumentasiModel::with('images')->get();
-
+            
             $responseData = $dokumentasiData->map(function ($dokumentasi) {
-                $imagePath = 'storage/dokumentasi/' . $dokumentasi->image;
+                $DokuImages = $dokumentasi->images->map(function ($img) {
+                    return[
+                        "url" => asset('storage/' . $img->image),
+                        "path" => $img->image
+                    ];
+                });
 
                 return [
                     'dokumentasi_id'   => $dokumentasi->dokumentasi_id,
                     'tahun'            => $dokumentasi->tahun,
                     'jenis_kegiatan'   => $dokumentasi->jenis_kegiatan,
-                    'images'           => [
-                        'url'  => asset($imagePath),
-                        'path' => $imagePath,
-                        'size' => File::size($imagePath),
-                    ],
+                    'images'           => $DokuImages,
                 ];
             });
 

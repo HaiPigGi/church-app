@@ -14,8 +14,7 @@ export async function get_JadwalMisa() {
       },
     );
     if (res.ok) {
-      const responseData = await res.json();
-      return responseData;
+      return await res.json();
     }
   } catch (e) {
     console.log('error at getJadwalMisa with message : ', e.message);

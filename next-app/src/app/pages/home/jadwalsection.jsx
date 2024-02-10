@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useInView, motion, useAnimation } from 'framer-motion';
 import { get_jadwal } from '@/app/api/User/jadwalmisa/route';
 
+const getJenisMisa = () => {};
 function JadwalMisaSection() {
   const refJadwalSec = useRef(null);
   const inView = useInView(refJadwalSec, { once: false });
@@ -23,13 +24,23 @@ function JadwalMisaSection() {
     fetchData();
   },[])
 
+  //     jenis_misa_id: 0,
+  //   },
+  // ]);
+  const [jenisMisa, setJenisMisa] = useState();
   const mainControlls = useAnimation();
+
+  const getJadwalMisa = async () => {
+    const res = await get_JadwalMisa();
+  };
 
   useEffect(() => {
     if (inView) {
       mainControlls.start('visible');
     }
   }, [inView]);
+
+  useEffect(() => {}, []);
 
   return (
     <section className="snap-always snap-center w-full h-screen flex justify-center items-center px-5 py-5 overflow-hidden bg-fixed bg-jadwalMisa bg-no-repeat bg-cover bg-center">
