@@ -131,7 +131,7 @@ class JadwalMisaController extends Controller
 
             DB::commit();
 
-            return response()->json(['message' => 'Jadwal Misa deleted successfully']);
+            return response()->json(['message' => 'Jadwal Misa deleted successfully'],201);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Jadwal Misa deletion failed', ['error' => $e->getMessage()]);

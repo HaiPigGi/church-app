@@ -11,6 +11,7 @@ import Hidden from './hiddenView/hidden';
 import Jadwal from './jadwalmisa';
 import Jenismisa from './jenismisa';
 import Dokumentasi from './dokumentasi';
+import Lihatjadwal from './lihatjadwal';
 import Dasbor from './das/dabord';
 import WithAuth from '@/app/api/Auth/withAuth.js';
 import { useAppSelector } from '@/lib/hook';
@@ -52,6 +53,12 @@ function Admin() {
       src: 'calendar (1)',
       gap: true,
       onClick: () => handleMenuClick('Jadwal'),
+    },
+    {
+      title: 'Lihat jadwal',
+      src: 'calendar (1)',
+      gap: false,
+      onClick: () => handleMenuClick('Lihatjadwal'),
     },
     {
       title: 'Jenismisa',
@@ -103,6 +110,8 @@ function Admin() {
         return <Member />;
       case 'Jadwal':
         return <Jadwal />;
+      case 'Lihatjadwal':
+        return <Lihatjadwal />;
       case 'Jenismisa':
         return <Jenismisa />;
       case 'Hidden':

@@ -95,25 +95,21 @@ export async function put_JadwalMisa(jadwalID, dataJadwal) {
   }
 }
 
-export async function delete_JadwalMisa(jadwalID) {
-  try {
+export async function delete_JadwalMisa(id){
+  try{
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jadwal-misa/${jadwalID}`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jadwal-misa/${id}`,
       {
         method: 'DELETE',
         mode: 'cors',
         headers: {
-          Authorization: `bearer ${token}`,
+          'Authorization': `Bearer ${token}`
         },
       },
     );
-    const responseData = await res.json();
-    if (res.ok) {
-      return responseData;
-    }
-    return responseData;
-  } catch (e) {
-    console.log('error at delete_JadwalMisa with message : ', e.message);
+    return res;
+  }catch(error){
+    console.log('biasa error',error.message)
   }
 }
 

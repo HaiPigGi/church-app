@@ -8,6 +8,8 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import 'remixicon/fonts/remixicon.css';
 import AuthService from '@/app/api/Auth/route';
 import { useAppSelector, useAppDispatch } from '@/lib/hook';
+import UseModalContent from '@/lib/customHooks/useModalContent';
+import { useHistory } from 'react-router-dom';
 
 function Navbar({ props }) {
   const ref = useRef(null);
@@ -62,6 +64,47 @@ function Navbar({ props }) {
   useEffect(() => {
     RenderBasedStatus();
   }, [status, RenderBasedStatus]);
+
+
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+   // Hook useHistory untuk melakukan redirect
+   const history = useHistory();
+
+   // Gunakan hook useModalContent
+   const { modalContent, clearState, setModalContent } = UseModalContent();
+
+   useEffect(() => {
+
+    console.log('Status login berubah:', isLoggedIn);
+}, [isLoggedIn]);
+
+
+   const showLoginModal = () => {
+    setModalContent('confirmation', {
+        actionAcc: () => {
+            history.push('/pages/login'); 
+            clearState(); 
+        },
+        actionDecline: () => {
+            clearState();
+        }
+    });
+};
+
+    
+    const handleClick = () => {
+    
+      if (!get_Session()) {
+        
+          showLoginModal();
+      } else {
+  
+          history.push('/pages/forum'); 
+      }
+  };
+
 
   return (
     <>
@@ -120,12 +163,15 @@ function Navbar({ props }) {
               Profil Gereja
             </Dropdowns>
 
-            <NavLinks href="/pages/forum" datatestid="Kritik & Saran">
+            <NavLinks onChange={handleClick} href="/pages/forum" datatestid="Kritik & Saran">
               Kritik & Saran
             </NavLinks>
-            <NavLinks href="/pages/dok" datatestid="Dokumentasi">
+            {modalContent}
+
+            <NavLinks href="/pages/dok" datatestid="Dokumentasi" >
               Dokumentasi
             </NavLinks>
+
             <NavLinks href="/pages/tentang" datatestid="Tentang">
               Tentang
             </NavLinks>
@@ -173,6 +219,7 @@ function Navbar({ props }) {
               <i className="ri-question-answer-fill block text-center ri-xl mb-2 text-slate-500 active:text-secondary"></i>
               Kritik & Saran
             </NavLinks>
+            {modalContent}
           </div>
           <div className="flex justify-center items-center h-full w-full text-center">
             <NavLinks href="/pages/dok" intent="netral" size="extraSmall">
@@ -190,6 +237,7 @@ function Navbar({ props }) {
       </nav>
     </>
   );
+  
 }
 
 export default Navbar;

@@ -56,6 +56,11 @@ export default function AllDokumentasi() {
       return;
     }
     simpanImages(Dok, Image);
+    setDok({
+      tahun:'',
+      jenis_kegiatan:'',
+      
+    })
   };
   async function simpanImages(datanya, gambar) {
     try {
