@@ -18,11 +18,24 @@ export default function AllDokumentasi() {
     message: '',
   });
   const [Image, setImage] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const MAX_IMAGES = 15;
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
     if (name === 'image[]' && files.length > 0) {
+      // Validasi jumlah file gambar
+      if (Image.length + files.length > MAX_IMAGES) {
+        setAlert({
+          isOpen: true,
+          title: 'Max file limit reached',
+          message: `You can only upload up to ${MAX_IMAGES} images.`,
+          onClose: () => (window.location.href = '/pages/admin'),
+        });
+        return;
+      }
+      
       // Menambahkan gambar-gambar baru ke array Images
       setImage([...Image, ...Array.from(files)]);
     } else {
@@ -38,24 +51,24 @@ export default function AllDokumentasi() {
     fetchData();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validasi input form
     if (!Dok.tahun < 2000 && !Dok.tahun > 2048) {
       setAlert({
         isOpen: true,
         title: 'Tahun tidak valid',
         message: 'Masukkan tahun antara 2000 dan 2048 saja.',
-        onClose: () => setAlert({ isOpen: false }),
+        onClose: () => (window.location.href = '/pages/admin'),
       });
       return;
     }
-    simpanImages(Dok, Image);
+    setIsLoading(true);
+    await simpanImages(Dok, Image);
+    setIsLoading(false);
     setDok({
-      tahun:'',
-      jenis_kegiatan:'',
-      
-    })
+      tahun: '',
+      jenis_kegiatan: '',
+    });
   };
 
   async function simpanImages(datanya, gambar) {
@@ -75,7 +88,7 @@ export default function AllDokumentasi() {
       tahun: '',
       jenis_kegiatan: '',
     });
-    setImage(null);
+    setImage([]);
   };
 
   const convert = ({ tahun, jenis_kegiatan }, images) => {
@@ -101,7 +114,7 @@ export default function AllDokumentasi() {
       <form
         onSubmit={handleSubmit}
         className=" shadow-2xl h-[82vh] w-[100vh] p-5 "
-        enctype="multipart/form-data"
+        encType="multipart/form-data" 
       >
         {/* gambar */}
         <div className="flex flex-col mb-3">
@@ -145,11 +158,18 @@ export default function AllDokumentasi() {
             <option value="select">select</option>
             <option value="natal">Natal</option>
             <option value="paskah">Paskah</option>
+            <option value="misdinar">Misdinar</option>
+            <option value="OMK">OMK</option>
+            <option value="DPP">DPP</option>
+            <option value="kegiatan lain">Kegiatan Lain</option>
           </select>
         </div>
         <div className="flex justify-center mb-3">
-          <button className="border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200">
-            Submit
+          <button className="border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200 relative">
+            {isLoading && (
+              <div className="absolute top-0 left-0 h-full bg-red-400 rounded-full animate-slide" />
+            )}
+            {isLoading ? 'Loading' : 'Submit'}
           </button>
         </div>
         <Alert
@@ -166,7 +186,7 @@ export default function AllDokumentasi() {
 const Alert = ({ isOpen, title, message, onClose }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose}>
+      <Dialog onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -203,7 +223,7 @@ const Alert = ({ isOpen, title, message, onClose }) => {
 
                 <div className="mt-4">
                   <button
-                    onClick={onClose}
+                    onClick={onClose} // Panggil onClose saat tombol diklik
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                   >
                     OK
@@ -217,3 +237,4 @@ const Alert = ({ isOpen, title, message, onClose }) => {
     </Transition>
   );
 };
+

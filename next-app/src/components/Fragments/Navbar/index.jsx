@@ -69,9 +69,6 @@ function Navbar({ props }) {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-   // Hook useHistory untuk melakukan redirect
-   const history = useHistory();
-
    // Gunakan hook useModalContent
    const { modalContent, clearState, setModalContent } = UseModalContent();
 
