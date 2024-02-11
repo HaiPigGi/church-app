@@ -9,6 +9,7 @@ import 'remixicon/fonts/remixicon.css';
 import AuthService from '@/app/api/Auth/route';
 import { useAppSelector, useAppDispatch } from '@/lib/hook';
 
+
 function Navbar({ props }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -63,42 +64,6 @@ function Navbar({ props }) {
     RenderBasedStatus();
   }, [status, RenderBasedStatus]);
 
-
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-   // Gunakan hook useModalContent
-   const { modalContent, clearState, setModalContent } = UseModalContent();
-
-   useEffect(() => {
-
-    console.log('Status login berubah:', isLoggedIn);
-}, [isLoggedIn]);
-
-
-   const showLoginModal = () => {
-    setModalContent('confirmation', {
-        actionAcc: () => {
-            history.push('/pages/login'); 
-            clearState(); 
-        },
-        actionDecline: () => {
-            clearState();
-        }
-    });
-};
-
-    
-    const handleClick = () => {
-    
-      if (!get_Session()) {
-        
-          showLoginModal();
-      } else {
-  
-          history.push('/pages/forum'); 
-      }
-  };
 
   return (
     <>
@@ -157,7 +122,7 @@ function Navbar({ props }) {
               Profil Gereja
             </Dropdowns>
 
-            <NavLinks onChange={handleClick} href="/pages/forum" datatestid="Kritik & Saran">
+            <NavLinks href="/pages/forum" datatestid="Kritik & Saran">
               Kritik & Saran
             </NavLinks>
 
