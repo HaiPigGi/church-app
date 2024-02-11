@@ -25,6 +25,10 @@ function Navbar({ props }) {
   //  status : "{'status : string'",
   //  error: "string"
   // }
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Gunakan hook useModalContent
+  const { modalContent, clearState, setModalContent } = UseModalContent();
 
   useEffect(() => {
     if (isInView) {
@@ -65,8 +69,9 @@ function Navbar({ props }) {
     RenderBasedStatus();
   }, [status, RenderBasedStatus]);
 
-  // Gunakan hook useModalContent
-  const { modalContent, clearState, setModalContent } = UseModalContent();
+  useEffect(() => {
+    console.log('Status login berubah:', isLoggedIn);
+  }, [isLoggedIn]);
 
   const showLoginModal = () => {
     setModalContent('confirmation', {
@@ -121,7 +126,7 @@ function Navbar({ props }) {
                   href: '/pages/OMK',
                 },
                 {
-                  text: 'Kepengurusan Mesdinar',
+                  text: 'Kepengurusan Misdinar',
                   href: '/pages/mesdinar',
                 },
                 {

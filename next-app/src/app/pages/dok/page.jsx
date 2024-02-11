@@ -29,8 +29,6 @@ export default function Dokumentasi() {
       if (eventCategory.includes(value.jenis_kegiatan)) return;
       eventCategory.push(value.jenis_kegiatan);
       photos.push(value);
-      console.log('eventCategory : ', eventCategory);
-      console.log('photos : ', photos);
     });
   };
 
