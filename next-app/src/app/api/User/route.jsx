@@ -3,7 +3,8 @@ import AuthService from '@/app/api/Auth/route.jsx';
 
 const UserServices = () => {
   // get user data with jwtToken
-  async function get_userData(jwtToken) {
+
+   async function get_userData(jwtToken) {
     try {
       const csrf_token = await AuthService().CSRF_token();
       const res = await fetch(
@@ -28,7 +29,7 @@ const UserServices = () => {
   }
 
   return {
-    getUserData: get_userData,
+    get_userData,
   };
 };
 

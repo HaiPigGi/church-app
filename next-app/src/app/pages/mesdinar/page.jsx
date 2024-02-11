@@ -20,6 +20,7 @@ export default function Mesdinar() {
       );
 
       setMisdinarData(filteredData);
+
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +38,7 @@ export default function Mesdinar() {
           <section>
             <div className="flex flex-col items-center">
               <h2 className="text-black font-poppins  md:text-5xl md:font-bold leading-[112px] pt-20 min-[357px]:text-primary min-[357px]:text-xl min-[357px]:mt-10 min-[357px]:mb-5  max-[775px]:text-black md:text-black">
-                Struktur Organisasi Mesdinar
+                Struktur Organisasi Misdinar
               </h2>
               <div className="flex flex-col md:flex-row justify-center items-center relative">
                 {/* Gambar Ketua */}
