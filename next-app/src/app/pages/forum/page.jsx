@@ -2,8 +2,10 @@
 import MainLayout from '@/components/Layouts/MainLayout';
 import Footer from '@/components/Fragments/Footer';
 import Navbar from '@/components/Fragments/Navbar';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { post_saran } from '@/app/api/User/saran/route';
+import Tanda from '@/app/api/User/route'
+
 
 
 export default function saran() {
@@ -12,6 +14,7 @@ const [formData,setfromData]= useState({
   email: '',
   message: '',
 });
+
 
 const handleInput=(e)=>{
 const { name, value } = e.target;
@@ -49,14 +52,30 @@ async function simpanSaran(dataSaran) {
     const res = await post_saran(postData);
     console.log('hasil datanya : ',res);
 
-
-
-    // tambahkan logika tambahan di sini jika diperlukan untuk menangani respons yang diterima
   } catch (error) {
     console.error('Terjadi kesalahan saat menyimpan saran:', error);
     // tambahkan logika penanganan kesalahan di sini, seperti menampilkan pesan kesalahan kepada pengguna
   }
 }
+
+ // Fetch data saat komponen dimuat
+ useEffect(() => {
+  async function fetchData() {
+      try {
+          const response = await Tanda();
+          console.log('Response Data:', response);
+          // Tambahan logika jika diperlukan
+          if (res.status === 200) {
+            window.location.href = '/pages/forum';
+          } else {
+            window.location.href = '/pages/login';
+          }
+      } catch (error) {
+          console.error('Terjadi kesalahan saat memuat data:', error);
+      }
+  }
+  fetchData();
+}, []);
 
 
   return (
