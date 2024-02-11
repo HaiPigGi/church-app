@@ -10,6 +10,7 @@ import AuthService from '@/app/api/Auth/route';
 import { useAppSelector, useAppDispatch } from '@/lib/hook';
 import UseModalContent from '@/lib/customHooks/useModalContent';
 
+
 function Navbar({ props }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -68,20 +69,41 @@ function Navbar({ props }) {
     RenderBasedStatus();
   }, [status, RenderBasedStatus]);
 
-  useEffect(() => {
-    console.log('Status login berubah:', isLoggedIn);
-  }, [isLoggedIn]);
 
-  const showLoginModal = () => {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+   // Gunakan hook useModalContent
+   const { modalContent, clearState, setModalContent } = UseModalContent();
+
+   useEffect(() => {
+
+    console.log('Status login berubah:', isLoggedIn);
+}, [isLoggedIn]);
+
+
+   const showLoginModal = () => {
     setModalContent('confirmation', {
-      actionAcc: () => {
-        history.push('/pages/login');
-        clearState();
-      },
-      actionDecline: () => {
-        clearState();
-      },
+        actionAcc: () => {
+            history.push('/pages/login'); 
+            clearState(); 
+        },
+        actionDecline: () => {
+            clearState();
+        }
     });
+};
+
+    
+    const handleClick = () => {
+    
+      if (!get_Session()) {
+        
+          showLoginModal();
+      } else {
+  
+          history.push('/pages/forum'); 
+      }
   };
 
   return (
