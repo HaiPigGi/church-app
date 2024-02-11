@@ -24,10 +24,7 @@ function Navbar({ props }) {
   //  status : "{'status : string'",
   //  error: "string"
   // }
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Gunakan hook useModalContent
-  const { modalContent, clearState, setModalContent } = UseModalContent();
 
   useEffect(() => {
     if (isInView) {
@@ -68,42 +65,6 @@ function Navbar({ props }) {
     RenderBasedStatus();
   }, [status, RenderBasedStatus]);
 
-
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-   // Gunakan hook useModalContent
-   const { modalContent, clearState, setModalContent } = UseModalContent();
-
-   useEffect(() => {
-
-    console.log('Status login berubah:', isLoggedIn);
-}, [isLoggedIn]);
-
-
-   const showLoginModal = () => {
-    setModalContent('confirmation', {
-        actionAcc: () => {
-            history.push('/pages/login'); 
-            clearState(); 
-        },
-        actionDecline: () => {
-            clearState();
-        }
-    });
-};
-
-    
-    const handleClick = () => {
-    
-      if (!get_Session()) {
-        
-          showLoginModal();
-      } else {
-  
-          history.push('/pages/forum'); 
-      }
-  };
 
   return (
     <>
