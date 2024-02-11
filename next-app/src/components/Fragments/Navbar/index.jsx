@@ -144,7 +144,7 @@ function Navbar({ props }) {
                   href: '/pages/OMK',
                 },
                 {
-                  text: 'Kepengurusan Mesdinar',
+                  text: 'Kepengurusan Misdinar',
                   href: '/pages/mesdinar',
                 },
                 {
