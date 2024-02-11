@@ -27,10 +27,44 @@ class dokumentasiController extends Controller
     {
         try {
             $dokumentasiData = dokumentasiModel::with('images')->get();
-            
+
             $responseData = $dokumentasiData->map(function ($dokumentasi) {
                 $DokuImages = $dokumentasi->images->map(function ($img) {
-                    return[
+                    return [
+                        "url" => asset('storage/' . $img->image),
+                        "path" => $img->image
+                    ];
+                });
+
+                return [
+                    'dokumentasi_id'   => $dokumentasi->dokumentasi_id,
+                    'tahun'            => $dokumentasi->tahun,
+                    'jenis_kegiatan'   => $dokumentasi->jenis_kegiatan,
+                    'images'           => $DokuImages,
+                ];
+            });
+
+            return response()->json(['data' => $responseData], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to retrieve data', 'error' => $e->getMessage()], 500);
+        }
+    }
+    /**
+     * Get all data including image information and filter by jenis kegiatan
+     *
+     * @param string $jenisKegiatan Jenis kegiatan untuk melakukan filter
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllDataByJenisKegiatan($jenisKegiatan)
+    {
+        try {
+            // Ambil semua data dokumentasi beserta informasi gambarnya
+            $dokumentasiData = dokumentasiModel::with('images')->where('jenis_kegiatan', $jenisKegiatan)->get();
+
+            // Format ulang data untuk JSON response
+            $responseData = $dokumentasiData->map(function ($dokumentasi) {
+                $DokuImages = $dokumentasi->images->map(function ($img) {
+                    return [
                         "url" => asset('storage/' . $img->image),
                         "path" => $img->image
                     ];
@@ -51,37 +85,41 @@ class dokumentasiController extends Controller
     }
 
     /**
-     * Get data for a specific year
+     * Get all data including image information and filter by jenis kegiatan and year
      *
-     * @param int $tahun
+     * @param string $jenisKegiatan Jenis kegiatan untuk melakukan filter
+     * @param int $tahun Tahun untuk melakukan filter
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAllDataByYear($tahun)
+    public function getAllDataByJenisKegiatanAndYear($jenisKegiatan, $tahun)
     {
         try {
-            $documentation = dokumentasiModel::with('images')->where('tahun', $tahun)->get();
+            // Ambil semua data dokumentasi beserta informasi gambarnya
+            $dokumentasiData = dokumentasiModel::with('images')
+                ->where('jenis_kegiatan', $jenisKegiatan)
+                ->where('tahun', $tahun)
+                ->get();
 
-            if ($documentation->isEmpty()) {
-                return response()->json(['message' => 'Data not found for the specified year'], 404);
-            }
-            $responseData = $documentation->map(function ($dokumentasi) {
-                $imagePath = 'storage/dokumentasi/' . $dokumentasi->image;
+            // Format ulang data untuk JSON response
+            $responseData = $dokumentasiData->map(function ($dokumentasi) {
+                $DokuImages = $dokumentasi->images->map(function ($img) {
+                    return [
+                        "url" => asset('storage/' . $img->image),
+                        "path" => $img->image
+                    ];
+                });
 
                 return [
                     'dokumentasi_id'   => $dokumentasi->dokumentasi_id,
                     'tahun'            => $dokumentasi->tahun,
                     'jenis_kegiatan'   => $dokumentasi->jenis_kegiatan,
-                    'images'           => [
-                        'url'  => asset($imagePath),
-                        'path' => $imagePath,
-                        'size' => File::size($imagePath),
-                    ],
+                    'images'           => $DokuImages,
                 ];
             });
 
             return response()->json(['data' => $responseData], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Failed to retrieve data for the specified year', 'error' => $e->getMessage()], 500);
+            return response()->json(['message' => 'Failed to retrieve data', 'error' => $e->getMessage()], 500);
         }
     }
 
@@ -96,7 +134,8 @@ class dokumentasiController extends Controller
             $data = $request->validate([
                 'tahun' => 'required',
                 'jenis_kegiatan' => 'required',
-                'image.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate each image file
+                'image.*' => 'image|mimes:jpeg,png,jpg,gif', // Validate each image file with maximum size 100MB
+
             ]);
 
             // Creating Dokumentasi instance
@@ -123,13 +162,13 @@ class dokumentasiController extends Controller
             });
 
             // Success response for JSON
-            Log::info("cek data sucess : ".json_encode($dokumentasi));
+            Log::info("cek data sucess : " . json_encode($dokumentasi));
             return response()->json(['message' => 'Dokumentasi added successfully', 'data' => $dokumentasi], 201);
         } catch (\Exception $e) {
             // Error response for JSON
             Log::error("Error occurred while processing dokumentasi: " . $e->getMessage() . "\n" . $e->getTraceAsString());
             return response()->json(['message' => 'Failed to add Dokumentasi', 'error' => $e->getMessage()], 500);
-        }        
+        }
     }
     /**
      * Delete data by dokumentasi_id

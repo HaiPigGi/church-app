@@ -65,7 +65,8 @@ Route::middleware(['cors'])->group(function () {
         });
         Route::prefix('dokumentasi')->group(function () {
             Route::get('/',[dokumentasiController::class, 'getAllData']);
-            Route::get('/{id}',[dokumentasiController::class, 'getAllDataByYear']);
+            Route::get('/search/{jenisKegiatan}/{tahun}',[dokumentasiController::class, 'getAllDataByJenisKegiatanAndYear']);
+            Route::get('/jenis/{jenis_kegiatan}',[dokumentasiController::class, 'getAllDataByJenisKegiatan']);
         });
         Route::prefix('member')->group(function () {
             Route::get('/',[MembersController::class, 'getAllDataMembers']);

@@ -63,9 +63,41 @@ function Navbar({ props }) {
     RenderBasedStatus();
   }, [status, RenderBasedStatus]);
 
-  const handleClick = () => {
-    // Tambahkan logika atau perintah yang ingin Anda jalankan saat link diklik
-    console.log('berhasil di klik!');
+
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+   // Gunakan hook useModalContent
+   const { modalContent, clearState, setModalContent } = UseModalContent();
+
+   useEffect(() => {
+
+    console.log('Status login berubah:', isLoggedIn);
+}, [isLoggedIn]);
+
+
+   const showLoginModal = () => {
+    setModalContent('confirmation', {
+        actionAcc: () => {
+            history.push('/pages/login'); 
+            clearState(); 
+        },
+        actionDecline: () => {
+            clearState();
+        }
+    });
+};
+
+    
+    const handleClick = () => {
+    
+      if (!get_Session()) {
+        
+          showLoginModal();
+      } else {
+  
+          history.push('/pages/forum'); 
+      }
   };
 
   return (
@@ -109,7 +141,7 @@ function Navbar({ props }) {
                   href: '/pages/OMK',
                 },
                 {
-                  text: 'Kepengurusan Mesdinar',
+                  text: 'Kepengurusan Misdinar',
                   href: '/pages/mesdinar',
                 },
                 {
