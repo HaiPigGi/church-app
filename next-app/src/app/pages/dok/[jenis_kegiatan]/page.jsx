@@ -13,7 +13,6 @@ import { useRouter } from 'next/navigation';
 const Dokumentasi_kegiatan = ({ params }) => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [searchYear, setSearchYear] = useState('');
-  const [showContent, setShowContent] = useState(false);
   const [groupImage, setGroupImage] = useState([
     {
       jenis_kegiatan: '',
@@ -46,7 +45,7 @@ const Dokumentasi_kegiatan = ({ params }) => {
     getDokumentasi(params.jenis_kegiatan);
   }, []);
 
-  const photosByYearAndJenisKegiatan = async (jenis_kegiatan,year) => {
+  const photosByYearAndJenisKegiatan = async (jenis_kegiatan, year) => {
     try {
       const res = await getAllDokumentasiByYear(jenis_kegiatan, year);
       const responseData = await res.json();
@@ -179,7 +178,7 @@ const Dokumentasi_kegiatan = ({ params }) => {
             Data ditemukan untuk {params.jenis_kegiatan} tahun {searchYear}.
           </h2>
           {/* Tampilkan data yang ditemukan di sini */}
-          {/* {groupImage.map((item, index) => (
+      {/* {groupImage.map((item, index) => (
             <div key={index} className="mb-4">
               <h2 className="text-xl font-semibold mb-2 text-center">
                 {item.tahun}
@@ -209,7 +208,7 @@ const Dokumentasi_kegiatan = ({ params }) => {
             Tutup
           </button>
         </div>
-      // </Modal> */} 
+      // </Modal> */}
 
       {selectedPhoto && (
         <div className="fixed top-0 left-0 w-full h-full bg-neutral-950 bg-opacity-75 flex items-center justify-center ">

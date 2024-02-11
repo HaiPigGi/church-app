@@ -1,6 +1,7 @@
 import ModalKonfirmasi from '@/components/Fragments/Modal/ModalKonfirmasi';
 import { useState } from 'react';
 import Modal from '@/components/Fragments/Modal';
+import LoadingBounce from '@/components/Fragments/Loading/LoadingBounce';
 
 const renderContentBasedOnType = (type, attr) => {
   switch (type) {
