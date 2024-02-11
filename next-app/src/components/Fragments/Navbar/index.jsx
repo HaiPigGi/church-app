@@ -8,6 +8,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import 'remixicon/fonts/remixicon.css';
 import AuthService from '@/app/api/Auth/route';
 import { useAppSelector, useAppDispatch } from '@/lib/hook';
+import UseModalContent from '@/lib/customHooks/useModalContent';
 
 
 function Navbar({ props }) {
@@ -24,8 +25,6 @@ function Navbar({ props }) {
   //  status : "{'status : string'",
   //  error: "string"
   // }
-
-
   useEffect(() => {
     if (isInView) {
       mainControl.start('visible');
