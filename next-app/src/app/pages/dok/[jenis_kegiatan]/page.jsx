@@ -29,10 +29,6 @@ const Dokumentasi_kegiatan = ({ params }) => {
     res = res.data;
     res = res.filter((data) => jenisKegiatan == data.jenis_kegiatan);
     console.log(res);
-    res.forEach((photo) => {
-      groupByYear(photo);
-    });
-    setGroupImage(groupImage.slice(1));
     console.log('groupImage : ', groupImage);
     setPhotos(res);
   };
@@ -59,6 +55,16 @@ const Dokumentasi_kegiatan = ({ params }) => {
   useEffect(() => {
     getDokumentasi(params.jenis_kegiatan);
   }, []);
+
+  useEffect(() => {
+    if (photos.length > 0) {
+      photos.forEach((photo) => {
+        groupByYear(photo);
+      });
+      setGroupImage(groupImage.slice(1));
+      console.log('groupImage : ', groupImage);
+    }
+  }, [photos]);
 
   const photosByYear = (year) => {
     if (photos.find((data) => data.tahun == `${year}`)) {

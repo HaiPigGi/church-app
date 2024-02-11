@@ -65,46 +65,20 @@ function Navbar({ props }) {
     RenderBasedStatus();
   }, [status, RenderBasedStatus]);
 
+  // Gunakan hook useModalContent
+  const { modalContent, clearState, setModalContent } = UseModalContent();
 
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-   // Hook useHistory untuk melakukan redirect
-   const history = useHistory();
-
-   // Gunakan hook useModalContent
-   const { modalContent, clearState, setModalContent } = UseModalContent();
-
-   useEffect(() => {
-
-    console.log('Status login berubah:', isLoggedIn);
-}, [isLoggedIn]);
-
-
-   const showLoginModal = () => {
+  const showLoginModal = () => {
     setModalContent('confirmation', {
-        actionAcc: () => {
-            history.push('/pages/login'); 
-            clearState(); 
-        },
-        actionDecline: () => {
-            clearState();
-        }
+      actionAcc: () => {
+        history.push('/pages/login');
+        clearState();
+      },
+      actionDecline: () => {
+        clearState();
+      },
     });
-};
-
-    
-    const handleClick = () => {
-    
-      if (!get_Session()) {
-        
-          showLoginModal();
-      } else {
-  
-          history.push('/pages/forum'); 
-      }
   };
-
 
   return (
     <>
@@ -163,12 +137,12 @@ function Navbar({ props }) {
               Profil Gereja
             </Dropdowns>
 
-            <NavLinks onChange={handleClick} href="/pages/forum" datatestid="Kritik & Saran">
+            <NavLinks href="/pages/forum" datatestid="Kritik & Saran">
               Kritik & Saran
             </NavLinks>
             {modalContent}
 
-            <NavLinks href="/pages/dok" datatestid="Dokumentasi" >
+            <NavLinks href="/pages/dok" datatestid="Dokumentasi">
               Dokumentasi
             </NavLinks>
 
@@ -237,7 +211,6 @@ function Navbar({ props }) {
       </nav>
     </>
   );
-  
 }
 
 export default Navbar;
