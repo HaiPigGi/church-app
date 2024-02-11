@@ -25,11 +25,6 @@ function Navbar({ props }) {
   //  status : "{'status : string'",
   //  error: "string"
   // }
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // Gunakan hook useModalContent
-  const { modalContent, clearState, setModalContent } = UseModalContent();
-
   useEffect(() => {
     if (isInView) {
       mainControl.start('visible');
