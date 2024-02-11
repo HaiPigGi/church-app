@@ -3,8 +3,7 @@ import AuthService from '@/app/api/Auth/route.jsx';
 
 const UserServices = () => {
   // get user data with jwtToken
-
-   async function get_userData(jwtToken) {
+  async function get_userData(jwtToken) {
     try {
       const csrf_token = await AuthService().CSRF_token();
       const res = await fetch(
@@ -22,6 +21,7 @@ const UserServices = () => {
       );
 
       const responseData = await res.json();
+      console.log(responseData);
       return responseData;
     } catch (e) {
       console.log('Error when getting userData : ', e.message);
@@ -29,7 +29,7 @@ const UserServices = () => {
   }
 
   return {
-    get_userData,
+    getUserData: get_userData,
   };
 };
 
