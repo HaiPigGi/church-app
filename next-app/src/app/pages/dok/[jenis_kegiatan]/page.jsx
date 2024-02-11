@@ -13,7 +13,6 @@ import { useRouter } from 'next/navigation';
 const Dokumentasi_kegiatan = ({ params }) => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [searchYear, setSearchYear] = useState('');
-  const [showContent, setShowContent] = useState(false);
   const [groupImage, setGroupImage] = useState([
     {
       jenis_kegiatan: '',
