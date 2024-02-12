@@ -21,6 +21,7 @@ const UserServices = () => {
       );
 
       const responseData = await res.json();
+      console.log(responseData);
       return responseData;
     } catch (e) {
       console.log('Error when getting userData : ', e.message);

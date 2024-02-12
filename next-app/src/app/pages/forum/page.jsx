@@ -1,87 +1,82 @@
-'use client'
+'use client';
 import MainLayout from '@/components/Layouts/MainLayout';
 import Footer from '@/components/Fragments/Footer';
 import Navbar from '@/components/Fragments/Navbar';
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { post_saran } from '@/app/api/User/saran/route';
-import Tanda from '@/app/api/User/route'
-
-
+import Tanda from '@/app/api/User/route';
 
 export default function saran() {
-const [formData,setfromData]= useState({
-  full_name: '',
-  email: '',
-  message: '',
-});
+  const [formData, setfromData] = useState({
+    full_name: '',
+    email: '',
+    message: '',
+  });
 
-
-const handleInput=(e)=>{
-const { name, value } = e.target;
+  const handleInput = (e) => {
+    const { name, value } = e.target;
     setfromData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
-const handleSubmit = (e) =>{
-  e.preventDefault();
-  simpanSaran(formData);
- 
-  setfromData({
-    full_name:'',
-    email:'',
-    message:''
-  })
-}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    simpanSaran(formData);
 
-async function simpanSaran(dataSaran) {
-  try {
-    console.log('Data saran yang akan disimpan:', dataSaran);
+    setfromData({
+      full_name: '',
+      email: '',
+      message: '',
+    });
+  };
 
-    const Data= dataSaran;
-    console.log("cek data simpanSaran : ",Data);
-    console.log("data full name : ",Data.full_name);
+  async function simpanSaran(dataSaran) {
+    try {
+      console.log('Data saran yang akan disimpan:', dataSaran);
 
-    const postData= new FormData();
-    postData.append('full_name',Data.full_name);
-    postData.append('email',Data.email);
-    postData.append('message',Data.message);
+      const Data = dataSaran;
+      console.log('cek data simpanSaran : ', Data);
+      console.log('data full name : ', Data.full_name);
 
-    // koneksi ke backend nya
-    const res = await post_saran(postData);
-    console.log('hasil datanya : ',res);
+      const postData = new FormData();
+      postData.append('full_name', Data.full_name);
+      postData.append('email', Data.email);
+      postData.append('message', Data.message);
 
-  } catch (error) {
-    console.error('Terjadi kesalahan saat menyimpan saran:', error);
-    // tambahkan logika penanganan kesalahan di sini, seperti menampilkan pesan kesalahan kepada pengguna
+      // koneksi ke backend nya
+      const res = await post_saran(postData);
+      console.log('hasil datanya : ', res);
+    } catch (error) {
+      console.error('Terjadi kesalahan saat menyimpan saran:', error);
+      // tambahkan logika penanganan kesalahan di sini, seperti menampilkan pesan kesalahan kepada pengguna
+    }
   }
-}
 
- // Fetch data saat komponen dimuat
- useEffect(() => {
-  async function fetchData() {
+  // Fetch data saat komponen dimuat
+  useEffect(() => {
+    async function fetchData() {
       try {
-          const response = await Tanda();
-          console.log('Response Data:', response);
-          // Tambahan logika jika diperlukan
-          if (res.status === 200) {
-            window.location.href = '/pages/forum';
-          } else {
-            window.location.href = '/pages/login';
-          }
+        const response = await Tanda();
+        console.log('Response Data:', response);
+        // Tambahan logika jika diperlukan
+        if (res.status === 200) {
+          window.location.href = '/pages/forum';
+        } else {
+          window.location.href = '/pages/login';
+        }
       } catch (error) {
-          console.error('Terjadi kesalahan saat memuat data:', error);
+        console.error('Terjadi kesalahan saat memuat data:', error);
       }
-  }
-  fetchData();
-}, []);
-
+    }
+    fetchData();
+  }, []);
 
   return (
-    <MainLayout >
+    <MainLayout>
       <a className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
-      <Navbar />
+        <Navbar />
       </a>
       <div className="max-w-screen-xl mx-auto px-5 mt-[-3rem] ">
         <div className="mt-28 text-center">
@@ -123,8 +118,11 @@ async function simpanSaran(dataSaran) {
                   d="M19 4H5a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-.41 2-5.88 5.88a1 1 0 0 1-1.42 0L5.41 6zM20 17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7.41l5.88 5.88a3 3 0 0 0 4.24 0L20 7.41z"
                 ></path>
               </svg>
-              <a href="#">email gereja</a>
+              <a href="mailto:parokistmarkusmelak@gmail.com">
+                parokistmarkusmelak@gmail.com
+              </a>
             </div>
+
             <div className="flex items-center mt-2 space-x-2 text-gray-600">
               <svg
                 viewBox="0 0 24 24"
@@ -140,7 +138,12 @@ async function simpanSaran(dataSaran) {
             </div>
           </div>
 
-          <form id="form" action="" onSubmit={handleSubmit} className="needs-validation">
+          <form
+            id="form"
+            action=""
+            onSubmit={handleSubmit}
+            className="needs-validation"
+          >
             <input type="hidden" name="access_key" />
             <input
               type="checkbox"
@@ -154,7 +157,7 @@ async function simpanSaran(dataSaran) {
                 type="text"
                 placeholder="Full Name"
                 required=""
-                name='full_name'
+                name="full_name"
                 value={formData.full_name}
                 onChange={handleInput}
                 className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100"
@@ -171,7 +174,7 @@ async function simpanSaran(dataSaran) {
               </label>
               <input
                 type="email"
-                name='email'
+                name="email"
                 value={formData.email}
                 onChange={handleInput}
                 placeholder="Email Address"

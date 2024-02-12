@@ -29,7 +29,7 @@ const InputOrganisasi = () => {
     'Misdinar',
     'Pastoran',
     'DPP',
-    'Panita Paskah',
+    'Panitia Paskah',
     'Panitia Natal',
   ];
 

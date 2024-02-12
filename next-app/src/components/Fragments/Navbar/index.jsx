@@ -68,22 +68,6 @@ function Navbar({ props }) {
     RenderBasedStatus();
   }, [status, RenderBasedStatus]);
 
-  useEffect(() => {
-    console.log('Status login berubah:', isLoggedIn);
-  }, [isLoggedIn]);
-
-  const showLoginModal = () => {
-    setModalContent('confirmation', {
-      actionAcc: () => {
-        history.push('/pages/login');
-        clearState();
-      },
-      actionDecline: () => {
-        clearState();
-      },
-    });
-  };
-
   return (
     <>
       {/* for PC*/}
