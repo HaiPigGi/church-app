@@ -137,7 +137,7 @@ const InputOrganisasi = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen overflow-hidden border-2">
+    <div className="w-full h-screen overflow-hidden">
       <div className="container mx-auto w-full mt-8 md:p-8 p-3 md:grid md:grid-cols-2 md:gap-x-3">
         {/* <h1 className="text-3xl font-semibold mb-4 sm:text-3xl">Input Organisasi</h1> */}
         <form className=" mr-8 grid grid-cols-1 w-full h-screen md:h-[77vh] bg-white shadow-lg rounded-md p-5 flex justify-center items-start">
