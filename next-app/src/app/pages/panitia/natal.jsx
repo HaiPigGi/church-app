@@ -3,11 +3,15 @@ import Footer from '@/components/Fragments/Footer';
 import Navbar from '@/components/Fragments/Navbar';
 import { useEffect, useState } from 'react';
 import { getAllDataPanitiaNatal } from '@/app/api/User/Panitia Natal/route';
+import Loading from '@/components/Fragments/Loading/loading';
+
 export default function natal() {
   const [NatalData, setNatalData] = useState([]);
+  const [loadingState, setLoadingState] = useState(false);
 
   const fetchData = async () => {
     try {
+      setLoadingState(true);
       let res = await getAllDataPanitiaNatal();
       res = await res.json();
       const responseJson = res.data;
@@ -17,8 +21,10 @@ export default function natal() {
         (item) => item.organitation_name === 'Panitia Natal',
       );
       setNatalData(filteredData);
+      setLoadingState(false);
     } catch (error) {
       console.log(error);
+      setLoadingState(true);
     }
   };
 
@@ -29,6 +35,7 @@ export default function natal() {
     <MainLayout>
       <section className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
         <Navbar />
+        {loadingState && <Loading />}
         <div className="relative items-center justify-center mb-[5rem] mt-[-3rem]">
           <section>
             <div className="flex flex-col items-center">
