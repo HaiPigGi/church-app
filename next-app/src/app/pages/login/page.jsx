@@ -10,6 +10,7 @@ import { getUserData, setSession } from '@/lib/features/session/sessionSlice';
 import { useAppDispatch } from '@/lib/hook';
 import LoadingBounce from '@/components/Fragments/Loading/LoadingBounce';
 import useModalContent from '@/lib/customHooks/useModalContent';
+import { isResponseError } from '../admin/posisi';
 
 export default function Login() {
   const [dataLogin, setDataLogin] = useState({
@@ -29,15 +30,6 @@ export default function Login() {
       ...prevData,
       [name]: value,
     }));
-  };
-
-  const isResponseError = (res) => {
-    if (res?.error) {
-      setErrorMessage(res.error);
-      setOpenModal(false);
-      return true;
-    }
-    return false;
   };
 
   const storeSessionData = (res) => {
@@ -69,7 +61,12 @@ export default function Login() {
     setModalContent('loading');
     setErrorMessage('');
     const res = await AuthService().Sign_in(dataLogin);
-    if (isResponseError(res, setModalContent, clearState)) return;
+    if (res.error) {
+      clearState();
+      setOpenModal(false);
+      setErrorMessage(res.error);
+      return;
+    }
     storeSessionData(res);
     showValidationModal(res);
     return;

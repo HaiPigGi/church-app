@@ -58,43 +58,7 @@ function BeritaSideBar() {
         >
           <i className="ri-close-line ri-xl"></i>
         </button>
-        <div className="relative h-56 overflow-y-auto">
-          <h1 className="text-xl font-bold sticky top-0 py-1 bg-white w-full z-0">
-            Pengumuman Mendatang
-          </h1>
-          <div className="py-2 border-b border-black hover:text-primary hover:border-primary">
-            {/* define routes with /pages/berita/[berita_id] */}
-            <Link className="text-pretty  text-sm " href="/pages/berita/1">
-              Pemberitahuan Penting: Seminar Keluarga Sejahtera Mendatang
-            </Link>
-          </div>
-          <div className="py-2 border-b border-black hover:text-primary hover:border-primary">
-            {/* define routes with /pages/berita/[berita_id] */}
-            <Link className="text-pretty  text-sm " href="/pages/berita/2">
-              Simak! Pengumuman Konser Natal Tahun Ini: 'Mengukir Kebahagiaan
-              Bersama
-            </Link>
-          </div>
-          <div className="py-2 border-b border-black hover:text-primary hover:border-primary">
-            {/* define routes with /pages/berita/[berita_id] */}
-            <Link className="text-pretty  text-sm " href="/pages/berita/3">
-              Panggilan: Gabunglah dalam Kegiatan Sosial Kemanusiaan Bulan Depan
-            </Link>
-          </div>
-          <div className="py-2 border-b border-black hover:text-primary hover:border-primary">
-            {/* define routes with /pages/berita/[berita_id] */}
-            <Link className="text-pretty  text-sm " href="/pages/berita/4">
-              Pemuda Aktif! Persiapan Retreat Rohani 'Menemukan Tujuan Hidup
-            </Link>
-          </div>
-          <div className="py-2 border-b border-black hover:text-primary hover:border-primary">
-            {/* define routes with /pages/berita/[berita_id] */}
-            <Link className="text-pretty  text-sm " href="/pages/berita/5">
-              Acara Minggu Ini: Kebaktian Khusus 'Membangun Kepribadian Kristen
-            </Link>
-          </div>
-        </div>
-        <div className="h-72 overflow-y-auto mt-5">
+        <div className="h-72 overflow-y-auto">
           <h1 className="text-xl font-bold sticky top-0 py-1 bg-white w-full  z-0">
             Berita lainnya
           </h1>

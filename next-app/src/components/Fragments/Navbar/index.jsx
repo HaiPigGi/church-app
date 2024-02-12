@@ -8,6 +8,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import 'remixicon/fonts/remixicon.css';
 import AuthService from '@/app/api/Auth/route';
 import { useAppSelector, useAppDispatch } from '@/lib/hook';
+import useModalContent from '@/lib/customHooks/useModalContent';
 
 function Navbar({ props }) {
   const ref = useRef(null);
@@ -26,7 +27,7 @@ function Navbar({ props }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Gunakan hook useModalContent
-  const { modalContent, clearState, setModalContent } = UseModalContent();
+  const { modalContent, clearState, setModalContent } = useModalContent();
 
   useEffect(() => {
     if (isInView) {

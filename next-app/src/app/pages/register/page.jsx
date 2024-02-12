@@ -7,6 +7,7 @@ import 'remixicon/fonts/remixicon.css';
 import AuthService from '@/app/api/Auth/route';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Fragments/Navbar';
+import useModalContent from '@/lib/customHooks/useModalContent';
 
 export default function Register() {
   const [dataRegis, setDataRegis] = useState({
@@ -17,7 +18,7 @@ export default function Register() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const [openModal, setOpenModal] = useState(false);
-  const [modalContent, setModalContent] = useState();
+  const { modalContent, setModalContent, clearState } = useModalContent();
   const router = useRouter();
 
   const handleChanges = (e) => {
@@ -50,16 +51,22 @@ export default function Register() {
 
     const res = await AuthService().Sign_up(dataRegis);
     if (res?.error) {
-      setErrorMessage(res.message);
+      console.log('executed');
+      setModalContent('validation', {
+        typeMessage: 'failed',
+        message: res.error.password,
+        action: () => {
+          setOpenModal(false);
+          clearState();
+        },
+      });
       return;
     }
-    setModalContent(
-      <Modal
-        type="success"
-        message="Pendaftaran berhasil"
-        action={handleModal}
-      />,
-    );
+    setModalContent('validation', {
+      typeMessage: 'success',
+      message: 'Pendaftaran berhasil',
+      action: handleModal,
+    });
   };
 
   return (
@@ -158,13 +165,7 @@ export default function Register() {
           </section>
         </div>
       </section>
-      {openModal ? (
-        <Modal action={handleModal} type="success">
-          {modalContent}
-        </Modal>
-      ) : (
-        ''
-      )}
+      {modalContent}
     </MainLayout>
   );
 }

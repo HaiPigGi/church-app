@@ -103,8 +103,11 @@ const Member = () => {
     let res = await getMembersData();
     // if error
     if (isResponseError(res)) return;
-    // if success
     res = await res.json();
+    if (res.error) {
+      typeModal(res.error, 'failed');
+    }
+    // if success
     setEmployeeList(res.data);
     getAllOrganitations();
     getAllPosition();
@@ -430,7 +433,7 @@ const Member = () => {
                     setModalContent(
                       <ModalKonfirmasi
                         actionAcc={handleCreate}
-                        actionDecline={setModalContent('')}
+                        actionDecline={() => setModalContent('')}
                       />,
                     )
                   }
@@ -785,7 +788,9 @@ const Member = () => {
           </div>
         </ReactModal>
       </div>
-      <div className="w-full h-screen overflow-hidden">{modalContent}</div>
+      {modalContent && (
+        <div className="w-full h-screen overflow-hidden">{modalContent}</div>
+      )}
     </>
   );
 };
