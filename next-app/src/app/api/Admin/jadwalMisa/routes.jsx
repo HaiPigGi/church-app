@@ -1,5 +1,6 @@
-const token = sessionStorage.getItem('jwtToken');
-
+function token() {
+  return sessionStorage.getItem('jwtToken');
+}
 export async function get_JadwalMisa() {
   try {
     const res = await fetch(

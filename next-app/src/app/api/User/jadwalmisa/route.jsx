@@ -7,6 +7,7 @@ export async function get_jadwal() {
       {
         method: 'GET',
         mode: 'cors',
+        credentials: 'include',
         headers: {
           'content-type': 'application/json',
         },
