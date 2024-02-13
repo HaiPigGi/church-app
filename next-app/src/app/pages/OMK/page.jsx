@@ -7,7 +7,7 @@ export default function Struktur() {
     <MainLayout>
         <section className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
       <Navbar/>
-        <div className="relative items-center justify-center mb-[5rem] mt-[-3rem]">
+        <div className="relative items-center justify-center mb-[5rem] mt-[-3rem] overflow-hidden">
           <section>
             <div className="flex flex-col items-center">
               <h2 className="text-black font-poppins  md:text-5xl md:font-bold leading-[112px] pt-20 min-[357px]:text-primary min-[357px]:text-xl min-[357px]:mt-10 min-[357px]:mb-5  max-[775px]:text-black md:text-black">Struktur Organisasi OMK</h2>
@@ -139,9 +139,123 @@ export default function Struktur() {
               </div>
 
               {/* card anggta */}
-              <div className="flex flex-col md:flex-row justify-center items-center relative mt-[4rem] mx-5">
+              <div className="flex flex-col md:flex-row justify-center items-center relative mt-[4rem] mx-5 overflow-x-scroll min-w-full">
                 {/* gambar 7 */}
-                <div className="relative left-2 mb-5 md:mr-10 md:mb-[-3rem] min-[375px]:mb-10 min-[375px]:mt-[-1.5rem] min-[375px]:left-0">
+                <div className="relative left-2 mb-5 md:mr-10 md:mb-[-3rem] min-[375px]:mb-10 min-[375px]:mt-[-1.5rem] min-[375px]:left-0 min-w-64">
+                  <img
+                    className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                    src="/img/unsplash_NDcN_8JiAqw.png"
+                    alt=""
+                  />
+                  <img
+                    className="object-cover absolute top-0 left-0 rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                    src="/img/Rectangle 20.png"
+                    alt=""
+                  />
+                  <div className="absolute top-[21rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                    <p className="text-white text-lg font-bold">Nama</p>
+                  </div>
+                  <div className="absolute top-[26rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                    <p className="text-primary text-lg font-bold">Anggota</p>
+                  </div>
+                </div>
+                {/* gambar 7 */}
+                <div className="relative left-2 mb-5 md:mr-10 md:mb-[-3rem] min-[375px]:mb-10 min-[375px]:mt-[-1.5rem] min-[375px]:left-0 min-w-64">
+                  <img
+                    className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                    src="/img/unsplash_NDcN_8JiAqw.png"
+                    alt=""
+                  />
+                  <img
+                    className="object-cover absolute top-0 left-0 rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                    src="/img/Rectangle 20.png"
+                    alt=""
+                  />
+                  <div className="absolute top-[21rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                    <p className="text-white text-lg font-bold">Nama</p>
+                  </div>
+                  <div className="absolute top-[26rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                    <p className="text-primary text-lg font-bold">Anggota</p>
+                  </div>
+                </div>
+                {/* gambar 7 */}
+                <div className="relative left-2 mb-5 md:mr-10 md:mb-[-3rem] min-[375px]:mb-10 min-[375px]:mt-[-1.5rem] min-[375px]:left-0 min-w-64">
+                  <img
+                    className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                    src="/img/unsplash_NDcN_8JiAqw.png"
+                    alt=""
+                  />
+                  <img
+                    className="object-cover absolute top-0 left-0 rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                    src="/img/Rectangle 20.png"
+                    alt=""
+                  />
+                  <div className="absolute top-[21rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                    <p className="text-white text-lg font-bold">Nama</p>
+                  </div>
+                  <div className="absolute top-[26rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                    <p className="text-primary text-lg font-bold">Anggota</p>
+                  </div>
+                </div>
+                {/* gambar 7 */}
+                <div className="relative left-2 mb-5 md:mr-10 md:mb-[-3rem] min-[375px]:mb-10 min-[375px]:mt-[-1.5rem] min-[375px]:left-0 min-w-64">
+                  <img
+                    className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                    src="/img/unsplash_NDcN_8JiAqw.png"
+                    alt=""
+                  />
+                  <img
+                    className="object-cover absolute top-0 left-0 rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                    src="/img/Rectangle 20.png"
+                    alt=""
+                  />
+                  <div className="absolute top-[21rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                    <p className="text-white text-lg font-bold">Nama</p>
+                  </div>
+                  <div className="absolute top-[26rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                    <p className="text-primary text-lg font-bold">Anggota</p>
+                  </div>
+                </div>
+                {/* gambar 7 */}
+                <div className="relative left-2 mb-5 md:mr-10 md:mb-[-3rem] min-[375px]:mb-10 min-[375px]:mt-[-1.5rem] min-[375px]:left-0 min-w-64">
+                  <img
+                    className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                    src="/img/unsplash_NDcN_8JiAqw.png"
+                    alt=""
+                  />
+                  <img
+                    className="object-cover absolute top-0 left-0 rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                    src="/img/Rectangle 20.png"
+                    alt=""
+                  />
+                  <div className="absolute top-[21rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                    <p className="text-white text-lg font-bold">Nama</p>
+                  </div>
+                  <div className="absolute top-[26rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                    <p className="text-primary text-lg font-bold">Anggota</p>
+                  </div>
+                </div>
+                {/* gambar 7 */}
+                <div className="relative left-2 mb-5 md:mr-10 md:mb-[-3rem] min-[375px]:mb-10 min-[375px]:mt-[-1.5rem] min-[375px]:left-0 min-w-64">
+                  <img
+                    className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                    src="/img/unsplash_NDcN_8JiAqw.png"
+                    alt=""
+                  />
+                  <img
+                    className="object-cover absolute top-0 left-0 rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                    src="/img/Rectangle 20.png"
+                    alt=""
+                  />
+                  <div className="absolute top-[21rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                    <p className="text-white text-lg font-bold">Nama</p>
+                  </div>
+                  <div className="absolute top-[26rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                    <p className="text-primary text-lg font-bold">Anggota</p>
+                  </div>
+                </div>
+                {/* gambar 7 */}
+                <div className="relative left-2 mb-5 md:mr-10 md:mb-[-3rem] min-[375px]:mb-10 min-[375px]:mt-[-1.5rem] min-[375px]:left-0 min-w-64">
                   <img
                     className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
                     src="/img/unsplash_NDcN_8JiAqw.png"
@@ -161,7 +275,7 @@ export default function Struktur() {
                 </div>
 
                 {/* gambar 8 */}
-                <div className="relative mb-5 md:mr-10 md:mb-0 min-[375px]:mb-10 min-[375px]:mt-[1.5rem]">
+                <div className="relative mb-5 md:mr-10 md:mb-0 min-[375px]:mb-10 min-[375px]:mt-[1.5rem] min-w-64">
                   <img
                     className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
                     src="/img/unsplash_NDcN_8JiAqw.png"
@@ -181,7 +295,7 @@ export default function Struktur() {
                 </div>
 
                 {/* gambar 9 */}
-                <div className="relative mb-5 md:mr-10 md:mb-0 min-[375px]:mb-10 min-[375px]:mt-[1.5rem]">
+                <div className="relative mb-5 md:mr-10 md:mb-0 min-[375px]:mb-10 min-[375px]:mt-[1.5rem] min-w-64">
                   <img
                     className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
                     src="/img/unsplash_NDcN_8JiAqw.png"
@@ -201,7 +315,7 @@ export default function Struktur() {
                 </div>
 
                 {/* gambar 10 */}
-                <div className="relative right-2  min-[375px]:mt-[1.5rem] min-[375px]:right-0">
+                <div className="relative right-2  min-[375px]:mt-[1.5rem] min-[375px]:right-0 ">
                   <img
                     className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
                     src="/img/unsplash_NDcN_8JiAqw.png"
