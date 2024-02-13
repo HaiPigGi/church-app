@@ -35,10 +35,10 @@ export default function Login() {
   const storeSessionData = (res) => {
     dispatch(
       setSession({
-        message: res.message,
+        message: res?.message,
         user: {
-          name: res.name,
-          status: res.status,
+          name: res?.name,
+          status: res?.status,
         },
         error: null,
       }),
@@ -49,11 +49,11 @@ export default function Login() {
     setOpenModal(true);
     setModalContent('validation', {
       action: () => {
-        handleModal(res.role);
+        handleModal(res?.role);
         setOpenModal(false);
       },
       typeMessage: 'success',
-      message: res.message,
+      message: res?.message,
     });
   };
 
