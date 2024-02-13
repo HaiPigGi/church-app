@@ -1,9 +1,15 @@
-import './cs.css'
-export default function dasbor(){
-    return(
-    <div className='m-0 p-0 w-[100%] h-[100vh]'>
+import './cs.css';
+export default function dasbor() {
+  return (
+    <div className="m-0 p-0 w-[100%] h-[100vh]">
       {/* <div className="absolute top-0 left-0 w-[100%] h-[100%] bg-black bg-opacity-40 "></div> */}
-      <video src="/img/jesus.mp4" autoPlay muted loop className='w-[100%] h-[100vh] object-cover'></video>
+      <video
+        src="/img/jesus.mp4"
+        autoPlay
+        muted
+        loop
+        className="w-[100%] h-[100vh] object-cover"
+      ></video>
       <div className="items-center justify-center  absolute w-[100%] h-[100%] top-0 flex flex-col ">
         <div className="text-center text-white">
           <h1 className=" font-bold mb-4 space-x-5 text-center text-4xl min-[360px]:max-[765px]:text-xl">
@@ -25,5 +31,5 @@ export default function dasbor(){
         </div>
       </div>
     </div>
-    )
+  );
 }

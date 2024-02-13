@@ -8,8 +8,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import 'remixicon/fonts/remixicon.css';
 import AuthService from '@/app/api/Auth/route';
 import { useAppSelector, useAppDispatch } from '@/lib/hook';
-import UseModalContent from '@/lib/customHooks/useModalContent';
-
+import useModalContent from '@/lib/customHooks/useModalContent';
 
 function Navbar({ props }) {
   const ref = useRef(null);
@@ -25,6 +24,11 @@ function Navbar({ props }) {
   //  status : "{'status : string'",
   //  error: "string"
   // }
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Gunakan hook useModalContent
+  const { modalContent, clearState, setModalContent } = useModalContent();
+
   useEffect(() => {
     if (isInView) {
       mainControl.start('visible');
@@ -63,7 +67,6 @@ function Navbar({ props }) {
   useEffect(() => {
     RenderBasedStatus();
   }, [status, RenderBasedStatus]);
-
 
   return (
     <>

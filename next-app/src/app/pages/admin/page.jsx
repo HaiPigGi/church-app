@@ -94,8 +94,6 @@ function Admin() {
     setActiveMenu(title);
   };
 
-
-
   const renderContent = () => {
     switch (activeMenu) {
       case 'Dasbor':
@@ -128,9 +126,9 @@ function Admin() {
   };
 
   return (
-    <div className="flex relative h-screen w-screen ">
+    <div className="flex relative h-auto w-screen ">
       <ScrollArea
-        className={` ${open ? 'w-72' : 'w-20'} p-3 pt-5 h-[40rem] duration-300 bg-secondary fixed left-0 `}
+        className={` ${open ? 'w-72' : 'w-20'} p-3 h-full duration-300 bg-secondary fixed left-0`}
       >
         <FaAnglesLeft
           className={` absolute cursor-pointer -right-3 top-9 w-7 border-2 border-black rounded-full ${!open && 'rotate-180'}`}
@@ -155,7 +153,6 @@ function Admin() {
               key={index}
               className={`text-white text-sm flex items-center gab-x-4 cursor-pointer p-2 hover:bg-orange-300 rounded-md 
                     ${menu.gap ? 'mt-6' : 'mt-1'} 
-                    ${index === 0 && 'bg-orange-300'}
                     ${menu.title === activeMenu && 'bg-orange-300'}`}
               onClick={menu.onClick}
             >
@@ -175,7 +172,7 @@ function Admin() {
         </ul>
       </ScrollArea>
 
-      <div className="flex-1">{renderContent()}</div>
+      <div className="flex items-center w-full h-screen">{renderContent()}</div>
     </div>
   );
 }
