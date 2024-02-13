@@ -29,7 +29,7 @@ const hidden = () => {
   }, []);
 
   return (
-    <div className='flex items-center justify-center mt-52 '>
+    <div className="flex items-center justify-center w-full h-full">
       <div className="mb-4 min-[360px]:max-[765px]:items-center">
         <button
           onClick={() => triggredToggle(0)} // Tampilan A
@@ -52,7 +52,7 @@ const hidden = () => {
         >
           Toggle Paskah
         </button>
-        <p className='ml-2 '>Status: {getStatusText(showViewA)}</p>
+        <p className="ml-2 ">Status: {getStatusText(showViewA)}</p>
       </div>
     </div>
   );

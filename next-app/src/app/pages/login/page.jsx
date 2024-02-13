@@ -61,7 +61,7 @@ export default function Login() {
     setModalContent('loading');
     setErrorMessage('');
     const res = await AuthService().Sign_in(dataLogin);
-    if (res.error) {
+    if (res?.error) {
       clearState();
       setOpenModal(false);
       setErrorMessage(res.error);
