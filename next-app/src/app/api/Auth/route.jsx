@@ -17,7 +17,6 @@ const AuthService = () => {
         `${process.env.NEXT_PUBLIC_API_DOMAIN}/sanctum/csrf-cookie`,
         {
           method: 'GET',
-          mode: 'no-cors',
           credentials: 'include',
         },
       );
