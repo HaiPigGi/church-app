@@ -1,5 +1,5 @@
-'use client'
-import { useState,useEffect,Suspense } from 'react';
+'use client';
+import { useState, useEffect, Suspense } from 'react';
 import { post_jenisMisa } from '@/app/api/Admin/jenismisa/routes';
 import { get_jenisMisa } from '@/app/api/Admin/jenismisa/routes';
 import { delete_jenismisa } from '@/app/api/Admin/jenismisa/routes';
@@ -81,8 +81,8 @@ export default function Jenismisa() {
   }
 
   return (
-    <div>
-      <div className="container mx-auto mt-8 p-8 sm:p-8">
+    <div className="w-full h-full">
+      <div className="container mx-auto mt-8 p-8 sm:p-8 ">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-semibold mb-4 text-center min-[360px]:max-[765px]:ml-[-3rem]">
             Input Jenis Misa
@@ -90,15 +90,13 @@ export default function Jenismisa() {
           <form onSubmit={handleSubmit} className="flex space-x-2 mb-4">
             <input
               type="text"
-              name='jenis'
+              name="jenis"
               placeholder="Posisi"
               className="p-2 border border-gray-300 rounded-md flex-1 min-[360px]:max-[765px]:w-[4rem]"
               value={posisi.jenis}
               onChange={handleCreate}
             />
-            <button
-              className="bg-green-500 text-white px-4 py-2 rounded-md"
-            >
+            <button className="bg-green-500 text-white px-4 py-2 rounded-md">
               Create
             </button>
           </form>
@@ -261,5 +259,3 @@ export default function Jenismisa() {
     </div>
   );
 }
-
-

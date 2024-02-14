@@ -17,7 +17,7 @@ export default function jadwal() {
 
   useEffect(() => {
     async function fetchJenisMisa() {
-      const worshipTypes = await get_jenisMisa(); 
+      const worshipTypes = await get_jenisMisa();
       setJenisMisaOptions(worshipTypes.data);
     }
 
@@ -33,24 +33,23 @@ export default function jadwal() {
     });
   };
 
-  const [isAlertOpen, setIsAlertOpen] = useState(false); 
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await simpanJadwal(Jadwa); 
-      setIsAlertOpen(true); 
+      await simpanJadwal(Jadwa);
+      setIsAlertOpen(true);
       setJadwal({
-        hari:'',
-        waktu_mulai:'',
-        waktu_selesai:'',
-        jenis_misa_id:''
+        hari: '',
+        waktu_mulai: '',
+        waktu_selesai: '',
+        jenis_misa_id: '',
       });
     } catch (error) {
       console.log('Error:', error);
     }
   };
-  
 
   async function simpanJadwal(datanya) {
     try {
@@ -73,13 +72,13 @@ export default function jadwal() {
   };
 
   return (
-    <div className="pt-10 flex flex-col items-center justify-center h-auto w-auto ">
+    <div className="pt-10 flex flex-col items-center justify-center w-full h-full px-5">
       <h1 className="font-bold text-3xl mb-2 min-[360px]:max-[765px]:text-xl">
         Tambah Jadwal Misa
       </h1>
       <form
         onSubmit={handleSubmit}
-        className="shadow-2xl opacity-50 h-[82vh] w-[100vh] p-5 min-[360px]:max-[765px]:w-[40vh] min-[360px]:max-[765px]:h-[88vh]  "
+        className="shadow-2xl h-[82vh] w-[100vh] p-5 min-[360px]:max-[765px]:w-[40vh] min-[360px]:max-[765px]:h-[88vh]  "
       >
         <div className="flex flex-col mb-3">
           <label className="text-red-700 font-mono mb-2 ">Jenis Misa</label>
@@ -153,69 +152,68 @@ export default function jadwal() {
         </div>
       </form>
 
-<Transition appear show={isAlertOpen} as={Fragment}>
-  <Dialog
-    as="div"
-    className="fixed inset-0 z-10 overflow-y-auto"
-    onClose={() => setIsAlertOpen(false)}
-  >
-    <div className="min-h-screen px-4 text-center">
-      <Transition.Child
-        as={Fragment}
-        enter="ease-out duration-300"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="ease-in duration-200"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
-        <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-      </Transition.Child>
-
-      <span
-        className="inline-block h-screen align-middle"
-        aria-hidden="true"
-      >
-        &#8203;
-      </span>
-
-      <Transition.Child
-        as={Fragment}
-        enter="ease-out duration-300"
-        enterFrom="opacity-0 scale-95"
-        enterTo="opacity-100 scale-100"
-        leave="ease-in duration-200"
-        leaveFrom="opacity-100 scale-100"
-        leaveTo="opacity-0 scale-95"
-      >
-        <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-          <Dialog.Title
-            as="h3"
-            className="text-lg font-medium leading-6 text-gray-900"
-          >
-            Berhasil menambahkan jadwal misa
-          </Dialog.Title>
-          <div className="mt-2">
-            <p className="text-sm text-gray-500">
-              Jadwal misa telah berhasil ditambahkan.
-            </p>
-          </div>
-
-          <div className="mt-4 flex">
-            <button
-              type="button"
-              className="inline-flex justify-center  px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
-              onClick={() => setIsAlertOpen(false)}
+      <Transition appear show={isAlertOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={() => setIsAlertOpen(false)}
+        >
+          <div className="min-h-screen px-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
             >
-              Tutup
-            </button>
-          </div>
-        </div>
-      </Transition.Child>
-    </div>
-  </Dialog>
-</Transition>
+              <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+            </Transition.Child>
 
+            <span
+              className="inline-block h-screen align-middle"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
+
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <Dialog.Title
+                  as="h3"
+                  className="text-lg font-medium leading-6 text-gray-900"
+                >
+                  Berhasil menambahkan jadwal misa
+                </Dialog.Title>
+                <div className="mt-2">
+                  <p className="text-sm text-gray-500">
+                    Jadwal misa telah berhasil ditambahkan.
+                  </p>
+                </div>
+
+                <div className="mt-4 flex">
+                  <button
+                    type="button"
+                    className="inline-flex justify-center  px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                    onClick={() => setIsAlertOpen(false)}
+                  >
+                    Tutup
+                  </button>
+                </div>
+              </div>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
     </div>
   );
 }
