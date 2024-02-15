@@ -35,7 +35,7 @@ export default function AllDokumentasi() {
         });
         return;
       }
-      
+
       // Menambahkan gambar-gambar baru ke array Images
       setImage([...Image, ...Array.from(files)]);
     } else {
@@ -107,14 +107,14 @@ export default function AllDokumentasi() {
   };
 
   return (
-    <div className="pt-20 flex flex-col items-center justify-center h-[60%] w-auto ">
+    <div className=" flex flex-col items-center justify-center w-full h-full">
       <label className="font-bold text-3xl mb-2 mt-10 min-[360px]:max-[765px]:text-xl">
         Tambahkan Dokumentasi
       </label>
       <form
         onSubmit={handleSubmit}
         className=" shadow-2xl h-[82vh] w-[100vh] p-5 "
-        encType="multipart/form-data" 
+        encType="multipart/form-data"
       >
         {/* gambar */}
         <div className="flex flex-col mb-3">
@@ -237,4 +237,3 @@ const Alert = ({ isOpen, title, message, onClose }) => {
     </Transition>
   );
 };
-

@@ -48,20 +48,23 @@ export default function Pastor() {
 
   const PersonalData = ({ data }) => {
     return (
-      <div className="grid md:grid-cols-2 grid-cols-1 w-[250px] h-[250px] md:w-[500px] md:h-[250px] gap-2 ">
-        <div className="relative col-span-1 w-full min-h-[125px]">
+      <div className="relative grid md:grid-rows-4 grid-cols-1 w-full h-full gap-2 ">
+        <div className="absolute -right-6 -top-5">
+          <i class="ri-close-circle-fill ri-xl"></i>
+        </div>
+        <div className="relative row-span-3 w-full min-h-[125px] h-full">
           <Image
             src={data.image.url}
             fill={true}
             className="object-contain rounded-xl object-center"
           />
         </div>
-        <div className="col-span-1">
-          <h1 className="font-bold text-2xl line-clamp-2">
+        <div className="relative row-span-1 w-full h-full">
+          <h1 className="font-bold text-2xl line-clamp-2 capitalize">
             {data.members_name}
           </h1>
-          <h1>{data.born_date}</h1>
-          <h1>{data.position_name}</h1>
+          <h1 className="text-lg font-semibold">{data.position_name}</h1>
+          <h1 className="text-md">{data.born_date}</h1>
         </div>
       </div>
     );

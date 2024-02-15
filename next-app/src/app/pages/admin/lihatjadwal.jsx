@@ -1,65 +1,61 @@
-import { useState,useEffect } from "react"
-import { delete_JadwalMisa } from "@/app/api/Admin/jadwalMisa/routes"
-import { get_JadwalMisa } from "@/app/api/Admin/jadwalMisa/routes";
+import { useState, useEffect } from 'react';
+import { delete_JadwalMisa } from '@/app/api/Admin/jadwalMisa/routes';
+import { get_JadwalMisa } from '@/app/api/Admin/jadwalMisa/routes';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
+export default function lihatjadwal() {
+  const [Jadwal, setJadwal] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
+  const handleDelete = async (id) => {
+    try {
+      const res = await delete_JadwalMisa(id);
+      if (res.status === 200 || res.ok === true) {
+        // Memastikan respons tidak bernilai null atau undefined
+        setIsOpen(true);
+        getAlljadwalmisa();
+      } else {
+        alert('Gagal menghapus jenis misa');
+        console.log(res.status);
+        console.log('hasilnya : ', res);
+        console.log('id : ', Jadwal.jadwal_misa_id);
+      }
+    } catch (error) {
+      console.log('Error:', error.message);
+      alert('Terjadi kesalahan saat menghapus jenis misa'); // Memberikan pesan kesalahan kepada pengguna
+    }
+  };
 
-export default function lihatjadwal(){
+  useEffect(() => {
+    async function fetchJenisMisa() {
+      const res = await get_JadwalMisa();
+      setJadwal(res.data);
+    }
 
-    const [Jadwal, setJadwal]= useState([]);
-    const [isOpen, setIsOpen] = useState(false);
+    fetchJenisMisa();
+  }, []);
 
-
-    const handleDelete = async (id) => {
-        try {
-            const res = await delete_JadwalMisa(id);
-            if (res.status === 200 || res.ok === true) { // Memastikan respons tidak bernilai null atau undefined
-                setIsOpen(true);
-                getAlljadwalmisa();
-              } else {
-                alert('Gagal menghapus jenis misa');
-                console.log(res.status)
-                console.log("hasilnya : ",res)
-                console.log('id : ',Jadwal.jadwal_misa_id)
-            }
-        } catch (error) {
-            console.log('Error:', error.message);
-            alert('Terjadi kesalahan saat menghapus jenis misa'); // Memberikan pesan kesalahan kepada pengguna
-        }
-    };
-    
-
-      useEffect(() => {
-        async function fetchJenisMisa() {
-          const res = await get_JadwalMisa();
-          setJadwal(res.data);
-        }
-    
-        fetchJenisMisa();
-      }, []);
-
-      const getAlljadwalmisa = async () => {
-        let res = await get_JadwalMisa();
-        setJadwal(res.data);
-        return;
-      };
-    return(
-        <div className="max-w-3xl mx-auto mt-8">
-          <h1 className="text-3xl font-semibold mb-4 text-center">
-            Dafftar Jadwal Misa
-          </h1>
+  const getAlljadwalmisa = async () => {
+    let res = await get_JadwalMisa();
+    setJadwal(res.data);
+    return;
+  };
+  return (
+    <div className="max-w-3xl mx-auto mt-8 h-full w-full">
+      <h1 className="text-3xl font-semibold mb-4 text-center">
+        Daftar Jadwal Misa
+      </h1>
       <table className="min-w-full bg-white border border-gray-300 rounded-md">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 border-b">Hari</th>
-                <th className="py-2 px-4 border-b">Waktu Mulai</th>
-                <th className="py-2 px-4 border-b">Waktu selesai</th>
-                <th className="py-2 px-4 border-b">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="text-center">
+        <thead>
+          <tr>
+            <th className="py-2 px-4 border-b">Hari</th>
+            <th className="py-2 px-4 border-b">Waktu Mulai</th>
+            <th className="py-2 px-4 border-b">Waktu selesai</th>
+            <th className="py-2 px-4 border-b">Actions</th>
+          </tr>
+        </thead>
+        <tbody className="text-center">
           {Jadwal?.map((item) => (
             <tr key={item.jenis_misa_id} className="border-t mx-auto">
               <td className="py-2 px-4">{item.hari}</td>
@@ -77,7 +73,7 @@ export default function lihatjadwal(){
           ))}
         </tbody>
       </table>
-          <Transition appear show={isOpen} as={Fragment}>
+      <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
@@ -139,6 +135,6 @@ export default function lihatjadwal(){
           </div>
         </Dialog>
       </Transition>
-        </div>
-    )
+    </div>
+  );
 }

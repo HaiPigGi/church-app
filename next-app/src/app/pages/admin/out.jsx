@@ -25,7 +25,7 @@ const Logout = () => {
   };
 
   return (
-    <div className="text-center mt-[16.5rem]">
+    <div className="text-center w-full h-full flex items-center justify-center">
       <button
         onClick={handleShowModal}
         className="bg-secondary border-4 border-secondary rounded-md py-2 px-4 text-white hover:bg-red-500"

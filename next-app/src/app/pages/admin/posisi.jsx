@@ -136,7 +136,7 @@ const Position = () => {
 
   return (
     <div
-      className="container mx-auto mt-8 p-8 sm:p-8"
+      className="container mx-auto mt-8 p-8 sm:p-8 w-full h-full"
       // onClick={() => clearPosition()}
     >
       <div className="max-w-3xl mx-auto">
