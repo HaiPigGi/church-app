@@ -5,6 +5,9 @@ import Navbar from '@/components/Fragments/Navbar';
 import React, { useState, useEffect } from 'react';
 import { post_saran } from '@/app/api/User/saran/route';
 import Tanda from '@/app/api/User/route';
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import { isResponseError } from '../admin/posisi';
 
 export default function saran() {
   const [formData, setfromData] = useState({
@@ -12,6 +15,8 @@ export default function saran() {
     email: '',
     message: '',
   });
+  const [isOpen, setIsOpen] = useState(false);
+  const [alert, setAlert] = useState(false);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -24,7 +29,6 @@ export default function saran() {
   const handleSubmit = (e) => {
     e.preventDefault();
     simpanSaran(formData);
-
     setfromData({
       full_name: '',
       email: '',
@@ -32,30 +36,52 @@ export default function saran() {
     });
   };
 
+
+
   async function simpanSaran(dataSaran) {
     try {
-      console.log('Data saran yang akan disimpan:', dataSaran);
+        console.log('Data saran yang akan disimpan:', dataSaran);
+        const Data = dataSaran;
+        console.log('cek data simpanSaran : ', Data);
+        console.log('data full name : ', Data.full_name);
 
-      const Data = dataSaran;
-      console.log('cek data simpanSaran : ', Data);
-      console.log('data full name : ', Data.full_name);
+        const postData = new FormData();
+        postData.append('full_name', Data.full_name);
+        postData.append('email', Data.email);
+        postData.append('message', Data.message);
 
-      const postData = new FormData();
-      postData.append('full_name', Data.full_name);
-      postData.append('email', Data.email);
-      postData.append('message', Data.message);
+        // koneksi ke backend nya
+        const res = await post_saran(postData);
+        console.log('hasil datanya : ', res);
 
-      // koneksi ke backend nya
-      const res = await post_saran(postData);
-      console.log('hasil datanya : ', res);
+        switch(res?.status){
+            case 200:
+                setIsOpen(true);
+                return true;
+            case 201:
+                return false;
+            case 401:
+                setAlert(true);
+                return true;
+            default:
+                console.log('Status respons tidak dikenali:', res?.status);
+                return false;
+        }
     } catch (error) {
-      console.error('Terjadi kesalahan saat menyimpan saran:', error);
-      // tambahkan logika penanganan kesalahan di sini, seperti menampilkan pesan kesalahan kepada pengguna
+        console.error('Terjadi kesalahan saat menyimpan saran:', error);
+        // tambahkan logika penanganan kesalahan di sini, seperti menampilkan pesan kesalahan kepada pengguna
+        return false;
     }
-  }
+}
+
 
   // Fetch data saat komponen dimuat
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsOpen(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+
     async function fetchData() {
       try {
         const response = await Tanda();
@@ -212,6 +238,116 @@ export default function saran() {
             </div>
           </form>
         </div>
+
+        {/* berhasil kirim data */}
+        <Transition appear show={isOpen} as={Fragment}>
+          <Dialog
+            as="div"
+            className="fixed inset-0 overflow-y-auto z-50"
+            onClose={() => setIsOpen(false)}
+          >
+            <div className="min-h-screen px-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
+
+              <span className="inline-block h-screen align-middle" aria-hidden="true">
+                &#8203;
+              </span>
+
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <div className="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-top w-full max-w-sm">
+                  <div className="bg-green-500 p-6">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-bold text-center font-medium leading-6 text-white"
+                    >
+                      Berhasil
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      <p className="text-sm text-white">Pesan berhasil dikirim.</p>
+                    </div>
+                  </div>
+                </div>
+              </Transition.Child>
+            </div>
+          </Dialog>
+        </Transition>
+
+        {/* allert not login */}
+        <Transition appear show={alert} as={Fragment}>
+          <Dialog
+            as="div"
+            className="fixed inset-0 overflow-y-auto z-50"
+            onClose={() => setAlert(false)}
+          >
+            <div className="min-h-screen px-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
+
+              <span className="inline-block h-screen align-middle" aria-hidden="true">
+                &#8203;
+              </span>
+
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <div className="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-top w-full max-w-sm">
+                  <div className="bg-red-500 p-6">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-center font-bold text-xl leading-6 text-white"
+                    >
+                      Perhatian!
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      <p className="text-sm text-white">Anda harus login terlebih dahulu.</p>
+                    </div>
+                    <div className="mt-4">
+                      <button
+                        onClick={() => setAlert(false)}
+                        className="px-4 py-2 bg-white text-red-500 rounded-lg hover:bg-red-100 focus:outline-none focus:ring focus:ring-red-200"
+                      >
+                        Tutup
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Transition.Child>
+            </div>
+          </Dialog>
+        </Transition>
       </div>
       <Footer />
     </MainLayout>
