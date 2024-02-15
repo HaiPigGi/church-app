@@ -138,7 +138,6 @@ export default function Struktur() {
                 </div>
               </div>
 
-              {/* card anggta */}
               <div className="flex flex-col md:flex-row justify-center items-center relative mt-[4rem] mx-5">
                 {/* gambar 7 */}
                 <div className="relative left-2 mb-5 md:mr-10 md:mb-[-3rem] min-[375px]:mb-10 min-[375px]:mt-[-1.5rem] min-[375px]:left-0">
