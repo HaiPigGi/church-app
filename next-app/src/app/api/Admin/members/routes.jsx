@@ -3,7 +3,7 @@ import AuthService from '../../Auth/route';
 export async function getMembersData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/members/`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/members`,
       {
         method: 'GET',
         mode: 'cors',
@@ -22,7 +22,7 @@ export async function getMembersData() {
 export async function postMembersData(data) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/members/`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/members`,
       {
         method: 'POST',
         mode: 'cors',

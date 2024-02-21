@@ -3,14 +3,15 @@ function token() {
 }
 export async function get_JadwalMisa() {
   try {
+    console.log("token : ",token)
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jadwal-misa/`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jadwal-misa`,
       {
         method: 'GET',
         mode: 'cors',
         headers: {
           'content-type': 'application/json',
-          Authorization: `bearer ${token}`,
+          Authorization: `bearer ${token()}`,
         },
       },
     );
@@ -31,7 +32,7 @@ export async function get_JadwalMisaid(jadwalID) {
         mode: 'cors',
         headers: {
           'content-type': 'application/json',
-          Authorization: `bearer ${token}`,
+          Authorization: `bearer ${token()}`,
         },
       },
     );
@@ -49,24 +50,19 @@ export async function get_JadwalMisaid(jadwalID) {
 }
 
 export async function post_JadwalMisa(dataJadwal) {
-  console.log('isinya : ', dataJadwal);
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jadwal-misa/`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jadwal-misa`,
       {
         method: 'POST',
         mode: 'cors',
         headers: {
-          Authorization: `bearer ${token}`,
+          Authorization: `bearer ${token()}`,
         },
         body: dataJadwal,
       },
     );
-    const responseData = await res.json();
-    if (res.ok) {
-      return responseData.message;
-    }
-    return responseData.error;
+    return res;
   } catch (e) {
     console.log('Error at post_JadwalMisa with message : ', e.message);
   }
@@ -80,7 +76,7 @@ export async function put_JadwalMisa(jadwalID, dataJadwal) {
         method: 'PUT',
         mode: 'cors',
         headers: {
-          Authorization: `bearer ${token}`,
+          Authorization: `bearer ${token()}`,
         },
         body: JSON.stringify(dataJadwal),
       },
@@ -103,7 +99,7 @@ export async function delete_JadwalMisa(id){
         method: 'DELETE',
         mode: 'cors',
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token()}`
         },
       },
     );
@@ -116,13 +112,13 @@ export async function delete_JadwalMisa(id){
 export async function get_jenisMisa() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jenis-misa/`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jenis-misa`,
       {
         method: 'GET',
         mode: 'cors',
         headers: {
           'content-type': 'application/json',
-          Authorization: `bearer ${token}`,
+          Authorization: `bearer ${token()}`,
         },
       },
     );

@@ -4,6 +4,8 @@ import { post_JadwalMisa } from '@/app/api/Admin/jadwalMisa/routes';
 import { get_jenisMisa } from '@/app/api/Admin/jenismisa/routes';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import useModalContent from '@/lib/customHooks/useModalContent';
+import { isResponseError } from './posisi';
 
 export default function jadwal() {
   const [Jadwa, setJadwal] = useState({
@@ -14,31 +16,43 @@ export default function jadwal() {
   });
 
   const [jenisMisaOptions, setJenisMisaOptions] = useState([]);
-
+  const {clearState,modalContent,setModalContent} = useModalContent();
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  
+  async function fetchJenisMisa() {
+    const worshipTypes = await get_jenisMisa();
+    setJenisMisaOptions(worshipTypes.data);
+  }
   useEffect(() => {
-    async function fetchJenisMisa() {
-      const worshipTypes = await get_jenisMisa();
-      setJenisMisaOptions(worshipTypes.data);
-    }
-
     fetchJenisMisa();
   }, []);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
-    // console.log("Name:", name, "Value:", value); // Tambahkan ini untuk debugging
-    setJadwal({
-      ...Jadwa,
-      [name]: value,
-    });
+      setJadwal({
+        ...Jadwa,
+        [name]: value,
+      });
   };
 
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await simpanJadwal(Jadwa);
+      const data = convertToFormData(Jadwa)
+      console.log(Jadwa);
+      let res = await post_JadwalMisa(data);
+      if(isResponseError(res,setModalContent,clearState)){
+        res = await res.json();
+        
+        setErrorMessage((res.error?.waktu_selesai||res.error?.waktu_mulai) ? 
+          "Waktu selesai lebih kecil dari waktu mulai, harap ganti!!!"
+          :
+          ""
+          );
+        return
+      };
       setIsAlertOpen(true);
       setJadwal({
         hari: '',
@@ -51,15 +65,7 @@ export default function jadwal() {
     }
   };
 
-  async function simpanJadwal(datanya) {
-    try {
-      datanya = convertToFormData();
-      const res = await post_JadwalMisa(datanya);
-      console.log('hasilnya syng : ', res);
-    } catch (error) {
-      console.error('biasalah ada error dikit', error);
-    }
-  }
+  
 
   const convertToFormData = () => {
     const { hari, jenis_misa_id, waktu_mulai, waktu_selesai } = Jadwa;
@@ -86,7 +92,6 @@ export default function jadwal() {
             name="jenis_misa_id"
             className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 min-[360px]:max-[765px]:w-[33vh]"
             required
-            value={Jadwa.jenis_misa_id}
             onChange={handleInput}
           >
             <option disable>select</option>
@@ -126,7 +131,6 @@ export default function jadwal() {
             className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100
                     min-[360px]:max-[765px]:w-[33vh]"
             required
-            value={Jadwa.waktu_mulai}
             onChange={handleInput}
           />
         </div>
@@ -138,10 +142,10 @@ export default function jadwal() {
             className="w-full px-4 py-3 border-2 placeholder:text-gray-800 rounded-md outline-none focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100
                     min-[360px]:max-[765px]:w-[33vh]"
             required
-            value={Jadwa.waktu_selesai}
             onChange={handleInput}
           />
         </div>
+        <h1 className='text-red-500 font-bold text-md'>{errorMessage}</h1>
         <div className="flex justify-center mb-3 min-[360px]:max-[765px]:justify-start min-[360px]:max-[765px]:ml-16">
           <button
             type="submit"
@@ -214,6 +218,7 @@ export default function jadwal() {
           </div>
         </Dialog>
       </Transition>
+      {modalContent}
     </div>
   );
 }

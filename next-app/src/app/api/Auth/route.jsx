@@ -109,6 +109,7 @@ const AuthService = () => {
     Sign_up: post_Register,
     CSRF_token: get_CSRF,
     getSession: get_Session,
+    csrfToken : csrf_token
   };
 };
 

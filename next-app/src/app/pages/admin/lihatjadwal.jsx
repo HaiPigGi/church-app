@@ -3,24 +3,27 @@ import { delete_JadwalMisa } from '@/app/api/Admin/jadwalMisa/routes';
 import { get_JadwalMisa } from '@/app/api/Admin/jadwalMisa/routes';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import { isResponseError } from './posisi';
+import useModalContent from '@/lib/customHooks/useModalContent';
 
 export default function lihatjadwal() {
   const [Jadwal, setJadwal] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const {clearState,modalContent,setModalContent} = useModalContent();
 
   const handleDelete = async (id) => {
     try {
       const res = await delete_JadwalMisa(id);
-      if (res.status === 200 || res.ok === true) {
-        // Memastikan respons tidak bernilai null atau undefined
-        setIsOpen(true);
-        getAlljadwalmisa();
-      } else {
-        alert('Gagal menghapus jenis misa');
-        console.log(res.status);
-        console.log('hasilnya : ', res);
-        console.log('id : ', Jadwal.jadwal_misa_id);
-      }
+      if(isResponseError(res,setModalContent,clearState))return;
+      setModalContent("validation", {
+        message:"Data Berhasil Dihapus",
+        typeMessage:"success",
+        action:() => {
+          clearState();
+          getAlljadwalmisa();
+        },
+      })
+      
     } catch (error) {
       console.log('Error:', error.message);
       alert('Terjadi kesalahan saat menghapus jenis misa'); // Memberikan pesan kesalahan kepada pengguna
@@ -28,17 +31,13 @@ export default function lihatjadwal() {
   };
 
   useEffect(() => {
-    async function fetchJenisMisa() {
-      const res = await get_JadwalMisa();
-      setJadwal(res.data);
-    }
 
-    fetchJenisMisa();
+    getAlljadwalmisa();
   }, []);
 
   const getAlljadwalmisa = async () => {
     let res = await get_JadwalMisa();
-    setJadwal(res.data);
+    setJadwal(res?.data);
     return;
   };
   return (
@@ -52,6 +51,7 @@ export default function lihatjadwal() {
             <th className="py-2 px-4 border-b">Hari</th>
             <th className="py-2 px-4 border-b">Waktu Mulai</th>
             <th className="py-2 px-4 border-b">Waktu selesai</th>
+            <th className="py-2 px-4 border-b">Jenis Misa</th>
             <th className="py-2 px-4 border-b">Actions</th>
           </tr>
         </thead>
@@ -61,6 +61,7 @@ export default function lihatjadwal() {
               <td className="py-2 px-4">{item.hari}</td>
               <td className="py-2 px-4">{item.waktu_mulai}</td>
               <td className="py-2 px-4">{item.waktu_selesai}</td>
+              <td className="py-2 px-4">{item.jenis_misa.jenis}</td>
               <td className="py-2 px-4 flex justify-center space-x-5">
                 <button
                   onClick={() => handleDelete(item.jadwal_misa_id)}
@@ -135,6 +136,7 @@ export default function lihatjadwal() {
           </div>
         </Dialog>
       </Transition>
+      {modalContent}
     </div>
   );
 }

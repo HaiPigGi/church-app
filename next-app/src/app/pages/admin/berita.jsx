@@ -6,7 +6,6 @@ import {
   get_AllBerita,
   post_berita,
 } from '@/app/api/Admin/berita/routes';
-import { imageLoader } from '@/lib/ImageLoader';
 import Image from 'next/image';
 import useModalContent from '@/lib/customHooks/useModalContent';
 import useBerita from '@/lib/customHooks/useBerita';
@@ -88,6 +87,7 @@ const berita = () => {
     let res = await get_AllBerita();
     if (isResponseError(res, setModalContent, clearState)) return;
     res = await res.json();
+    console.log(res);
     setBeritaList(res.data);
     setLoadingFetching(false);
     return;
@@ -118,6 +118,7 @@ const berita = () => {
       message: 'Data berhasil disimpan',
       action: clearState,
     });
+    console.log(res);
     getBeritaData();
   };
 
@@ -361,7 +362,7 @@ const BeritaCard = ({ data }) => {
       <div className="flex justify-start items-center h-full">
         <div className="relative w-56 min-w-36 max-w-56 h-full  rounded-xl overflow-hidden me-2">
           <Image
-            src={imageLoader(data.image.path)}
+            src={data.image.url}
             fill={true}
             alt={data.title}
             className="object-cover"

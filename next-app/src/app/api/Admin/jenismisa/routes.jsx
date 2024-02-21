@@ -9,7 +9,7 @@ function getJwtToken() {
 export async function post_jenisMisa(dataPost) {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jenis-misa/`,
+        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jenis-misa`,
         {
           method: 'POST',
           mode: 'cors',
@@ -29,7 +29,7 @@ export async function post_jenisMisa(dataPost) {
   export async function get_jenisMisa() {
     try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jenis-misa/`,
+          `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/jenis-misa`,
           {
                 method: 'GET',
                 mode: 'cors',
@@ -44,7 +44,7 @@ export async function post_jenisMisa(dataPost) {
             const dataRespon = await res.json();
             return dataRespon;
         } else {
-            throw new Error('Failed to fetch data');
+            console.error('Failed to fetch data');
         }
     } catch (error) {
         console.error('Error at get_Saran:', error.message);

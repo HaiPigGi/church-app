@@ -9,7 +9,7 @@ export async function get_AllOrganitations() {
   if (token) {
     try {
       let res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/organitations/`,
+        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/organitations`,
         {
           method: 'GET',
           mode: 'cors',

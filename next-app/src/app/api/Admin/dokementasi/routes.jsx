@@ -6,7 +6,7 @@ export async function post_Images(data) {
   try {
     console.log('cek data api post_images : ', data);
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/dokumentasi/`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/dokumentasi`,
       {
         method: 'POST',
         mode: 'cors',
@@ -27,7 +27,7 @@ export async function post_Images(data) {
 export async function get_dokumentasi() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/dokumentasi/`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/dokumentasi`,
       {
         method: 'GET',
         mode: 'cors',

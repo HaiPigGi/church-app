@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useInView, motion, useAnimation } from 'framer-motion';
 import { get_jadwal } from '@/app/api/User/jadwalmisa/route';
+import AuthService from '@/app/api/Auth/route';
 
 function JadwalMisaSection() {
   const refJadwalSec = useRef(null);
@@ -11,18 +12,34 @@ function JadwalMisaSection() {
 
   const [Jadwal, setJadwal] = useState([]);
 
+  const fetchData = async () => {
+      const res = await get_jadwal();
+      console.log('hasilnya : ', res);
+      setJadwal(res.data);
+        
+  };
+
+  function changeTimeformat(waktu) {
+
+    // Memecah waktu menjadi array
+    const waktuArray = waktu.split(':');
+
+    // Menggabungkan jam dan menit tanpa detik
+    return  waktuArray[0] + ':' + waktuArray[1];
+  }
+
+  
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await get_jadwal();
-        console.log('hasilnya : ', res);
-        setJadwal(res?.data);
-      } catch (error) {
-        console.error('Error fetching jadwal misa:', error.message);
-      }
-    };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    Jadwal.forEach((val) =>{
+      console.log("jadwal: ",val)
+      val.waktu_mulai = changeTimeformat(val.waktu_mulai);
+      val.waktu_selesai = changeTimeformat(val.waktu_selesai);
+    })
+  },[Jadwal])
   
 
   useEffect(() => {
@@ -70,7 +87,7 @@ function JadwalMisaSection() {
                   {Jadwal?.map((row, index) => (
                     <div key={index} className="flex justify-between items-center py-3 border-b border-black">
                       <h3 className="text-primary font-bold ml-3">{row.hari}</h3>
-                      <h3 className=''>{row.jenis}</h3>
+                      <h3 className='mr-10 ml-[-3rem]'>{row.jenis_misa.jenis}</h3>
                       <p className='mr-10 ml-[-3rem]'>{row.waktu_mulai}</p>
                       <p className='mr-10 ml-[-3rem]'>{row.waktu_selesai}</p>
                     </div>

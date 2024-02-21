@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { imageLoader } from '@/lib/ImageLoader';
 
 function BeritaCard({ data }) {
   return (
@@ -10,10 +9,10 @@ function BeritaCard({ data }) {
       data-testid="pathnameTest"
       className="block shadow-xl mx-auto w-full max-w-[500px] md:w-4/5 mb-5 bg-white/90 rounded-xl overflow-hidden"
     >
-      <div className="flex justify-center items-center ">
+      <div className="flex justify-start items-center ">
         <div className="relative w-full min-w-36 max-w-56 h-36 md:w-36 md:h-36 rounded-xl overflow-hidden me-2">
           <Image
-            src={imageLoader(data.image.path)}
+            src={data.image.url}
             fill={true}
             className="object-cover"
             alt={data.title}

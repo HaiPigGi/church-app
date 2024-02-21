@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>testing</title>
+</head>
+<body>
+    <button id="clickme">Clickme</button>
+    <script >
+        const id = document.querySelector("#clickme");
+        id.addEventListener("click",() => {
+            fetch("https://config.api.parokistmarkusmelak.org/public/api/user/jadwalMisa",{
+                mode:"cors",
+                method:"GET",
+                headers:{
+                    "content-type":"application/JSON",
+                }
+            })
+            .then(e => console.log(e.data));
+        })
+        
+    </script>
+</body>
+</html>

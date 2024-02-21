@@ -1,22 +1,20 @@
-
+import AuthService from "../../Auth/route";
 
 export async function get_jadwal() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/user/jadwal-misa/`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/user/jadwal-misa`,
       {
-        method: 'GET',
         mode: 'cors',
-        credentials: 'include',
+        method: 'GET',
         headers: {
-          'content-type': 'application/json',
+          'content-type': 'application/JSON',
         },
       },
-    );
-    if (res.ok) {
-      const responseData = await res.json();
-      return responseData;
-    }
+    )
+    if(res.ok){
+      return await res.json();
+    }    
   } catch (e) {
     console.log('error at getJadwalMisa with message : ', e.message);
   }

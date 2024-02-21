@@ -9,7 +9,7 @@ function getJwtToken() {
 export async function get_AllBerita() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita/`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/berita`,
       {
         method: 'GET',
         mode: 'cors',

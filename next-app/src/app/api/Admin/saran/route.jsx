@@ -8,7 +8,7 @@ function getJwtToken() {
   export async function get_Saran() {
     try {
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/saran/`,
+            `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/saran`,
             {
                 method: 'GET',
                 mode: 'cors',

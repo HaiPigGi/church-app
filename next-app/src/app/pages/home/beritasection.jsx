@@ -30,7 +30,6 @@ function BeritaSection() {
           mode: 'cors',
           headers: {
             'content-type': 'application/json',
-            'X-CSRF-TOKEN': AuthService().CSRF_token(),
           },
         },
       );

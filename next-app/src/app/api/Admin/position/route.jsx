@@ -9,7 +9,7 @@ function getJwtToken() {
 export async function get_Position() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/positions/`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/positions`,
       {
         method: 'GET',
         mode: 'cors',
@@ -28,7 +28,7 @@ export async function post_position(postData) {
   console.log('cek data postData ', postData);
   try {
     let res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/positions/`,
+      `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/positions`,
       {
         method: 'POST',
         mode: 'cors',
