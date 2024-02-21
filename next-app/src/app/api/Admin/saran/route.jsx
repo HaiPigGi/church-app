@@ -30,3 +30,21 @@ function getJwtToken() {
         throw error;
     }
 }
+
+export async function delete_pesan(id){
+    try {
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/admin/saran/${id}`,
+            {
+                method: 'DELETE',
+                mode: 'cors',
+                headers: {
+                    'Authorization': `Bearer ${getJwtToken()}` // Make sure to define getJwtToken function
+                },
+            },
+        );
+        return res;
+    }catch(error){
+      console.log('biasa error',error.message)
+    }
+  }

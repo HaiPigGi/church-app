@@ -5,6 +5,9 @@ import Navbar from '@/components/Fragments/Navbar';
 import React, { useState, useEffect } from 'react';
 import { post_saran } from '@/app/api/User/saran/route';
 import Tanda from '@/app/api/User/route';
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import { isResponseError } from '../admin/posisi';
 
 export default function saran() {
   const [formData, setfromData] = useState({
@@ -12,6 +15,8 @@ export default function saran() {
     email: '',
     message: '',
   });
+  const [isOpen, setIsOpen] = useState(false);
+  const [alert, setAlert] = useState(false);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -24,7 +29,6 @@ export default function saran() {
   const handleSubmit = (e) => {
     e.preventDefault();
     simpanSaran(formData);
-
     setfromData({
       full_name: '',
       email: '',
@@ -32,30 +36,52 @@ export default function saran() {
     });
   };
 
+
+
   async function simpanSaran(dataSaran) {
     try {
-      console.log('Data saran yang akan disimpan:', dataSaran);
+        console.log('Data saran yang akan disimpan:', dataSaran);
+        const Data = dataSaran;
+        console.log('cek data simpanSaran : ', Data);
+        console.log('data full name : ', Data.full_name);
 
-      const Data = dataSaran;
-      console.log('cek data simpanSaran : ', Data);
-      console.log('data full name : ', Data.full_name);
+        const postData = new FormData();
+        postData.append('full_name', Data.full_name);
+        postData.append('email', Data.email);
+        postData.append('message', Data.message);
 
-      const postData = new FormData();
-      postData.append('full_name', Data.full_name);
-      postData.append('email', Data.email);
-      postData.append('message', Data.message);
+        // koneksi ke backend nya
+        const res = await post_saran(postData);
+        console.log('hasil datanya : ', res);
 
-      // koneksi ke backend nya
-      const res = await post_saran(postData);
-      console.log('hasil datanya : ', res);
+        switch(res?.status){
+            case 200:
+                setIsOpen(true);
+                return true;
+            case 201:
+                return false;
+            case 401:
+                setAlert(true);
+                return true;
+            default:
+                console.log('Status respons tidak dikenali:', res?.status);
+                return false;
+        }
     } catch (error) {
-      console.error('Terjadi kesalahan saat menyimpan saran:', error);
-      // tambahkan logika penanganan kesalahan di sini, seperti menampilkan pesan kesalahan kepada pengguna
+        console.error('Terjadi kesalahan saat menyimpan saran:', error);
+        // tambahkan logika penanganan kesalahan di sini, seperti menampilkan pesan kesalahan kepada pengguna
+        return false;
     }
-  }
+}
+
 
   // Fetch data saat komponen dimuat
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsOpen(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+
     async function fetchData() {
       try {
         const response = await Tanda();
@@ -134,7 +160,7 @@ export default function saran() {
                   d="M19.44 13c-.22 0-.45-.07-.67-.12a9.44 9.44 0 0 1-1.31-.39 2 2 0 0 0-2.48 1l-.22.45a12.18 12.18 0 0 1-2.66-2 12.18 12.18 0 0 1-2-2.66l.42-.28a2 2 0 0 0 1-2.48 10.33 10.33 0 0 1-.39-1.31c-.05-.22-.09-.45-.12-.68a3 3 0 0 0-3-2.49h-3a3 3 0 0 0-3 3.41 19 19 0 0 0 16.52 16.46h.38a3 3 0 0 0 2-.76 3 3 0 0 0 1-2.25v-3a3 3 0 0 0-2.47-2.9zm.5 6a1 1 0 0 1-.34.75 1.05 1.05 0 0 1-.82.25A17 17 0 0 1 4.07 5.22a1.09 1.09 0 0 1 .25-.82 1 1 0 0 1 .75-.34h3a1 1 0 0 1 1 .79q.06.41.15.81a11.12 11.12 0 0 0 .46 1.55l-1.4.65a1 1 0 0 0-.49 1.33 14.49 14.49 0 0 0 7 7 1 1 0 0 0 .76 0 1 1 0 0 0 .57-.52l.62-1.4a13.69 13.69 0 0 0 1.58.46q.4.09.81.15a1 1 0 0 1 .79 1z"
                 ></path>
               </svg>
-              <a href="#">no gereja</a>
+              <a href="tel:082254605270">0822 5460 5270</a>
             </div>
           </div>
 
@@ -212,6 +238,116 @@ export default function saran() {
             </div>
           </form>
         </div>
+
+        {/* berhasil kirim data */}
+        <Transition appear show={isOpen} as={Fragment}>
+          <Dialog
+            as="div"
+            className="fixed inset-0 overflow-y-auto z-50"
+            onClose={() => setIsOpen(false)}
+          >
+            <div className="min-h-screen px-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
+
+              <span className="inline-block h-screen align-middle" aria-hidden="true">
+                &#8203;
+              </span>
+
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <div className="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-top w-full max-w-sm">
+                  <div className="bg-green-500 p-6">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-bold text-center font-medium leading-6 text-white"
+                    >
+                      Berhasil
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      <p className="text-sm text-white">Pesan berhasil dikirim.</p>
+                    </div>
+                  </div>
+                </div>
+              </Transition.Child>
+            </div>
+          </Dialog>
+        </Transition>
+
+        {/* allert not login */}
+        <Transition appear show={alert} as={Fragment}>
+          <Dialog
+            as="div"
+            className="fixed inset-0 overflow-y-auto z-50"
+            onClose={() => setAlert(false)}
+          >
+            <div className="min-h-screen px-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
+
+              <span className="inline-block h-screen align-middle" aria-hidden="true">
+                &#8203;
+              </span>
+
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <div className="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-top w-full max-w-sm">
+                  <div className="bg-red-500 p-6">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-center font-bold text-xl leading-6 text-white"
+                    >
+                      Perhatian!
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      <p className="text-sm text-white">Anda harus login terlebih dahulu.</p>
+                    </div>
+                    <div className="mt-4">
+                      <button
+                        onClick={() => setAlert(false)}
+                        className="px-4 py-2 bg-white text-red-500 rounded-lg hover:bg-red-100 focus:outline-none focus:ring focus:ring-red-200"
+                      >
+                        Tutup
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Transition.Child>
+            </div>
+          </Dialog>
+        </Transition>
       </div>
       <Footer />
     </MainLayout>

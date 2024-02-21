@@ -17,26 +17,20 @@ const AuthService = () => {
         `${process.env.NEXT_PUBLIC_API_DOMAIN}/sanctum/csrf-cookie`,
         {
           method: 'GET',
-          mode: 'no-cors',
           credentials: 'include',
         },
       );
-
       if (response.ok) {
-        const csrfToken = document.cookie
-          .split('; ')
-          .find((row) => row.startsWith('XSRF-TOKEN'))
-          .split('=')[1];
-
-        setCsrf({ csrf_token: csrfToken });
-        return csrfToken;
+        const csrfCookie = response.headers.get('X-CSRF-TOKEN');
+        setCsrf(csrfCookie); // Set CSRF token ke variabel csrf_token
       } else {
-        console.error('Failed to fetch CSRF token');
+        console.error('Failed to get CSRF token');
       }
     } catch (error) {
       console.error(`An error occurred: ${error.message}`);
     }
   }
+
 
   // function for Login
   async function post_Login(dataLogin) {

@@ -4,43 +4,32 @@ import { useEffect, useRef, useState } from 'react';
 import { useInView, motion, useAnimation } from 'framer-motion';
 import { get_jadwal } from '@/app/api/User/jadwalmisa/route';
 
-const getJenisMisa = () => {};
 function JadwalMisaSection() {
   const refJadwalSec = useRef(null);
   const inView = useInView(refJadwalSec, { once: false });
-
-  const [Jadwal,setJadwal] = useState([])
-
-  useEffect(()=>{
-    async function fetchData(){
-      try{
-        const res = await get_jadwal();
-        console.log('hasilnya : ',res);
-        setJadwal(res.data)
-      }catch{
-
-      }
-    }
-    fetchData();
-  },[])
-
-  //     jenis_misa_id: 0,
-  //   },
-  // ]);
-  const [jenisMisa, setJenisMisa] = useState();
   const mainControlls = useAnimation();
 
-  const getJadwalMisa = async () => {
-    const res = await get_JadwalMisa();
-  };
+  const [Jadwal, setJadwal] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await get_jadwal();
+        console.log('hasilnya : ', res);
+        setJadwal(res?.data);
+      } catch (error) {
+        console.error('Error fetching jadwal misa:', error.message);
+      }
+    };
+    fetchData();
+  }, []);
+  
 
   useEffect(() => {
     if (inView) {
       mainControlls.start('visible');
     }
   }, [inView]);
-
-  useEffect(() => {}, []);
 
   return (
     <section className="snap-always snap-center w-full h-screen flex justify-center items-center px-5 py-5 overflow-hidden bg-fixed bg-jadwalMisa bg-no-repeat bg-cover bg-center">
@@ -65,7 +54,6 @@ function JadwalMisaSection() {
               transition={{ duration: 0.5, delay: 0.25 }}
               className="rounded-md flex justify-center md:justify-start items-center w-full h-full "
             >
-      
               {Jadwal?.length > 0 && (
                 <div className="border ml-16 bg-white w-full md:max-h-[400px] min-w-[300px] md:min-h-[400px] md:min-w-[350px] max-w-[500px] h-full border-secondary rounded-sm p-5 shadow-sm shadow-primary">
                   <h1 className="text-xl font-light text-center mt-[-0.5rem]">
