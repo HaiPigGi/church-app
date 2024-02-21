@@ -20,6 +20,7 @@ export async function post_saran(postData) {
     res = await res.json();
     console.log(res);
     if (res.status == 201) {
+      console.log(res.status)
       return res;
     }
     return res.error;
