@@ -15,7 +15,7 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         hero: "url('/img/hero.JPG')",
-        jadwalMisa: "url('/img/bg-jadwalmisa.JPG')",
+        jadwalMisa: "url('/img/bg-JadwalMisa.JPG')",
         berita: "url('/img/bg-Berita.JPG')",
         depan: "url('/img/depan_mimbar.jpg')",
         dalam: "url('/img/gereja_dalam.jpg')",
@@ -39,8 +39,8 @@ module.exports = {
           '100%': { transform: 'translateX(100%)' },
         },
       },
-      fontFamily:{
-         'Open Sans': ['Open Sans', 'sans-serif'],
+      fontFamily: {
+        'Open Sans': ['Open Sans', 'sans-serif'],
       },
     },
   },

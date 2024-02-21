@@ -83,7 +83,7 @@ function BeritaSection() {
                 }
               >
                 {beritaData.map((dat) => {
-                  return <BeritaCard key={dat.id} data={dat} />;
+                  return <BeritaCard data={dat} />;
                 })}
               </div>
             ) : (

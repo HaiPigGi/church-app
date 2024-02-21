@@ -3,10 +3,9 @@ import Link from 'next/link';
 import { imageLoader } from '@/lib/ImageLoader';
 
 function BeritaCard({ data }) {
-  console.log(data.image);
-
   return (
     <Link
+      key={data.berita_id}
       href={`/pages/berita/${data.berita_id}`}
       data-testid="pathnameTest"
       className="block shadow-xl mx-auto w-full max-w-[500px] md:w-4/5 mb-5 bg-white/90 rounded-xl overflow-hidden"
@@ -21,7 +20,7 @@ function BeritaCard({ data }) {
             data-testid="imgTest"
           />
         </div>
-        <div className="p-2 w-96">
+        <div className="p-2 w-auto">
           <h1
             className="line-clamp-2 text-base font-bold "
             data-testid="titleTest"

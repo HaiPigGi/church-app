@@ -10,7 +10,7 @@ export default function Home() {
   //get the AuthStatus
 
   const AuthStatus = useAppSelector((state) => state.session.status);
-  const [RenderBasedAuth, setRenderBasedAuth] = useState();
+  const [RenderBasedAuth, setRenderBasedAuth] = useState(<Loading />);
 
   //execute function Load whenever the AuthStatus changed
   useEffect(() => {
@@ -22,10 +22,8 @@ export default function Home() {
   }, [AuthStatus]);
 
   return (
-    <RootLayout>
-      <MainLayout>
-        <Suspense fallback={<Loading />}>{RenderBasedAuth}</Suspense>
-      </MainLayout>
-    </RootLayout>
+    <MainLayout>
+      <Suspense fallback={<Loading />}>{RenderBasedAuth}</Suspense>
+    </MainLayout>
   );
 }
