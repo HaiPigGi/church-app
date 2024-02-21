@@ -1,30 +1,34 @@
 'use client';
+import { useEffect, useState } from 'react';
 import PageHome from './pages/home/page';
-import { Suspense, useEffect, useState } from 'react';
 import Loading from '@/components/Fragments/Loading/loading';
 import { useAppSelector } from '@/lib/hook';
 import MainLayout from '@/components/Layouts/MainLayout';
 import RootLayout from './layout';
 
 export default function Home() {
-  //get the AuthStatus
-
   const AuthStatus = useAppSelector((state) => state.session.status);
-  const [RenderBasedAuth, setRenderBasedAuth] = useState();
+  const [appReady, setAppReady] = useState(false);
+  const [renderBasedAuth, setRenderBasedAuth] = useState(null);
 
-  //execute function Load whenever the AuthStatus changed
   useEffect(() => {
-    if (AuthStatus == 'loading') {
-      // change the loading animation in components/fragments/Loading
-      setRenderBasedAuth(<Loading />);
+    if (AuthStatus === 'loading') {
+      setRenderBasedAuth(null); // Hide the content while loading
+    } else {
+      setRenderBasedAuth(<PageHome />);
     }
-    setRenderBasedAuth(<PageHome />);
+    // Set appReady to true once the initial loading is done
+    setAppReady(true);
   }, [AuthStatus]);
 
   return (
     <RootLayout>
       <MainLayout>
-        <Suspense fallback={<Loading />}>{RenderBasedAuth}</Suspense>
+        {appReady ? (
+          <>{renderBasedAuth}</>
+        ) : (
+          <Loading />
+        )}
       </MainLayout>
     </RootLayout>
   );
