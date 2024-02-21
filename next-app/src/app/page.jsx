@@ -8,7 +8,8 @@ import RootLayout from './layout';
 
 export default function Home() {
   const AuthStatus = useAppSelector((state) => state.session.status);
-  const [RenderBasedAuth, setRenderBasedAuth] = useState(<Loading />);
+  const [appReady, setAppReady] = useState(false);
+  const [renderBasedAuth, setRenderBasedAuth] = useState(null);
 
   useEffect(() => {
     if (AuthStatus === 'loading') {
@@ -21,8 +22,8 @@ export default function Home() {
   }, [AuthStatus]);
 
   return (
-    <MainLayout>
-      <Suspense fallback={<Loading />}>{RenderBasedAuth}</Suspense>
-    </MainLayout>
+    <RootLayout>
+      <MainLayout>{appReady ? <>{renderBasedAuth}</> : <Loading />}</MainLayout>
+    </RootLayout>
   );
 }

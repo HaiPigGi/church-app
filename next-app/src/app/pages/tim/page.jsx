@@ -1,5 +1,4 @@
 import MainLayout from '@/components/Layouts/MainLayout';
-import Navbar from '@/components/Fragments/Navbar';
 import Footer from '@/components/Fragments/Footer';
 
 export default function tim() {
