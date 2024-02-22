@@ -4,7 +4,6 @@ import BeritaLayout from '@/components/Layouts/BeritaLayout';
 import Image from 'next/image';
 import { useEffect, useState, Suspense } from 'react';
 import Loading from '@/components/Fragments/Loading/loading';
-import { imageLoader } from '@/lib/ImageLoader';
 
 function BeritaPage({ params }) {
   // use params.beritaid to get the berita ID
@@ -32,7 +31,7 @@ function BeritaPage({ params }) {
             <>
               <div className="relative w-full h-52 rounded-xl overflow-hidden">
                 <Image
-                  src={imageLoader(beritaDat.image.path)}
+                  src={beritaDat.image.url}
                   fill={true}
                   alt="deskripsi"
                   className="object-cover "
