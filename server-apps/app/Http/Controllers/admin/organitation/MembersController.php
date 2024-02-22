@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use App\Models\OrganitationModel;
 use App\Models\PositionModel;
-
 class MembersController extends Controller
 {
     /**

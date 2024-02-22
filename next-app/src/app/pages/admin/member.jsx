@@ -394,7 +394,7 @@ const Member = () => {
                 setEmployee({ ...employee, image: e.target.files[0] })
               }
               placeholder="Foto Member"
-              accept="image/*"
+              accept="image"
               className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
             />
           </div>

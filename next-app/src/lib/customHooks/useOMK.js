@@ -34,7 +34,7 @@ export default function useOmk() {
   const getAllMembers = async () => {
     try {
       let res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/user/member/`,
+        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/user/member`,
         {
           method: 'GET',
           mode: 'cors',
