@@ -1,6 +1,9 @@
 # Church App
 
-Church App is a fullstack project developed using Laravel as the backend framework and React.js as the frontend library. The project aims to provide a modern platform for churches to interact with their congregation and deliver spiritual messages in an innovative way.
+Church App is a project developed using Laravel as the backend framework and next.js as the frontend library. The project aims to provide a modern platform for churches to interact with their congregation and deliver spiritual messages in an innovative way.
+
+![image](https://github.com/HaiPigGi/church-app/assets/119752348/5056db94-284a-489b-a952-b740370c7335)
+
 
 ## Main Features
 
@@ -25,7 +28,7 @@ Church App is a fullstack project developed using Laravel as the backend framewo
   - Developed using the PHP Laravel framework for backend development, providing stability, security, and scalability.
 
 - **Frontend:**
-  - Designed the user interface using React.js for dynamic and responsive user experiences.
+  - Designed the user interface using next.js for dynamic and responsive user experiences.
 
 - **Database:**
   - Integrated with MySQL database for efficient data storage and management.
