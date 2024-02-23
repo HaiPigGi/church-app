@@ -4,11 +4,13 @@ import BeritaLayout from '@/components/Layouts/BeritaLayout';
 import Image from 'next/image';
 import { useEffect, useState, Suspense } from 'react';
 import Loading from '@/components/Fragments/Loading/loading';
+import useModalContent from '@/lib/customHooks/useModalContent';
 
 function BeritaPage({ params }) {
   // use params.beritaid to get the berita ID
   const [beritaDat, setBeritaDat] = useState();
   const [loading, setLoading] = useState(true);
+  const { clearState, modalContent, setModalContent } = useModalContent();
 
   useEffect(() => {
     async function getData() {
@@ -20,6 +22,20 @@ function BeritaPage({ params }) {
     getData();
   }, []);
 
+  const showImage = (image) => {
+    setModalContent('show', {
+      content: (
+        <Image
+          src={image.url}
+          fill={true}
+          alt="Gambar"
+          className="object-contain"
+        />
+      ),
+      action: clearState,
+    });
+  };
+
   return (
     <BeritaLayout>
       <Suspense fallback={<Loading />}>
@@ -29,14 +45,17 @@ function BeritaPage({ params }) {
             <Loading />
           ) : beritaDat ? (
             <>
-              <div className="relative w-full h-52 rounded-xl overflow-hidden">
+              <button
+                className="relative w-full h-52 rounded-xl overflow-hidden transition duration-500 hover:translate-x-2 hover:translate-y-2"
+                onClick={() => showImage(beritaDat.image)}
+              >
                 <Image
                   src={beritaDat.image.url}
                   fill={true}
                   alt="deskripsi"
-                  className="object-cover "
+                  className="object-cover"
                 />
-              </div>
+              </button>
               <article className="px-4 mt-8">
                 <h1 className="text-2xl text-pretty font-bold">
                   {beritaDat.title}
@@ -48,6 +67,7 @@ function BeritaPage({ params }) {
             <h1>Data not available</h1>
           )}
         </section>
+        {modalContent}
       </Suspense>
     </BeritaLayout>
   );
