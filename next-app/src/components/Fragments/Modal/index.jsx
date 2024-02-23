@@ -13,7 +13,7 @@ const clsButton = cva([' px-5 py-2 text-white rounded-md'], {
 
 const clsModal = cva(
   [
-    'relative md:min-w-[350px] shadow-xl md:max-w-[500px] md:min-h-[250px] md:max-h-[500px] p-5 h-auto w-auto bg-white z-50 rounded-xl ',
+    'relative shadow-xl max-w-[350px] max-h-[500px] md:max-w-[800px] md:min-w-[500px] md:max-h-[600px] md:min-h-[250px]  p-5 h-auto w-auto bg-white z-50 rounded-xl rounded-xl overflow-hidden',
   ],
   {
     variants: {
@@ -98,7 +98,14 @@ function Modal({ message, action, type, content = '' }) {
     >
       <div className={clsModal({ type })}>
         {content != '' ? (
-          content
+          <>
+            <div className="relative w-[250px] h-[450px] md:w-[700px] md:h-[500px] overflow-auto">
+              <button className="absolute right-0 top-2 z-20 ri-close-circle-fill ri-xl "></button>
+              <div className="relative w-full h-full flex justify-center items-center">
+                {content}
+              </div>
+            </div>
+          </>
         ) : (
           <div className="grid grid-rows-3">
             <div className="row-span-2">
