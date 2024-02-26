@@ -6,6 +6,64 @@ export default function about() {
   return (
     <MainLayout className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
       <Navbar />
+
+      <div className="mb-10 mt-10">
+        <section className="parallax-1 bg-hero bg-no-repeat bg-cover bg-center bg-fixed min-h-[357px] sm:min-h-[375px]">
+          <div className="parallax-inner py-[10%] px-0">
+            <h1 className="font-bold text-[120px] text-center text-custom2 text-shadow1 min-[357px]:text-[70px]">
+              VISI DAN MISI GEREJA
+            </h1>
+          </div>
+        </section>
+        <h2 className="text-[32px] text-center text-custom font-300 tracking-[2px] mt-[20px] mb-[10px]">
+          Visi
+        </h2>
+        <p className="text-[16px] text-black font-extrabold text-center leading-[30px] mx-0 my-4[0px] mr-[50px] mt-5 ml-5">
+          “Mengikuti Kristus, dibimbing oleh Roh Kudus dan senantiasa Hidup dari
+          Ekaristi.”
+        </p>
+        {/* <aside className="col-span-1 mx-8 my-12 items-center">
+          <div className="mb-12 py-4 bg-white px-8 shadow-base border-2 border-indigo-200 rounded"> */}
+            <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
+              Visi diatas dilandasi oleh beberapa hal, yakni: Gereja yang adalah
+              ciptaan Tuhan yang paling luhur berasal dari Allah, berziarah dan
+              pada titik tertentu akan kembali kepada Sang sumber kehidupan itu
+              sendiri. Kristus yang adalah penyelamat manusia, hidup bersolider
+              dengan manusia. Kehidupan manusia akan hidup berkembang dalam iman
+              dan aneka aspek kehidupan hanya karena bimbingan Roh Kudus.
+              Darinya, manusia diberi penerangan hati dan budi, diarahkan untuk
+              melakukan apa pun yang menjadi tanggung jawabnya. Sebagai makluk
+              beriman, dan jantung kehidupan iman adalah Ekaristi. Ekaristi
+              menjadi puncak kehidupan iman umat sekaligus persatuan individu
+              dengan Allah dan diantara sesama itu sendiri. Perziarahan Gereja
+              mengikuti teladan Yesus yang adalah panutan dan model hidup iman
+              umat dalam iman, harap dan kasih.
+            </p>
+          {/* </div>
+        </aside> */}
+        <h2 className="text-[32px] text-center text-custom font-300 tracking-[2px] mt-[20px] mb-[10px]">
+          Misi
+        </h2>
+        <p className="text-[16px] text-black font-extrabold text-center leading-[30px] mx-0 my-4[0px] mr-[50px] mt-2 ml-2 ">
+          “Menghadirkan Allah, baik internal maupun eksternal.”
+        </p>
+        {/* <aside className="col-span-1 mx-3 my-12 items-center">
+          <div className="mb-12 py-4 bg-white px-8 shadow-base border-2 border-indigo-200 rounded"> */}
+            <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
+              Keberagaman umat Paroki St. Markus Melak dalam cara pandang, SDM,
+              budaya, mata pencaharian; meggerakan para pelayan Firman Tuhan
+              untuk melakukan pendekatan yang mengena dan menyentuh hati umat
+              dalam karya pelayanan pastoral. Pelayanan melibatkan para pengurus
+              DPP, Dewan Pastoral Stasi dan pengurus lingkungan dengan maksud
+              ada keterlibatan aktif dari tingkat dewan hingga umat Allah.
+              Menghadirkan wajah Allah di tengah aneka perbedaan dengan
+              cara-cara yang termudah demi memudahkan umat untuk memahami
+              kehadiran Allah di tengah kehidupan umat itu sendiri.
+            </p>
+          {/* </div>
+        </aside> */}
+      </div>
+
       {/* gambar pertama */}
       <div className="mb-10 mt-10">
         <section className="parallax-1 bg-hero bg-no-repeat bg-cover bg-center bg-fixed min-h-[357px] sm:min-h-[375px]">
@@ -18,7 +76,10 @@ export default function about() {
         <h2 className="text-[32px] text-center text-custom font-300 tracking-[2px] mt-[20px] mb-[10px]">
           Gereja ST. Markus Melak
         </h2>
-        <p className="text-[16px] text-black text-justify leading-[30px] mx-0 my-4[0px] mr-[50px] mt-5 ml-5">
+        
+        {/* <aside className="col-span-1 mx-3 my-12 items-center">
+          <div className="mb-12 py-4 bg-white px-8 shadow-base border-2 border-indigo-200 rounded"> */}
+        <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
           PERIODE 1984-AWAL 1997: DISEBUT GEREJA STASI Awal tahun 1984, Melak
           menjadi stasi dari Paroki Kristus Raja Barong Tongkok yang pada saat
           itu dilayani oleh Pastor Klein, MSF sebagai Pastor Parokinya. Jemaat
@@ -30,7 +91,12 @@ export default function about() {
           rumah ke rumah untuk kegiatan ibadat. Kegiatan ini bertahan sampai
           tahun1988.
         </p>
-        <p className="text-[16px] text-black text-justify leading-[30px] mx-0 my-4[0px] mr-[50px] mt-5 ml-5">
+        {/* </div>
+        </aside> */}
+{/* 
+        <aside className="col-span-1 mx-3 my-12 items-center">
+          <div className="mb-12 py-4 bg-white px-8 shadow-base border-2 border-indigo-200 rounded"> */}
+          <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
           Perubahan terjadi pada tahun 1989, umat katolik distasi Melak semakin
           bertambah terutama karena anak-anak sekolah yang berasal dari
           kampung-kampung mulai tinggal diasrama-asrama pelajar dan menuntut
@@ -51,15 +117,15 @@ export default function about() {
           stasi yang resmi waktu itu karena 4 memang jumlah umat belum terlalu
           banyak. Untuk mengkoordinir umat dalam ibadat. Bpk. Martinus dan
           teman-temannya menjadi pengurus stasi waktu itu.
-        </p>
+          </p>
+        {/* </div>
+        </aside> */}
         <br />
-        <br />
-        <h3 className="font-bold text-[20px] text-center">
+        <h3 className="font-bold text-2xl text-center text-blue-500">
           PERIODE 1998 – Sekarang : PAROKI SANTO MARKUS MELAK
         </h3>
         <br />
-        <br />
-        <p className="text-[16px] text-black text-justify leading-[30px] mx-0 my-4[0px] mr-[50px] mt-5 ml-5">
+        <p className="text-lg text-black text-justify leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5">
           Embrio terbentuknya paroki sudah ada dengan adanya Stasi Melak.
           Ibukota kecamatan Melak dijadikan pusat pemerintahan pembantu
           Kabupaten Kutai hingga menjadi Kabupaten Kutai Barat dengan sendirinya
@@ -127,7 +193,7 @@ export default function about() {
         <h2 className="text-[32px] text-center text-custom font-300 tracking-[2px] mt-[20px] mb-[10px]">
           Pelayan Tuhan
         </h2>
-        <p className="text-[16px] text-black text-justify leading-[30px] mx-0 my-4[0px] mr-[50px] mt-5 ml-5">
+        <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
           Pastor pertama yang bertugas di paroki ini adalah P. Marianus Bere, Pr
           yang dilantik pada 8 Maret 1998 di gereja Kristus Raja Barong Tongkok.
           Pastor paroki pertama ini mulai mempersiapkan sebuah tim pastoral
@@ -167,9 +233,8 @@ export default function about() {
           </tbody>
         </table>
 
-        <br />
 
-        <p className="text-[16px] text-black text-justify leading-[30px] mx-0 my-4[0px] mr-[50px] mt-5 ml-5">
+        <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
           Mendahului acara pelantikan Dewan Paroki diadakan penataran bagi
           pengurus dewan paroki oleh pihak kateketik Keuskupan Samarinda yang
           dipandu oleh Bpk. Roedy Haryowidjono AMZ dan kawan-kawan. Akhirnya 5
@@ -181,8 +246,7 @@ export default function about() {
           termasuk tanah/lokasi pembangunan gereja. Pastoran Pertama (kini
           asrama putri) dibangun.{' '}
         </p>
-        <br />
-        <p className="text-[16px] text-black text-justify leading-[30px] mx-0 my-4[0px] mr-[50px] mt-5 ml-5">
+        <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
           Pastor Marianus Bere, Pr hanya satu tahun saja mengemban tugas di
           paroki ini. Karena dipindahkan kembali ke keuskupan Atambua Timor,
           dengan demikian pada bulan Oktober 1999 terjadi pergantian pastor
@@ -193,13 +257,14 @@ export default function about() {
           paroki Alleluia Tana Grogot, Paser.
         </p>
 
-        <p className="text-[16px] text-black text-justify leading-[30px] mx-0 my-4[0px] mr-[50px] mt-5 ml-5">
+        <div className='text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md'>
+        <p className="">
           P.Willfridus Samdirgawijaya, Pr digantikan oleh P.Ambros Pantola, SVD.
           Perpisahan dan pelantikan dilaksanakan pada tanggal 21 Februari 2001
           di Melak dan dihadiri oleh banyak umat. Pada bulan Maret 2001 Pastoran
           yang baru diresmikan dan dihuni oleh P.Ambros Pantola, SVD.
         </p>
-        <p className="text-[16px] text-black text-justify leading-[30px] mx-0 my-4[0px] mr-[50px] mt-5 ml-5">
+        <p className="">
           Setelah Melak, Sendawar menjadi ibukota kabupaten Kutai Barat terjadi
           penambahan umat katolik yang cukup besar di Melak maupun di Barong
           Tongkok. Gereja kecil yang ada tidak dapat lagi menampung umat pada
@@ -208,12 +273,13 @@ export default function about() {
           yang baru. Maka pada tanggal 10 Januari 2002, diadakan rapat untuk
           pemilihan panitia pembangunan gereja yang dihadiri Pastor Paroki.
         </p>
-        <p className="text-[16px] text-black text-justify leading-[30px] mx-0 my-4[0px] mr-[50px] mt-5 ml-5">
+        <p className="">
           Dewan Paroki dan tokoh-tokoh umat yang berkecimpung dipemerintahan dan
           Dewan Perwakilan Rakyat, maupun di perusahaan dan 6 lembaga-lembaga
           swasta. Dalam rapat tersebut panitia pembangunan gereja terbentuk
           dengan susunan sebagai berikut :
         </p>
+        </div>
 
         <table className="mx-auto mt-5 border-collapse border border-gray-300">
           <tbody>
