@@ -76,7 +76,6 @@ export default function Pastor() {
   }, []);
 
   useEffect(() => {
-    console.log(pastorsDat);
   }, [pastorsDat]);
 
   return loadingStatus ? (

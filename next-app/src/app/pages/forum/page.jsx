@@ -40,10 +40,7 @@ export default function saran() {
 
   async function simpanSaran(dataSaran) {
     try {
-        console.log('Data saran yang akan disimpan:', dataSaran);
         const Data = dataSaran;
-        console.log('cek data simpanSaran : ', Data);
-        console.log('data full name : ', Data.full_name);
 
         const postData = new FormData();
         postData.append('full_name', Data.full_name);
@@ -52,7 +49,6 @@ export default function saran() {
 
         // koneksi ke backend nya
         const res = await post_saran(postData);
-        console.log('hasil datanya : ', res);
 
         switch(res?.status){
             case 200:
@@ -64,7 +60,6 @@ export default function saran() {
                 setAlert(true);
                 return true;
             default:
-                console.log('Status respons tidak dikenali:', res?.status);
                 return false;
         }
     } catch (error) {
@@ -85,7 +80,6 @@ export default function saran() {
     async function fetchData() {
       try {
         const response = await Tanda();
-        console.log('Response Data:', response);
         // Tambahan logika jika diperlukan
         if (res.status === 200) {
           window.location.href = '/pages/forum';

@@ -13,7 +13,6 @@ const Panitia = () => {
     try {
       const data = await fetchPanitiaStatus();
       setShowViewA(data.status); // Update state here
-      console.log(data.response);
     } catch (error) {
       console.error('Error fetching Panitia status:', error);
     }
