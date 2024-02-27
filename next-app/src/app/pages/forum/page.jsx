@@ -52,21 +52,31 @@ export default function saran() {
 
         // koneksi ke backend nya
         const res = await post_saran(postData);
-        console.log('hasil datanya : ', res);
-
-        switch(res?.status){
-            case 200:
-                setIsOpen(true);
-                return true;
-            case 201:
-                return false;
-            case 401:
-                setAlert(true);
-                return true;
-            default:
-                console.log('Status respons tidak dikenali:', res?.status);
-                return false;
+        console.log('hasil datanya : ', res.status);
+        
+        if (res?.status === 200) {
+          setIsOpen(true);
+        } else if (res?.status === 201) {
+          setIsOpen(true);
+        } else if (res?.status === 401) {
+            setAlert(true);
+        } else {
+            console.log('Status respons tidak dikenali:', res?.status);
+            return false;
         }
+        // switch(res?.status){
+        //     case 200:
+        //         setIsOpen(true);
+        //         return true;
+        //     case 201:
+        //         return false;
+        //     case 401:
+        //         setAlert(true);
+        //         return true;
+        //     default:
+        //         console.log('Status respons tidak dikenali:', res?.status);
+        //         return false;
+        // }
     } catch (error) {
         console.error('Terjadi kesalahan saat menyimpan saran:', error);
         // tambahkan logika penanganan kesalahan di sini, seperti menampilkan pesan kesalahan kepada pengguna
@@ -276,12 +286,12 @@ export default function saran() {
                   <div className="bg-green-500 p-6">
                     <Dialog.Title
                       as="h3"
-                      className="text-bold text-center font-medium leading-6 text-white"
+                      className="text-bold text-center font-extrabold leading-6 text-white"
                     >
                       Berhasil
                     </Dialog.Title>
                     <div className="mt-2">
-                      <p className="text-sm text-white">Pesan berhasil dikirim.</p>
+                      <p className="text-lg text-center text-white">Pesan berhasil dikirim.</p>
                     </div>
                   </div>
                 </div>
@@ -327,20 +337,22 @@ export default function saran() {
                   <div className="bg-red-500 p-6">
                     <Dialog.Title
                       as="h3"
-                      className="text-center font-bold text-xl leading-6 text-white"
+                      className="text-center font-extrabold text-xl leading-6 text-white"
                     >
-                      Perhatian!
+                      Perhatian!!!
                     </Dialog.Title>
                     <div className="mt-2">
-                      <p className="text-sm text-white">Anda harus login terlebih dahulu.</p>
+                      <p className="text-sm text-white text-center font-open-sans">Anda harus login terlebih dahulu.</p>
                     </div>
                     <div className="mt-4">
+                    <div className="flex items-center justify-center">
                       <button
-                        onClick={() => setAlert(false)}
-                        className="px-4 py-2 bg-white text-red-500 rounded-lg hover:bg-red-100 focus:outline-none focus:ring focus:ring-red-200"
+                          onClick={() => setAlert(false)}
+                          className="flex items-center justify-center px-4 py-2 bg-white text-red-500 rounded-lg hover:bg-red-100 focus:outline-none focus:ring focus:ring-red-200"
                       >
-                        Tutup
+                          Tutup
                       </button>
+                  </div>  
                     </div>
                   </div>
                 </div>

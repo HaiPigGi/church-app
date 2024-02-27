@@ -17,13 +17,8 @@ export async function post_saran(postData) {
         body: postData,
       },
     );
-    res = await res.json();
-    console.log(res);
-    if (res.status == 201) {
-      console.log(res.status)
-      return res;
-    }
-    return res.error;
+   return res;
+    // return res.error;
   } catch (e) {
     console.log('error in Saran Post : ', e.message);
   }
