@@ -1,7 +1,7 @@
 export const getAllDataPanitiaPaskah = async () => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/user/member/`,
+        `${process.env.NEXT_PUBLIC_API_DOMAIN}/api/user/member`,
         {
           method: 'GET',
           mode: 'cors',

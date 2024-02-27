@@ -14,7 +14,6 @@ function JadwalMisaSection() {
 
   const fetchData = async () => {
       const res = await get_jadwal();
-      console.log('hasilnya : ', res);
       setJadwal(res.data);
         
   };
@@ -35,7 +34,6 @@ function JadwalMisaSection() {
 
   useEffect(() => {
     Jadwal.forEach((val) =>{
-      console.log("jadwal: ",val)
       val.waktu_mulai = changeTimeformat(val.waktu_mulai);
       val.waktu_selesai = changeTimeformat(val.waktu_selesai);
     })

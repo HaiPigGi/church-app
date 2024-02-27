@@ -45,7 +45,6 @@ export default function useOmk() {
       );
       res = await res.json();
       res = res.data.filter((dat) => dat.organitation_name == 'OMK');
-      console.log('data members: ', res);
       setOmkList(res);
     } catch (e) {
       console.log(

@@ -45,7 +45,6 @@ const clsModal = cva(
 );
 
 export const ShowModal = ({ above, datas, position = 'toLeft' }) => {
-  console.log(datas);
   return (
     <div className={clsModal({ above, position })} data-testid="modalDropdown">
       {datas.map((data) => {

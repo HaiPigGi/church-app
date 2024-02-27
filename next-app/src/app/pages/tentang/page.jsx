@@ -24,22 +24,21 @@ export default function about() {
         </p>
         {/* <aside className="col-span-1 mx-8 my-12 items-center">
           <div className="mb-12 py-4 bg-white px-8 shadow-base border-2 border-indigo-200 rounded"> */}
-            <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
-              Visi diatas dilandasi oleh beberapa hal, yakni: Gereja yang adalah
-              ciptaan Tuhan yang paling luhur berasal dari Allah, berziarah dan
-              pada titik tertentu akan kembali kepada Sang sumber kehidupan itu
-              sendiri. Kristus yang adalah penyelamat manusia, hidup bersolider
-              dengan manusia. Kehidupan manusia akan hidup berkembang dalam iman
-              dan aneka aspek kehidupan hanya karena bimbingan Roh Kudus.
-              Darinya, manusia diberi penerangan hati dan budi, diarahkan untuk
-              melakukan apa pun yang menjadi tanggung jawabnya. Sebagai makluk
-              beriman, dan jantung kehidupan iman adalah Ekaristi. Ekaristi
-              menjadi puncak kehidupan iman umat sekaligus persatuan individu
-              dengan Allah dan diantara sesama itu sendiri. Perziarahan Gereja
-              mengikuti teladan Yesus yang adalah panutan dan model hidup iman
-              umat dalam iman, harap dan kasih.
-            </p>
-          {/* </div>
+        <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
+          Visi diatas dilandasi oleh beberapa hal, yakni: Gereja yang adalah
+          ciptaan Tuhan yang paling luhur berasal dari Allah, berziarah dan pada
+          titik tertentu akan kembali kepada Sang sumber kehidupan itu sendiri.
+          Kristus yang adalah penyelamat manusia, hidup bersolider dengan
+          manusia. Kehidupan manusia akan hidup berkembang dalam iman dan aneka
+          aspek kehidupan hanya karena bimbingan Roh Kudus. Darinya, manusia
+          diberi penerangan hati dan budi, diarahkan untuk melakukan apa pun
+          yang menjadi tanggung jawabnya. Sebagai makluk beriman, dan jantung
+          kehidupan iman adalah Ekaristi. Ekaristi menjadi puncak kehidupan iman
+          umat sekaligus persatuan individu dengan Allah dan diantara sesama itu
+          sendiri. Perziarahan Gereja mengikuti teladan Yesus yang adalah
+          panutan dan model hidup iman umat dalam iman, harap dan kasih.
+        </p>
+        {/* </div>
         </aside> */}
         <h2 className="text-[32px] text-center text-custom font-300 tracking-[2px] mt-[20px] mb-[10px]">
           Misi
@@ -49,18 +48,18 @@ export default function about() {
         </p>
         {/* <aside className="col-span-1 mx-3 my-12 items-center">
           <div className="mb-12 py-4 bg-white px-8 shadow-base border-2 border-indigo-200 rounded"> */}
-            <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
-              Keberagaman umat Paroki St. Markus Melak dalam cara pandang, SDM,
-              budaya, mata pencaharian; meggerakan para pelayan Firman Tuhan
-              untuk melakukan pendekatan yang mengena dan menyentuh hati umat
-              dalam karya pelayanan pastoral. Pelayanan melibatkan para pengurus
-              DPP, Dewan Pastoral Stasi dan pengurus lingkungan dengan maksud
-              ada keterlibatan aktif dari tingkat dewan hingga umat Allah.
-              Menghadirkan wajah Allah di tengah aneka perbedaan dengan
-              cara-cara yang termudah demi memudahkan umat untuk memahami
-              kehadiran Allah di tengah kehidupan umat itu sendiri.
-            </p>
-          {/* </div>
+        <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
+          Keberagaman umat Paroki St. Markus Melak dalam cara pandang, SDM,
+          budaya, mata pencaharian; meggerakan para pelayan Firman Tuhan untuk
+          melakukan pendekatan yang mengena dan menyentuh hati umat dalam karya
+          pelayanan pastoral. Pelayanan melibatkan para pengurus DPP, Dewan
+          Pastoral Stasi dan pengurus lingkungan dengan maksud ada keterlibatan
+          aktif dari tingkat dewan hingga umat Allah. Menghadirkan wajah Allah
+          di tengah aneka perbedaan dengan cara-cara yang termudah demi
+          memudahkan umat untuk memahami kehadiran Allah di tengah kehidupan
+          umat itu sendiri.
+        </p>
+        {/* </div>
         </aside> */}
       </div>
 
@@ -76,7 +75,7 @@ export default function about() {
         <h2 className="text-[32px] text-center text-custom font-300 tracking-[2px] mt-[20px] mb-[10px]">
           Gereja ST. Markus Melak
         </h2>
-        
+
         {/* <aside className="col-span-1 mx-3 my-12 items-center">
           <div className="mb-12 py-4 bg-white px-8 shadow-base border-2 border-indigo-200 rounded"> */}
         <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
@@ -93,10 +92,10 @@ export default function about() {
         </p>
         {/* </div>
         </aside> */}
-{/* 
+        {/* 
         <aside className="col-span-1 mx-3 my-12 items-center">
           <div className="mb-12 py-4 bg-white px-8 shadow-base border-2 border-indigo-200 rounded"> */}
-          <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
+        <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
           Perubahan terjadi pada tahun 1989, umat katolik distasi Melak semakin
           bertambah terutama karena anak-anak sekolah yang berasal dari
           kampung-kampung mulai tinggal diasrama-asrama pelajar dan menuntut
@@ -117,7 +116,7 @@ export default function about() {
           stasi yang resmi waktu itu karena 4 memang jumlah umat belum terlalu
           banyak. Untuk mengkoordinir umat dalam ibadat. Bpk. Martinus dan
           teman-temannya menjadi pengurus stasi waktu itu.
-          </p>
+        </p>
         {/* </div>
         </aside> */}
         <br />
@@ -233,7 +232,6 @@ export default function about() {
           </tbody>
         </table>
 
-
         <p className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
           Mendahului acara pelantikan Dewan Paroki diadakan penataran bagi
           pengurus dewan paroki oleh pihak kateketik Keuskupan Samarinda yang
@@ -257,28 +255,29 @@ export default function about() {
           paroki Alleluia Tana Grogot, Paser.
         </p>
 
-        <div className='text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md'>
-        <p className="">
-          P.Willfridus Samdirgawijaya, Pr digantikan oleh P.Ambros Pantola, SVD.
-          Perpisahan dan pelantikan dilaksanakan pada tanggal 21 Februari 2001
-          di Melak dan dihadiri oleh banyak umat. Pada bulan Maret 2001 Pastoran
-          yang baru diresmikan dan dihuni oleh P.Ambros Pantola, SVD.
-        </p>
-        <p className="">
-          Setelah Melak, Sendawar menjadi ibukota kabupaten Kutai Barat terjadi
-          penambahan umat katolik yang cukup besar di Melak maupun di Barong
-          Tongkok. Gereja kecil yang ada tidak dapat lagi menampung umat pada
-          hari Minggu dan hari-hari raya. Keadaan ini mendesak pastor bersama
-          dewan paroki dan tokoh-tokoh umat untuk memikirkan pembangunan gereja
-          yang baru. Maka pada tanggal 10 Januari 2002, diadakan rapat untuk
-          pemilihan panitia pembangunan gereja yang dihadiri Pastor Paroki.
-        </p>
-        <p className="">
-          Dewan Paroki dan tokoh-tokoh umat yang berkecimpung dipemerintahan dan
-          Dewan Perwakilan Rakyat, maupun di perusahaan dan 6 lembaga-lembaga
-          swasta. Dalam rapat tersebut panitia pembangunan gereja terbentuk
-          dengan susunan sebagai berikut :
-        </p>
+        <div className="text-lg text-black justify-center leading-relaxed mx-0 my-4 mr-12 mt-5 ml-5 bg-white p-6 rounded shadow-md">
+          <p className="">
+            P.Willfridus Samdirgawijaya, Pr digantikan oleh P.Ambros Pantola,
+            SVD. Perpisahan dan pelantikan dilaksanakan pada tanggal 21 Februari
+            2001 di Melak dan dihadiri oleh banyak umat. Pada bulan Maret 2001
+            Pastoran yang baru diresmikan dan dihuni oleh P.Ambros Pantola, SVD.
+          </p>
+          <p className="">
+            Setelah Melak, Sendawar menjadi ibukota kabupaten Kutai Barat
+            terjadi penambahan umat katolik yang cukup besar di Melak maupun di
+            Barong Tongkok. Gereja kecil yang ada tidak dapat lagi menampung
+            umat pada hari Minggu dan hari-hari raya. Keadaan ini mendesak
+            pastor bersama dewan paroki dan tokoh-tokoh umat untuk memikirkan
+            pembangunan gereja yang baru. Maka pada tanggal 10 Januari 2002,
+            diadakan rapat untuk pemilihan panitia pembangunan gereja yang
+            dihadiri Pastor Paroki.
+          </p>
+          <p className="">
+            Dewan Paroki dan tokoh-tokoh umat yang berkecimpung dipemerintahan
+            dan Dewan Perwakilan Rakyat, maupun di perusahaan dan 6
+            lembaga-lembaga swasta. Dalam rapat tersebut panitia pembangunan
+            gereja terbentuk dengan susunan sebagai berikut :
+          </p>
         </div>
 
         <table className="mx-auto mt-5 border-collapse border border-gray-300">
@@ -534,12 +533,13 @@ export default function about() {
           Hari Raya Gereja
         </h2>
         <p className="text-[16px] text-black text-justify leading-[30px] mx-0 my-4[0px] mr-[50px] mt-5 ml-5">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Exercitationem culpa rerum voluptates mollitia, officia illo adipisci
-          assumenda quidem eveniet eum magnam vero numquam autem, deserunt
-          repudiandae distinctio alias consequatur, illum dicta enim cum.
-          Accusamus neque eligendi nemo, mollitia nihil ullam debitis et
-          repellat optio, quasi id obcaecati libero numquam dolorum.
+          Hari Raya Gereja adalah momen suci dan penuh berkat bagi umat
+          Kristiani. Kami bersukacita dalam persekutuan, memuji Tuhan atas
+          kasih-Nya yang tiada tara. Di bawah naungan-Nya, kita bersatu dalam
+          cinta dan damai, merayakan kehidupan dan pengampunan. Marilah kita
+          bersama-sama menyambut kehadiran-Nya dengan hati yang tulus dan penuh
+          sukacita. Selamat Hari Raya Gereja kepada semua saudara dan saudari
+          dalam iman!
         </p>
       </div>
 
