@@ -41,7 +41,12 @@ module.exports = {
       },
       fontFamily: {
         'Open Sans': ['Open Sans', 'sans-serif'],
+        'open-sans': ['"Open Sans"', 'sans-serif'],
       },
+      fontOpticalSizing: ['responsive'],
+      fontStyle: ['responsive'],
+      fontVariationSettings: ['responsive'],
+      fontWeight: ['responsive'],
     },
   },
   plugins: [],
