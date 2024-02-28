@@ -17,8 +17,7 @@ export async function post_saran(postData) {
       },
     );
    return res;
-    // return res.error;
   } catch (e) {
-    console.log('error in Saran Post : ', e.message);
+    // console.log('error in Saran Post : ', e.message);
   }
 }

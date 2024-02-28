@@ -1,9 +1,12 @@
 'use client';
 import AuthService from '@/app/api/Auth/route.jsx';
+import { useAppSelector } from '@/lib/hook';
 
 const UserServices = () => {
+  // const status = useAppSelector(state => state.session.status);
   // get user data with jwtToken
   async function get_userData(jwtToken) {
+    // if(status == failed)return;
     try {
       const csrf_token = await AuthService().CSRF_token();
       const res = await fetch(
@@ -21,10 +24,8 @@ const UserServices = () => {
       );
 
       const responseData = await res.json();
-      console.log(responseData);
       return responseData;
     } catch (e) {
-      console.log('Error when getting userData : ', e.message);
     }
   }
 

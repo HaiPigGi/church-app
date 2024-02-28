@@ -4,10 +4,10 @@ import Footer from '@/components/Fragments/Footer';
 import Navbar from '@/components/Fragments/Navbar';
 import React, { useState, useEffect } from 'react';
 import { post_saran } from '@/app/api/User/saran/route';
-import Tanda from '@/app/api/User/route';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { isResponseError } from '../admin/posisi';
+import { useAppSelector } from '@/lib/hook';
 
 export default function saran() {
   const [formData, setfromData] = useState({
@@ -17,7 +17,9 @@ export default function saran() {
   });
   const [isOpen, setIsOpen] = useState(false);
   const [alert, setAlert] = useState(false);
-
+  const [alertEmptyData,setAlertEmptyData] = useState(false);
+  const status = useAppSelector(state => state.session.status);
+  
   const handleInput = (e) => {
     const { name, value } = e.target;
     setfromData({
@@ -28,6 +30,8 @@ export default function saran() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // if not authanticated 
+    if(checkStatusUser())return;
     simpanSaran(formData);
     setfromData({
       full_name: '',
@@ -36,44 +40,48 @@ export default function saran() {
     });
   };
 
+  // check the user auth status
+  const checkStatusUser = () => {
+    if (status == "succeeded") {
+      setIsOpen(true);
+      return false;
+    } else if(status == "failed") {
+      setAlert(true);
+      return true;
+    }
+  }
+
+  const convertToFormData = (Data) => {
+    if(Data.full_name == "" || Data.email == "" || Data.message == "") {
+      setAlertEmptyData(true)
+      return;
+    };
+    const postData = new FormData();
+    postData.append('full_name', Data.full_name);
+    postData.append('email', Data.email);
+    postData.append('message', Data.message);
+    return postData;
+  }
 
 
   async function simpanSaran(dataSaran) {
     try {
-        const Data = dataSaran;
+        let Data = dataSaran;
 
-        const postData = new FormData();
-        postData.append('full_name', Data.full_name);
-        postData.append('email', Data.email);
-        postData.append('message', Data.message);
-
+        Data = convertToFormData(Data);
+        if(!Data)return;
         // koneksi ke backend nya
-        const res = await post_saran(postData);
-        console.log('hasil datanya : ', res.status);
-        
-        if (res?.status === 200) {
-          setIsOpen(true);
-        } else if (res?.status === 201) {
-          setIsOpen(true);
-        } else if (res?.status === 401) {
-            setAlert(true);
-        } else {
-            console.log('Status respons tidak dikenali:', res?.status);
-            return false;
+        let res = await post_saran(Data);
+
+        if(res.status == 200 || res.status == 201){
+          res = await res.json();
+          if(res?.message){
+            setIsOpen(true);
+          }
+          return;
         }
-        // switch(res?.status){
-        //     case 200:
-        //         setIsOpen(true);
-        //         return true;
-        //     case 201:
-        //         return false;
-        //     case 401:
-        //         setAlert(true);
-        //         return true;
-        //     default:
-        //         console.log('Status respons tidak dikenali:', res?.status);
-        //         return false;
-        // }
+        setAlert(true);
+
     } catch (error) {
         console.error('Terjadi kesalahan saat menyimpan saran:', error);
         // tambahkan logika penanganan kesalahan di sini, seperti menampilkan pesan kesalahan kepada pengguna
@@ -81,35 +89,25 @@ export default function saran() {
     }
 }
 
+// async function fetchData() {
+//   try {
+//     const response = await UserServices().getUserData();
+//     // Tambahan logika jika diperlukan
+//     if (res.status === 200) {
+//       window.location.href = '/pages/forum';
+//     } else {
+//       window.location.href = '/pages/login';
+//     }
+//   } catch (error) {
+//     console.error('Terjadi kesalahan saat memuat data:', error);
+//   }
+// }
 
   // Fetch data saat komponen dimuat
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-
-    async function fetchData() {
-      try {
-        const response = await Tanda();
-        // Tambahan logika jika diperlukan
-        if (res.status === 200) {
-          window.location.href = '/pages/forum';
-        } else {
-          window.location.href = '/pages/login';
-        }
-      } catch (error) {
-        console.error('Terjadi kesalahan saat memuat data:', error);
-      }
-    }
-    fetchData();
-  }, []);
 
   return (
     <MainLayout>
-      <a className="snap-y snap-mandatory h-screen w-full overflow-y-auto">
-        <Navbar />
-      </a>
+      <Navbar />
       <div className="max-w-screen-xl mx-auto px-5 mt-[-3rem] ">
         <div className="mt-28 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold lg:tracking-tight">
@@ -344,6 +342,66 @@ export default function saran() {
                     <div className="flex items-center justify-center">
                       <button
                           onClick={() => setAlert(false)}
+                          className="flex items-center justify-center px-4 py-2 bg-white text-red-500 rounded-lg hover:bg-red-100 focus:outline-none focus:ring focus:ring-red-200"
+                      >
+                          Tutup
+                      </button>
+                  </div>  
+                    </div>
+                  </div>
+                </div>
+              </Transition.Child>
+            </div>
+          </Dialog>
+        </Transition>
+        {/* allert Data Empty */}
+        <Transition appear show={alertEmptyData} as={Fragment}>
+          <Dialog
+            as="div"
+            className="fixed inset-0 overflow-y-auto z-50"
+            onClose={() => setAlertEmptyData(false)}
+          >
+            <div className="min-h-screen px-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
+
+              <span className="inline-block h-screen align-middle" aria-hidden="true">
+                &#8203;
+              </span>
+
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <div className="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-top w-full max-w-sm">
+                  <div className="bg-red-500 p-6">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-center font-extrabold text-xl leading-6 text-white"
+                    >
+                      Perhatian!!!
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      <p className="text-sm text-white text-center font-open-sans">Masih ada data yang kosong harap cek lagi</p>
+                    </div>
+                    <div className="mt-4">
+                    <div className="flex items-center justify-center">
+                      <button
+                          onClick={() => setAlertEmptyData(false)}
                           className="flex items-center justify-center px-4 py-2 bg-white text-red-500 rounded-lg hover:bg-red-100 focus:outline-none focus:ring focus:ring-red-200"
                       >
                           Tutup
