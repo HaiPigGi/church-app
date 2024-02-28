@@ -16,9 +16,6 @@ export default function StoreProvider({ children }) {
     const userData = getUserData();
     storeRef.current.dispatch(userData);
   }
-  useEffect(() => {
-    
-  }, []);
 
   // const storeData = () => {};
 
