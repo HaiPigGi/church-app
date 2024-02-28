@@ -1,9 +1,12 @@
 'use client';
 import Dashboard from './Dashboard';
-import { useEffect } from 'react';
-
+import ErrorBundary from '@/components/Error/ErrorBundary';
 function PageHome() {
-  return <Dashboard />;
+  return (
+    <ErrorBundary>
+      <Dashboard />
+    </ErrorBundary>
+  );
 }
 
 export default PageHome;

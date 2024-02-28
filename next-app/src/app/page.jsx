@@ -1,10 +1,11 @@
-'use client';
-import { useEffect, useState } from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
 import PageHome from './pages/home/page';
 import Loading from '@/components/Fragments/Loading/loading';
 import { useAppSelector } from '@/lib/hook';
 import MainLayout from '@/components/Layouts/MainLayout';
 import RootLayout from './layout';
+import ErrorBundary from '@/components/Error/ErrorBundary'; // Mengimpor komponen ErrorBoundary dengan benar
 
 export default function Home() {
   const AuthStatus = useAppSelector((state) => state.session.status);
@@ -13,17 +14,21 @@ export default function Home() {
 
   useEffect(() => {
     if (AuthStatus === 'loading') {
-      setRenderBasedAuth(null); // Hide the content while loading
+      setRenderBasedAuth(null); // Sembunyikan konten saat loading
     } else {
       setRenderBasedAuth(<PageHome />);
     }
-    // Set appReady to true once the initial loading is done
+    // Tetapkan appReady menjadi true setelah loading awal selesai
     setAppReady(true);
   }, [AuthStatus]);
 
   return (
     <RootLayout>
-      <MainLayout>{appReady ? <>{renderBasedAuth}</> : <Loading />}</MainLayout>
+      <MainLayout>
+        <ErrorBundary> {/* Gunakan ErrorBundary di sekitar konten yang mungkin menimbulkan kesalahan */}
+          {appReady ? renderBasedAuth : <Loading />}
+        </ErrorBundary>
+      </MainLayout>
     </RootLayout>
   );
 }

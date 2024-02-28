@@ -2,11 +2,11 @@
   "name": "next-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://parokistmarkusmelak.org",
+  "homepage": "https://parokistmarkusmelak.org",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.js",
     "lint": "next lint",
     "test": "jest --watchAll --coverage",
     "format": "prettier --check --ignore-path .gitignore .",
