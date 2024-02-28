@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { Provider } from 'react-redux';
 import { makeStore } from '@/lib/store';
 import { getUserData } from '@/lib/features/session/sessionSlice';
