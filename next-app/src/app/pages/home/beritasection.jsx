@@ -40,7 +40,6 @@ function BeritaSection() {
           return;
         }
         setBeritaData(responseData.data);
-        console.log('beritaData Val : ', beritaData);
       } else {
         return;
       }

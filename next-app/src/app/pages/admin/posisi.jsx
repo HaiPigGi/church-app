@@ -35,8 +35,6 @@ export const isResponseError = (res, setModalContent, clearState) => {
   // if res is undefined or null
   if (!res) return true;
 
-  console.log(res);
-
   switch (res.status) {
     case 401:
       setModalContent('validation', {

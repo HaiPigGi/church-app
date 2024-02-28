@@ -14,7 +14,6 @@ function HeroSection() {
   const mainControlls = useAnimation();
   useEffect(() => {
     if (inView) {
-      console.log('inView', inView);
       mainControlls.start('visible');
     }
   }, [inView]);

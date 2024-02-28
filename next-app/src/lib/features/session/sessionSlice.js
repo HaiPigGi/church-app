@@ -52,7 +52,6 @@ export const sessionSlice = createSlice({
           state.user = action.payload;
           return;
         }
-        console.log(action.payload);
         state.status = 'failed';
         state.error = action.error;
         return;
